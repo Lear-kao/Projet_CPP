@@ -1,0 +1,33 @@
+60 cartes, 30 - 30 pour chaque joueurs
+
+2 types de cartes: combattant ou instantanés
+3 types de classe de combattant: guerrier - mage - assassin
+
+pour poser des cartes -> dépenser des charges:
+	- n charges par tour, n le nombre de tour, pas de perte de charge entre les tours;
+
+Cartes monstres:
+3 de chaque catégorie (1 par classe):
+	- 4 x simple ( force = 3, défense = 3 ) ( 2 charges )
+	- 2 x mur ( force = 0, défense = 6) ( 2 charges )
+	- 2 x perce muraille ( force = 6, défense = 0 ) (piétinnement, meurt à la fin du tour ) ( 2 charge )
+	- 2 x héro (force = 6, défense = 6) (5 charges)
+
+5 cartes instantanées de chaques:
+assassinat : ( 3 charges si pas d'assassin, sinon 1 ), tue une créature
+evasion : ( 3 charges si pas d'assassin, sinon 1 ), créature imbloquable
+
+clairvoyance : (  3 charges si pas de mage, sinon 1 ), pioche 3 cartes
+anticipation : (  3 charges si pas de mage, sinon 1 ), bloque un sort
+
+repos : (  3 charges si pas de guerrier, sinon 1 ), soigne 3 points de vie
+vaillance : (  3 charges si pas de guerrier, sinon 1 ), donne 3 de force en plus
+
+Déroulé:
+CHaque joueur a 20 points de vie.
+On mélange les créature et les instantannées séparément, on distribue 15 cartes de chaques aux 2 joueurs.
+Chaque joueur commence avec 5 cartes en main, le second joueur commence la partie avec 1 charges en plus
+Un tour se déroule ainsi:
+	pose de créature -> combat/pose de sorts -> pose de créature
+Chaque phase est optionnelle est les joueurs peuvent en ignorer une.
+Les joueurs jouent tour à tour jusqu'a ce que l'un d'entre eux finisse avec des points de vie inférieurs ou égaux à 0;
