@@ -14,5 +14,5 @@ void main_game::render( sf::RenderWindow& window)
 
 void main_game::update()
 {
-    
+    return;
 }

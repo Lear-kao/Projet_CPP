@@ -14,9 +14,8 @@ class heap_card
         void suffle(); //mélange les cartes
         card_gen* pick_one(); //pioche une carte
         std::vector<heap_card*> divide(); //coupe le paquet en 2
-
-        //lib_graphique
-        void render();//affiche les cartes en fonction de leurs propres méthodes
+        void add_one( card_gen* nc);
+        int get_size(void);
 };
 
 

@@ -6,8 +6,8 @@
 class card_gen
 {
     private:
-        bool type;
-        bool d_o_a;
+        std::string classe;
+        std::string categorie;
         int cost;
         std::string name;
 
@@ -16,16 +16,15 @@ class card_gen
         sf::Sprite sprite;
 
     public:
-        void set_type(bool t)
-        {
-            type = t;
-        }
-        void set_name(std::string n)
-        {
-            name.append(n);
-        }
+        void set_classe(std::string c);
+        void set_categorie(std::string c);
+        void set_name(std::string n);
+        bool counter(card_gen ad);
+        bool support(card_gen fr);
 
+        //lib_graph
         virtual void render(sf::RenderWindow& window);
+        virtual void update();
 };
 
 #endif
