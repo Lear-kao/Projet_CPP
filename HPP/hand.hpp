@@ -6,4 +6,4 @@ class hand: public heap_card
         bool is_max_size();
         void render(sf::RenderWindow& window);
         card_gen* play_one(int i);
-}
+};

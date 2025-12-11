@@ -10,12 +10,11 @@ class heap_card
     private:
         std::vector<card_gen*> heap;
     public:
-        heap_card(); //récupère depuis un fichier texte chaque carte
-        void suffle(); //mélange les cartes
-        card_gen* pick_one(); //pioche une carte
-        std::vector<heap_card*> divide(); //coupe le paquet en 2
-        void add_one( card_gen* nc);
-        int get_size(void);
+        heap_card();//a faire(Noah)
+        void suffle();//a faire(Noah)
+        card_gen* pick_one();//fini
+        void add_one( card_gen* nc);//a faire(Noah)
+        int get_size(void);//a faire(Noah)
 };
 
 

@@ -10,6 +10,5 @@ class main_game
         void handleEvent(const sf::Event& event, sf::RenderWindow& window);
         void update();
         void render(sf::RenderWindow& window);
-
 };
 
