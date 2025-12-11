@@ -7,6 +7,6 @@ class unit: public card_gen
         int stamina;
     public:
         unit(int cost);
-        int get_strenght(void);
-        int get_stamina(void);
+        int get_strenght(void);//fait
+        int get_stamina(void);//fait
 };
