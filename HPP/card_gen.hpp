@@ -21,6 +21,7 @@ class card_gen
         void set_classe(std::string c);//fait
         std::string get_classe(void);
         void set_categorie(std::string c);//fait
+        std::string get_categorie(void);
         void set_name(std::string n);//fait
         void set_cost(int c);//fait
         bool counter(card_gen *ad);//a faire (Noah)

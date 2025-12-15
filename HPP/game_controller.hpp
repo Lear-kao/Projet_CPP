@@ -34,6 +34,10 @@ class game_controller
         //phase de combat
         unit *attacker = NULL;
         unit *blocker = NULL;
+
+        //phase principale
+        spell* waiting_spell = NULL; //variable d'attente si une cible est necessaire pour le sort (kill)
+
     public:
         //phase de combat méthode
         void selected_card_board(unit *u);
@@ -41,11 +45,7 @@ class game_controller
         void select_blocker(unit *u);
         void resolve_fight();
         //phase d'invocation méthode
-        void selected_card_hand(card_gen* card);
-        
-
-
-    
+        void selected_card_hand(card_gen* card);    
 }
 
 #endif

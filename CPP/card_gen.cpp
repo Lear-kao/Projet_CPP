@@ -11,6 +11,11 @@ void card_gen::set_categorie(std::string c)
     categorie = c;
 }
 
+std::string card_gen::get_categorie(void)
+{
+    return categorie;
+}
+
 void card_gen::set_cost(int c)
 {
     cost = c;
