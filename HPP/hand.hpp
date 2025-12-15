@@ -9,7 +9,7 @@ class hand: public heap_card
 {
     public:
         bool is_max_size();
-        void render(sf::RenderWindow& window);
+        void render(sf::RenderWindow& window, bool is_bot);
         card_gen* play_one(int i);
 };
 

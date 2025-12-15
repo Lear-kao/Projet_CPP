@@ -9,7 +9,7 @@
 
 class heap_card
 {
-    private:
+    protected:
         std::vector<card_gen*> heap;
     public:
         heap_card();//a faire(Noah)
