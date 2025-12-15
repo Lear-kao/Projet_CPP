@@ -4,14 +4,24 @@
 #include "player.hpp"
 #include "unit.hpp"
 
+enum Phase_turn
+{
+    Draw,
+    main1,
+    fight,
+    main2,
+    end
+};
+
+
 class main_game
 {
-    private:
-        player m_player;
+
     public:
         void handleEvent(const sf::Event& event, sf::RenderWindow& window);
-        void update();
+        void update(void);
         void render(sf::RenderWindow& window);
+
 };
 
 #endif

@@ -17,8 +17,10 @@ class player
     public:
         player(bool a);
     //logic
+        void draw_card(void);
         void play_card();
         void hitted(int damage);
+        void healled(int heal);
         bool is_dead();
         std::vector<bool> get_board();
     //lib_graph

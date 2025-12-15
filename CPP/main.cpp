@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "../HPP/main_game.hpp"
+#include "../HPP/hand.hpp"
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Base");
@@ -10,9 +11,10 @@ int main() {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-        
         window.clear(sf::Color::Black);
         game.render(window);
+        hand a;
+        hand.render(window);
         window.display();
     }
 }

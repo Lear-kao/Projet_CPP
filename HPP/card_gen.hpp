@@ -19,6 +19,7 @@ class card_gen
 
     public:
         void set_classe(std::string c);//fait
+        std::string get_classe(void);
         void set_categorie(std::string c);//fait
         void set_name(std::string n);//fait
         void set_cost(int c);//fait
@@ -29,6 +30,7 @@ class card_gen
         void set_sprite(std::string path);//fait
         virtual void render(sf::RenderWindow& window, int x, int y) = 0;//en cours
         virtual void update() = 0;//a faire(Non attribué)
+        bool isClicked(sf::Vector2f mouse);
 };
 
 

@@ -22,6 +22,11 @@ void card_gen::set_classe(std::string c)
     classe = c;
 }
 
+std::string card_gen::get_classe(void)
+{
+    return classe;
+}
+
 void card_gen::set_name(std::string n)
 {
     name = n;
@@ -36,4 +41,5 @@ void card_gen::set_sprite(std::string path)
     texture.loadFromFile(path);
     sprite.setTexture(texture);
 }
+
 

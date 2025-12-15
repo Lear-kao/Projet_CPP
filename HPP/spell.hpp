@@ -2,13 +2,17 @@
 #define SPELL_HPP
 
 #include "card_gen.hpp"
+#include "../HPP/player.hpp"
 
-class sort: public card_gen
+class spell: public card_gen
 {
     private: 
-        int value_effect;
+        std::string target;
     public:
-        sort(int v_e);
+        spell(int v_e);
+        void render(sf::RenderWindow& window, int x, int y);
+        std::string type_target();
+        void resolve(auto target);
 };
 
 #endif

@@ -4,7 +4,11 @@
 
 class board: public heap_card
 {
+    private:
+        int border_x;
+        int border_y;
     public:
+        board(bool is_bot);
         bool is_max_size();
         void render(sf::RenderWindow& window,bool is_bot);
         std::vector<card_gen*> attacking(int i);

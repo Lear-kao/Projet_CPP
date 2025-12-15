@@ -10,10 +10,21 @@ player::player(bool a)
 
 void player::render_hand(sf::RenderWindow& window)
 {
-    hand_player->render(window,bot);
+    hand_player->render(window);
 }
 
 void player::render_board(sf::RenderWindow& window)
 {
-    board_player->render(window,bot);
+    board_player->render(window);
+}
+
+void player::draw_card(void)
+{
+    hand_player -> add_one(deck->pick_one());
+    return;
+}
+
+void player::healled(int heal)
+{
+    life += heal;
 }
