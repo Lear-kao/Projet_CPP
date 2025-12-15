@@ -1,5 +1,7 @@
 #include "heap_card.hpp"
 
+#define MAXSIZE 7
+
 class hand: public heap_card
 {
     public:

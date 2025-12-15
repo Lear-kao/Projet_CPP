@@ -25,8 +25,10 @@ class card_gen
 
         //lib_graph
         void set_sprite(std::string path);//fait
-        virtual void render(sf::RenderWindow& window);//a faire (Axel)
+        void render(sf::RenderWindow& window, int x, int y);//a faire (Axel)
         virtual void update();//a faire(Non attribué)
 };
+
+
 
 #endif
