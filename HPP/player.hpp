@@ -3,17 +3,19 @@
 
 #include "heap_card.hpp"
 #include "hand.hpp"
+#include "board.hpp"
 
 class player
 {
     private:
-        heap_card deck;
-        hand hand_player;
-        heap_card board;
+        heap_card *deck;
+        hand *hand_player;
+        board *board_player;
         int charge;
-        int life;
+        int life = 20;
+        bool bot;
     public:
-        player(void);
+        player(bool a);
     //logic
         void play_card();
         void hitted(int damage);

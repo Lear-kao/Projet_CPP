@@ -11,6 +11,7 @@ class card_gen
         std::string name;
         int cost;
 
+    protected:
         //librairie graphique
         sf::Texture texture;
         sf::Sprite sprite;
@@ -20,13 +21,13 @@ class card_gen
         void set_categorie(std::string c);//fait
         void set_name(std::string n);//fait
         void set_cost(int c);//fait
-        bool counter(card_gen ad);//a faire (Noah)
-        bool support(card_gen fr);//a faire (Noah)
+        bool counter(card_gen *ad);//a faire (Noah)
+        bool support(card_gen *fr);//a faire (Noah)
 
         //lib_graph
         void set_sprite(std::string path);//fait
-        virtual void render(sf::RenderWindow& window);//a faire (Axel)
-        virtual void update();//a faire(Non attribué)
+        virtual void render(sf::RenderWindow& window, int x, int y) = 0;//en cours
+        virtual void update() = 0;//a faire(Non attribué)
 };
 
 #endif

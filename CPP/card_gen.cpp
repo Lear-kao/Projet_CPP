@@ -5,10 +5,6 @@
 Toute les fonctions de mise en place de l'objet
 Méthode lourde mais explicite (voir si on fait differemment)
 */
-void card_gen::render(sf::RenderWindow& window)
-{
-    return;
-}
 
 void card_gen::set_categorie(std::string c)
 {

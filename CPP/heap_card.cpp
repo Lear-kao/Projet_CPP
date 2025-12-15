@@ -19,3 +19,5 @@ int heap_card::get_size(void)
 {
     return heap.size();
 }
+
+heap_card::heap_card(){}
