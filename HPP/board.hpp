@@ -1,16 +1,11 @@
-#ifndef HAND_HPP
-#define HAND_HPP
-
 #include "heap_card.hpp"
 
-#define MAX_SIZE 6
+#define MAX_SIZE_BOARD 6
 
-class hand: public heap_card
+class board: public heap_card
 {
     public:
         bool is_max_size();
         void render(sf::RenderWindow& window,bool is_bot);
-        card_gen* play_one(int i);
+        std::vector<card_gen*> attacking(int i);
 };
-
-#endif
