@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 #include "card_gen.hpp"
+#include "unit.hpp"
+#include "spell.hpp"
 #include <vector>
 
 class heap_card

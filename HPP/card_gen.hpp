@@ -1,7 +1,8 @@
 #ifndef CARD_GEN
 #define CARD_GEN
 #include <SFML/Graphics.hpp>
-#include <string.h>
+#include <string>
+#include <cstring> //Pour utiliser strcomp
 
 class card_gen
 {

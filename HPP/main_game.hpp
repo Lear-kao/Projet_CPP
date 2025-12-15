@@ -1,3 +1,5 @@
+#ifndef MAIN_GAME_HPP
+#define MAIN_GAME_HPP
 #include <SFML/Graphics.hpp>
 #include "player.hpp"
 
@@ -12,3 +14,4 @@ class main_game
         void render(sf::RenderWindow& window);
 };
 
+#endif

@@ -1,3 +1,6 @@
+#ifndef HAND_HPP
+#define HAND_HPP
+
 #include "heap_card.hpp"
 
 class hand: public heap_card
@@ -7,3 +10,5 @@ class hand: public heap_card
         void render(sf::RenderWindow& window);
         card_gen* play_one(int i);
 };
+
+#endif

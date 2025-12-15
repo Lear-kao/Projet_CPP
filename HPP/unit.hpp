@@ -1,3 +1,5 @@
+#ifndef UNIT_HPP
+#define UNIT_HPP
 #include "card_gen.hpp"
 
 class unit: public card_gen
@@ -10,3 +12,5 @@ class unit: public card_gen
         int get_strenght(void);//fait
         int get_stamina(void);//fait
 };
+
+#endif

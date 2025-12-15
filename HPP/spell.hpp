@@ -1,3 +1,6 @@
+#ifndef SPELL_HPP
+#define SPELL_HPP
+
 #include "card_gen.hpp"
 
 class sort: public card_gen
@@ -7,3 +10,5 @@ class sort: public card_gen
     public:
         sort(int v_e);
 };
+
+#endif
