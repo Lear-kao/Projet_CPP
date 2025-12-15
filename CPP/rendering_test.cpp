@@ -10,7 +10,7 @@ int main() {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-
+        
         window.clear(sf::Color::Black);
         game.render(window);
         window.display();

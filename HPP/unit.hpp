@@ -11,6 +11,12 @@ class unit: public card_gen
         unit(int cost);
         int get_strenght(void);//fait
         int get_stamina(void);//fait
+<<<<<<< HEAD
 };
 
 #endif
+=======
+
+        void render(sf::RenderWindow& window, int x, int y);
+};
+>>>>>>> Axel

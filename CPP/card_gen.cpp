@@ -5,13 +5,6 @@
 Toute les fonctions de mise en place de l'objet
 Méthode lourde mais explicite (voir si on fait differemment)
 */
-void card_gen::render(sf::RenderWindow& window, int x, int y)
-{
-    sprite.setTexture(texture);
-    sprite.setPosition(x, y);
-    window.draw(sprite);
-    return;
-}
 
 void card_gen::set_categorie(std::string c)
 {
