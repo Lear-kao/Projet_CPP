@@ -1,6 +1,7 @@
 #include "../HPP/main_game.hpp"
 #include <SFML/Graphics.hpp>
 
+
 void main_game::render( sf::RenderWindow& window)
 {
     sf::Texture texture;
@@ -12,43 +13,43 @@ void main_game::render( sf::RenderWindow& window)
 }
 
 
-void main_game::next_phase()
+
+void main_game::handleEvent(const sf::Event& event, sf::RenderWindow& window)
+/* 
+!!!
+fonction à moddifier pour respecter l'encapsulation des données !!!
+*/
 {
-    switch (phase_game)
+    /* if(event.type != sf::Event::MouseButtonPressed || event.mouseButton.button != sf::Mouse::Left)
+        return;
+
+    sf::Vector2f mousePos =
+        window.mapPixelToCoords({event.mouseButton.x, event.mouseButton.y});
+
+    // ---- clic sur hand ----
+    for(auto* card : m_player->hand) 
     {
-        case Phase_turn::Draw:
-            m_player.draw_card();
-            phase_game = Phase_turn::main1;
-            break;
-
-        case Phase_turn::main1:
-            phase_game = Phase_turn::fight;
-            break;
-
-        case Phase_turn::fight:
-            phase_game = Phase_turn::main2;
-            break;
-
-        case Phas_turn::main2:
-            phase_game = Phase_turn::end;
-            break;
-
-        case Phase_turn::end:
-            phase_game = Phase_turn::Draw;
-            break;
+        if(u->get_sprite().getGlobalBounds().contains(mousePos)) 
+        { 
+            controller->selected_card_hand(card);
+            return;
+        }
     }
-}
 
-bool mmain_game::canPlayCard(){
-    return phase_game == Phase::main1 || phase_game == Phase::Main2;
-}
+    // ---- clic sur board ----
+    for(auto* u : m_player->board) 
+    {
+        if(u->get_sprite().getGlobalBounds().contains(mousePos))
+        {
+            controller->selected_card_board(u);
+            return;
+        }
+    }
 
-bool mmain_game::canfight(){
-    return phase_game == Phase::fight;
-}
-
-
-void main_game::update()
-{
-    return;
+    for(auto* u : bot->board) {
+        if(u->get_sprite().getGlobalBounds().contains(mousePos)) {
+            controller->selected_card_board(u);
+            return;
+        }
+    } */
 }

@@ -7,9 +7,11 @@
 
 enum phase_turn
 {
+    draw,
     main1,
     fight,
-    main2
+    main2,
+    end
 };
 
 enum phase_fight
@@ -39,13 +41,16 @@ class game_controller
         spell* waiting_spell = NULL; //variable d'attente si une cible est necessaire pour le sort (kill)
 
     public:
+        void next_phase(void);
+
         //phase de combat méthode
         void selected_card_board(unit *u);
         void select_attacker(unit* u);
         void select_blocker(unit *u);
         void resolve_fight();
+
         //phase d'invocation méthode
         void selected_card_hand(card_gen* card);    
-}
+};
 
 #endif

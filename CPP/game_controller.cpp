@@ -2,6 +2,7 @@
 
 void game_controller::selected_card_board(unit *u)
 {
+    if(u->is_tapped()) return;
     if(p_turn == phase_turn::fight)
     {
         if(p_fight == phase_fight::selection_attacker){select_attacker(u);}
@@ -30,6 +31,7 @@ void game_controller::resolve_fight()
     }
     if(attacker->get_strenght() >= blocker->get_stamina()) blocker->killed();
     if( blocker -> get_strenght() >= attacker->get_stamina()) attacker->killed();
+    attacker->tap();
     return;
 }
 
@@ -39,7 +41,7 @@ void game_controller::selected_card_hand(card_gen* card)
 
     if(card->get_categorie() == "sort")
     { 
-        auto spell = dynamic_cast<spell*>(card);
+        spell* u_cp = dynamic_cast<spell*>(card);
         /* 
         Lance le sort
         si une target est necessaire, attendre la target
@@ -49,10 +51,39 @@ void game_controller::selected_card_hand(card_gen* card)
     }
     if(card->get_categorie() == "unite")
     { 
-        auto spell = dynamic_cast<unit*>(card);
+        unit* s_cp = dynamic_cast<unit*>(card);
         /* 
         pose l'unité sur le board
         */
         return;
+    }
+}
+
+void game_controller::next_phase()
+{
+    switch (p_turn)
+    {
+        case phase_turn::draw:
+            current_player->draw_card();
+            p_turn = phase_turn::main1;
+            break;
+        case phase_turn::main1:
+            p_turn = phase_turn::fight;
+            break;
+
+        case phase_turn::fight:
+            p_turn = phase_turn::main2;
+            break;
+
+        case phase_turn::main2:
+            p_turn = phase_turn::end;
+            break;
+
+        case phase_turn::end:
+            player *temp = current_player;
+            current_player = waiting_player;
+            waiting_player = temp;
+            p_turn = phase_turn::draw;
+            break;
     }
 }

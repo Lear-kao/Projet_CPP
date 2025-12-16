@@ -20,3 +20,18 @@ int unit::get_stamina(void)
 {
     return stamina;
 }
+
+void unit::tap(void)
+{
+    tapped == true;
+}
+
+void unit::untap(void)
+{
+    tapped == false;
+}
+
+bool unit::is_tapped(void)
+{
+    return tapped;
+}
