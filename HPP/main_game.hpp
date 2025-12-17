@@ -11,6 +11,7 @@
 class main_game
 {
     private:
+        int turn = 0;
         game_controller *controller = new game_controller();
         player *r_player = new player(false);
         player *bot = new player(true);

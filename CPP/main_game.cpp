@@ -60,3 +60,4 @@ main_game::main_game(void)
 {
     next_phase->set_loc(100,100);
 }
+

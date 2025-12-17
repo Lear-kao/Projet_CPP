@@ -31,3 +31,4 @@ hand::hand(bool is_bot)
         border_y = 500;
     }
 }
+
