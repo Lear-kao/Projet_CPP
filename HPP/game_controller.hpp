@@ -1,6 +1,9 @@
 #ifndef GAME_CONTROLLER_HPP
 #define GAME_CONTROLLER_HPP
 
+#include <SFML/Graphics.hpp>
+#include <string>
+
 class player;
 class unit;
 class spell;
@@ -52,7 +55,9 @@ class game_controller
         void resolve_fight();
 
         //phase d'invocation méthode
-        void selected_card_hand(card_gen* card);    
+        void selected_card_hand(card_gen* card);   
+        
+        void render(sf::RenderWindow& window);
 };
 
 #endif

@@ -106,3 +106,43 @@ void game_controller::next_phase()
             break;
     }
 }
+
+void game_controller::render(sf::RenderWindow& window)
+{
+    sf::Font font;
+    if (!font.loadFromFile("assets_lib_g/arial.ttf")){
+        return;
+    }  
+    sf::Text text;
+    text.setFont(font);
+    std::string text_aff;
+    switch(p_turn)
+    {
+        case phase_turn::draw:
+            text_aff.append("draw");
+            break;
+        case phase_turn::main1:
+            text_aff.append("main");
+            break;
+
+        case phase_turn::fight:
+            text_aff.append("fight");
+            break;
+
+        case phase_turn::main2:
+            text_aff.append("main");
+            break;
+
+        case phase_turn::end:
+            text_aff.append("end");
+            break; 
+    }
+    text.setString(text_aff);
+    text.setCharacterSize(24);
+    text.setFillColor(sf::Color::White);
+    text.setPosition(300.f, 300.f);
+    
+    // ligne magique 👇
+    window.draw(text);
+
+}

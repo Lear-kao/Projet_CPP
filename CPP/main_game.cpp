@@ -5,6 +5,7 @@
 void main_game::render( sf::RenderWindow& window)
 {
     next_phase->render(window);
+    controller->render(window);
 }
 
 
