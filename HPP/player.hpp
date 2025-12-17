@@ -4,14 +4,14 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
-class heap_card;
+class deck;
 class board;
 class hand;
 
 class player
 {
     private:
-        heap_card *deck;
+        deck *deck_player;
         hand *hand_player;
         board *board_player;
         int charge;

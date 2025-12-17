@@ -25,3 +25,15 @@ board::board(bool is_bot)
         border_y = 380;
     }
 }
+
+void board::untap_all( void )
+{
+    for( int i = 0; i < heap.size(); i++)
+    {
+        unit *a = (unit*)heap[i];
+        if(a->is_tapped())
+        {
+            a->untap();
+        }
+    }
+}

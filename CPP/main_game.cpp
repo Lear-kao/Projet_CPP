@@ -4,6 +4,7 @@
 
 void main_game::render( sf::RenderWindow& window)
 {
+    window.draw(board);
     next_phase->render(window);
     controller->render(window);
 }
@@ -20,10 +21,10 @@ fonction à moddifier pour respecter l'encapsulation des données !!!
     {
         sf::Vector2f mousePos = window.mapPixelToCoords({event.mouseButton.x, event.mouseButton.y});
 
-    if (next_phase->get_sprite().getGlobalBounds().contains(mousePos))
-    {
-        controller->next_phase();
-    }
+        if (next_phase->get_sprite().getGlobalBounds().contains(mousePos))
+        {
+            controller->next_phase();
+        }
     }
 
     /*
@@ -58,5 +59,12 @@ fonction à moddifier pour respecter l'encapsulation des données !!!
 
 main_game::main_game(void)
 {
-    next_phase->set_loc(100,100);
+    next_phase->set_loc(700,300);
+    set_board();
+}
+
+void main_game::set_board( void )
+{
+    texture.loadFromFile("assets_lib_g/board.png");
+    board.setTexture(texture);
 }

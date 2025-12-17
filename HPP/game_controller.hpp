@@ -46,6 +46,7 @@ class game_controller
         spell* waiting_spell = nullptr; //variable d'attente si une cible est necessaire pour le sort (kill)
 
     public:
+        game_controller(player *p1, player *p2);
         void next_phase(void);
 
         //phase de combat méthode

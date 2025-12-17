@@ -2,12 +2,13 @@
 
 #include "hand.hpp"
 #include "board.hpp"
+#include "deck.hpp"
 
 player::player(bool a)
 {
     bot = a;
     hand_player = new hand(bot);
-    deck = new heap_card;
+    deck_player = new deck(bot);
     board_player = new board(bot);
 }
 

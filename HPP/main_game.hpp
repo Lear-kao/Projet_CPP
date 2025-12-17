@@ -11,16 +11,19 @@
 class main_game
 {
     private:
-        game_controller *controller = new game_controller();
+        int turn = 0;
+        sf::Sprite board;
+        sf::Texture texture;
         player *r_player = new player(false);
         player *bot = new player(true);
+        game_controller *controller = new game_controller(r_player,bot);
         gen_button *next_phase = new gen_button("assets_lib_g/button_next_phase.png");
     public:
         main_game(void);
+        void set_board(void);
         void handleEvent(const sf::Event& event, sf::RenderWindow& window);
         void update(void);
         void render(sf::RenderWindow& window);
-
 };
 
 #endif

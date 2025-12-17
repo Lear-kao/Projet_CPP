@@ -1,0 +1,17 @@
+{
+  "name": "projet_cpp",
+  "version": "1.0.0",
+  "description": "small project for the end of the semester",
+  "main": "index.js",
+  "scripts": {
+    "build": "make",
+    "run": "./game",
+    "clean": "make clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "*"
+  },
+  "author": "Axel_AUDEOUD Noah_ARANEGA",
+  "license": "ISC"
+}
