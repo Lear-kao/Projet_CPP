@@ -13,7 +13,9 @@ int main() {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
+            game.handleEvent(event,window);
         }
+
         window.clear(sf::Color::Black);
         game.render(window);
         window.display();

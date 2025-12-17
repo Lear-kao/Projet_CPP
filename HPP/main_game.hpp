@@ -11,10 +11,10 @@
 class main_game
 {
     private:
-        game_controller *controller;
+        game_controller *controller = new game_controller();
         player *r_player = new player(false);
         player *bot = new player(true);
-        gen_button *next_phase;
+        gen_button *next_phase = new gen_button("assets_lib_g/button_next_phase.png");
     public:
         main_game(void);
         void handleEvent(const sf::Event& event, sf::RenderWindow& window);

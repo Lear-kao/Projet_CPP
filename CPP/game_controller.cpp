@@ -1,4 +1,8 @@
 #include "../HPP/game_controller.hpp"
+#include "../HPP/player.hpp"
+#include "../HPP/unit.hpp"
+#include "../HPP/spell.hpp"
+#include "../HPP/class_button.hpp"
 
 void game_controller::selected_card_board(unit *u)
 {
@@ -76,17 +80,21 @@ void game_controller::next_phase()
         case phase_turn::draw:
             current_player->draw_card();
             p_turn = phase_turn::main1;
+            printf("darw\n");
             break;
         case phase_turn::main1:
             p_turn = phase_turn::fight;
+            printf("main1\n");
             break;
 
         case phase_turn::fight:
             p_turn = phase_turn::main2;
+            printf("fight\n");
             break;
 
         case phase_turn::main2:
             p_turn = phase_turn::end;
+            printf("main2\n");
             break;
 
         case phase_turn::end:
@@ -94,6 +102,7 @@ void game_controller::next_phase()
             current_player = waiting_player;
             waiting_player = temp;
             p_turn = phase_turn::draw;
+            printf("end\n");
             break;
     }
 }

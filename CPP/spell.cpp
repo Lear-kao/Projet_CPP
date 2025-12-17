@@ -3,6 +3,11 @@
 #include "../HPP/player.hpp"
 
 
+spell::spell(int v_e)
+{
+    set_cost(v_e);
+}
+
 void spell::render(sf::RenderWindow& window, int x, int y)
 {
     sprite.setPosition(x,y);

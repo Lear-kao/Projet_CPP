@@ -1,7 +1,7 @@
 #include "../HPP/unit.hpp"
 
 unit::unit(int cost){
-    cost = cost;
+    set_cost(cost);
 }
 
 void unit::render(sf::RenderWindow& window, int x, int y)

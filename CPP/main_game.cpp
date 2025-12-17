@@ -15,11 +15,17 @@ void main_game::handleEvent(const sf::Event& event, sf::RenderWindow& window)
 fonction à moddifier pour respecter l'encapsulation des données !!!
 */
 {
-    /* if(event.type != sf::Event::MouseButtonPressed || event.mouseButton.button != sf::Mouse::Left)
-        return;
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+    {
+        sf::Vector2f mousePos = window.mapPixelToCoords({event.mouseButton.x, event.mouseButton.y});
 
-    sf::Vector2f mousePos =
-        window.mapPixelToCoords({event.mouseButton.x, event.mouseButton.y});
+    if (next_phase->get_sprite().getGlobalBounds().contains(mousePos))
+    {
+        controller->next_phase();
+    }
+    }
+
+    /*
 
     // ---- clic sur hand ----
     for(auto* card : m_player->hand) 

@@ -1,9 +1,11 @@
 #ifndef GAME_CONTROLLER_HPP
 #define GAME_CONTROLLER_HPP
 
-#include "player.hpp"
-#include "unit.hpp"
-#include "spell.hpp"
+class player;
+class unit;
+class spell;
+class button;
+class card_gen;
 
 enum phase_turn
 {
@@ -34,11 +36,11 @@ class game_controller
         player *waiting_player;
 
         //phase de combat
-        unit *attacker = NULL;
-        unit *blocker = NULL;
+        unit *attacker = nullptr;
+        unit *blocker = nullptr;
 
         //phase principale
-        spell* waiting_spell = NULL; //variable d'attente si une cible est necessaire pour le sort (kill)
+        spell* waiting_spell = nullptr; //variable d'attente si une cible est necessaire pour le sort (kill)
 
     public:
         void next_phase(void);

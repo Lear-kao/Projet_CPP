@@ -14,9 +14,11 @@ class gen_button
         sf::Texture texture;
         sf::Sprite sprite;
     public: 
+        gen_button(std::string path);
         void set_loc(int x, int y);
         std::pair<int,int> get_loc( void );
         void render(sf::RenderWindow& window);
+        sf::Sprite get_sprite( void );
 };
 
 #endif

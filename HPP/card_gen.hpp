@@ -32,7 +32,7 @@ class card_gen
         void set_sprite(std::string path);//fait
         sf::Sprite get_sprite(void);
         virtual void render(sf::RenderWindow& window, int x, int y) = 0;//en cours
-        virtual void update() = 0;//a faire(Non attribué)
+        //virtual void update() = 0;//a faire(Non attribué)
         bool isClicked(sf::Vector2f mouse);
 };
 
