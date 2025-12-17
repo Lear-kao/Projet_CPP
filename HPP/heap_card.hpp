@@ -17,6 +17,7 @@ class heap_card
         card_gen* pick_one();//fini
         void add_one( card_gen* nc);//a faire(Noah)
         int get_size(void);//a faire(Noah)
+        virtual void render(sf::RenderWindow& window) = 0;
 };
 
 

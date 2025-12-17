@@ -4,6 +4,9 @@
 #include "../HPP/spell.hpp"
 #include "../HPP/class_button.hpp"
 
+
+
+
 void game_controller::selected_card_board(unit *u)
 {
     if(u->is_tapped()) return;
@@ -140,9 +143,21 @@ void game_controller::render(sf::RenderWindow& window)
     text.setString(text_aff);
     text.setCharacterSize(24);
     text.setFillColor(sf::Color::White);
-    text.setPosition(300.f, 300.f);
+    text.setPosition(20.f, 300.f);
     
     // ligne magique 👇
     window.draw(text);
 
+}
+
+game_controller::game_controller(player *p1,player *p2)
+{
+    if(p1 != nullptr)
+    {
+        current_player = p1;
+    }
+    if(p2 != nullptr)
+    {
+        current_player = p2;
+    }
 }
