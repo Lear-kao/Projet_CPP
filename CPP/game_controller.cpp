@@ -5,8 +5,18 @@ void game_controller::selected_card_board(unit *u)
     if(u->is_tapped()) return;
     if(p_turn == phase_turn::fight)
     {
-        if(p_fight == phase_fight::selection_attacker){select_attacker(u);}
-        if(p_fight == phase_fight::selection_attacker){select_blocker(u);}
+        if(p_fight == phase_fight::selection_attacker)
+        {
+            if(u->is_tapped()) 
+                return;
+            select_attacker(u);
+        }
+        if(p_fight == phase_fight::selection_blocker)
+        {
+            if(u->is_tapped()) 
+                return;
+            select_blocker(u);
+        }
         return;
     }
     waiting_spell->resolve(u);
@@ -41,7 +51,7 @@ void game_controller::selected_card_hand(card_gen* card)
 
     if(card->get_categorie() == "sort")
     { 
-        spell* u_cp = dynamic_cast<spell*>(card);
+        spell* u_cp = (spell*)card;
         /* 
         Lance le sort
         si une target est necessaire, attendre la target
@@ -51,7 +61,7 @@ void game_controller::selected_card_hand(card_gen* card)
     }
     if(card->get_categorie() == "unite")
     { 
-        unit* s_cp = dynamic_cast<unit*>(card);
+        unit* s_cp = (unit*)card;
         /* 
         pose l'unité sur le board
         */

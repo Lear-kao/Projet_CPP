@@ -18,7 +18,7 @@ heap_card::heap_card(){
             heap.push_back(u);
         }
         else{
-            sort *s;
+            spell *s;
             s->set_categorie(categorie);
             s->set_classe(classe);
             //s.set_sprite(chemin);

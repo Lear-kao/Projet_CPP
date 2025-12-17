@@ -2,7 +2,9 @@
 #define SPELL_HPP
 
 #include "card_gen.hpp"
-#include "../HPP/player.hpp"
+
+class player;
+class unit;
 
 class spell: public card_gen
 {
@@ -12,7 +14,8 @@ class spell: public card_gen
         spell(int v_e);
         void render(sf::RenderWindow& window, int x, int y);
         std::string type_target();
-        void resolve(auto target);
+        void resolve(unit* current_target);
+        void resolve(player* current_target);
 };
 
 #endif

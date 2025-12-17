@@ -1,9 +1,12 @@
 #ifndef PLAYER
 #define PLAYER
 
-#include "heap_card.hpp"
-#include "hand.hpp"
-#include "board.hpp"
+#include <vector>
+#include <SFML/Graphics.hpp>
+
+class heap_card;
+class board;
+class hand;
 
 class player
 {

@@ -16,8 +16,6 @@ int main() {
         }
         window.clear(sf::Color::Black);
         game.render(window);
-        hand a;
-        hand.render(window);
         window.display();
     }
 }

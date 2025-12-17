@@ -23,15 +23,20 @@ int unit::get_stamina(void)
 
 void unit::tap(void)
 {
-    tapped == true;
+    tapped = true;
 }
 
 void unit::untap(void)
 {
-    tapped == false;
+    tapped = false;
 }
 
 bool unit::is_tapped(void)
 {
     return tapped;
+}
+
+void unit::killed(void)
+{
+    alive = false;
 }

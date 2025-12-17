@@ -1,5 +1,6 @@
 #ifndef CARD_GEN
 #define CARD_GEN
+
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <cstring> //Pour utiliser strcomp
@@ -16,10 +17,10 @@ class card_gen
         //librairie graphique
         sf::Texture texture;
         sf::Sprite sprite;
+        std::string get_classe(void);
 
     public:
         void set_classe(std::string c);//fait
-        std::string get_classe(void);
         void set_categorie(std::string c);//fait
         std::string get_categorie(void);
         void set_name(std::string n);//fait

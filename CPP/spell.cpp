@@ -1,4 +1,6 @@
 #include "../HPP/spell.hpp"
+#include "../HPP/unit.hpp"
+#include "../HPP/player.hpp"
 
 
 void spell::render(sf::RenderWindow& window, int x, int y)
@@ -8,15 +10,21 @@ void spell::render(sf::RenderWindow& window, int x, int y)
     return;
 }
 
-void resolve(auto *target)
+
+void spell::resolve(unit* current_target)
+{
+    if(target == "unit")
+    {
+        current_target->killed();
+        return;
+    }
+}
+
+void spell::resolve(player* current_target)
 {
     if(target == "player")
     {
-        player *temp = (player*) target;
-        if(get_classe() == "guerrier")
-        {
-            player->healled(3);
-        }
-        temp->
+        current_target->healled(3);
+        return;
     }
 }

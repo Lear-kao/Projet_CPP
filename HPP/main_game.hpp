@@ -4,15 +4,8 @@
 #include "game_controller.hpp"
 #include "player.hpp"
 #include "unit.hpp"
+#include "class_button.hpp"
 
-enum Phase_turn
-{
-    Draw,
-    main1,
-    fight,
-    main2,
-    end
-};
 
 
 class main_game
@@ -21,7 +14,9 @@ class main_game
         game_controller *controller;
         player *r_player = new player(false);
         player *bot = new player(true);
+        gen_button *next_phase;
     public:
+        main_game(void);
         void handleEvent(const sf::Event& event, sf::RenderWindow& window);
         void update(void);
         void render(sf::RenderWindow& window);

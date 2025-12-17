@@ -4,12 +4,7 @@
 
 void main_game::render( sf::RenderWindow& window)
 {
-    sf::Texture texture;
-    texture.loadFromFile("/home/axel/Projet_CPP/assets_lib_g/maison.png");
-    sf::Sprite sprite;
-    sprite.setTexture(texture);
-    sprite.setPosition(100, 100);
-    window.draw(sprite);
+    next_phase->render(window);
 }
 
 
@@ -52,4 +47,9 @@ fonction à moddifier pour respecter l'encapsulation des données !!!
             return;
         }
     } */
+}
+
+main_game::main_game(void)
+{
+    next_phase->set_loc(100,100);
 }
