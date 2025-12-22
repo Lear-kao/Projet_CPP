@@ -6,7 +6,6 @@ void gen_button::set_loc(int x, int y)
     localisation.second = y;
 }
 
-
 std::pair<int,int> gen_button::get_loc( void )
 {
     return localisation;

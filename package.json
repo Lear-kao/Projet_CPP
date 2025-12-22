@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "make",
-    "run": "./game",
+    "run": "valgrind ./game",
     "clean": "make clean"
   },
   "repository": {

@@ -28,6 +28,7 @@ class player
         std::vector<bool> get_board();
     //lib_graph
         void render_general(sf::RenderWindow& window);
+        void render_deck(sf::RenderWindow& window);
         void render_board(sf::RenderWindow& window);
         void render_hand(sf::RenderWindow& window);
 };

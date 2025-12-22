@@ -101,9 +101,9 @@ void game_controller::next_phase()
             break;
 
         case phase_turn::end:
-            player *temp = current_player;
+            /* player *temp = current_player;
             current_player = waiting_player;
-            waiting_player = temp;
+            waiting_player = temp; */
             p_turn = phase_turn::draw;
             printf("end\n");
             break;
@@ -158,6 +158,6 @@ game_controller::game_controller(player *p1,player *p2)
     }
     if(p2 != nullptr)
     {
-        current_player = p2;
+        waiting_player = p2;
     }
 }

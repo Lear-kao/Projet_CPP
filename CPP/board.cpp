@@ -1,13 +1,10 @@
 #include "../HPP/board.hpp"
 
-void board::render(sf::RenderWindow& window, bool is_bot)
+void board::render(sf::RenderWindow& window )
 {
-    if(!is_bot)
+    for( int i = 0; i < get_size(); i++)
     {
-        for( int i = 0; i < get_size(); i++)
-        {
-            heap[i]->render(window,i*100,400);
-        }
+        heap[i]->render(window,i*40,border_y);
     }
     return;
 }
