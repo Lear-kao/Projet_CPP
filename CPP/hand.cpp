@@ -2,9 +2,11 @@
 
 void hand::render(sf::RenderWindow& window)
 {
+    int size = get_size();
+    if(size == 0) exit(0);
     for( int i = 0; i < get_size(); i++)
     {
-        heap[i]->render(window,i*100+border_x,border_y);
+        heap[i]->render(window,i*38+border_x,border_y);
     }
     return;
 }
@@ -22,13 +24,13 @@ hand::hand(bool is_bot)
 {
     if(is_bot)
     {
-        border_x = 20;
+        border_x = 170;
         border_y = 20;
     }
     else 
     {
-        border_x = 20;
-        border_y = 500;
+        border_x = 170;
+        border_y = 510;
     }
 }
 

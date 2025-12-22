@@ -13,7 +13,7 @@ class board: public heap_card
     public:
         board(bool is_bot);
         bool is_max_size();
-        void render(sf::RenderWindow& window,bool is_bot);
+        void render(sf::RenderWindow& window);
         void untap_all( void );
         std::vector<card_gen*> attacking(int i);
 };

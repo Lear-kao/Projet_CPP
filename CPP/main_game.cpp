@@ -7,6 +7,7 @@ void main_game::render( sf::RenderWindow& window)
     window.draw(board);
     next_phase->render(window);
     controller->render(window);
+    r_player->render_general(window);
 }
 
 

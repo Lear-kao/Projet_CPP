@@ -12,7 +12,7 @@ class heap_card
     protected:
         std::vector<card_gen*> heap;
     public:
-        heap_card();//a faire(Noah)
+        //heap_card();//a faire(Noah)
         void suffle();//a faire(Noah)
         card_gen* pick_one();//fini
         void add_one( card_gen* nc);//a faire(Noah)
