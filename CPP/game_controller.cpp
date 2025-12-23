@@ -1,5 +1,6 @@
 #include "../HPP/game_controller.hpp"
 #include "../HPP/player.hpp"
+#include "../HPP/hand.hpp"
 #include "../HPP/unit.hpp"
 #include "../HPP/spell.hpp"
 #include "../HPP/class_button.hpp"
@@ -52,28 +53,27 @@ void game_controller::resolve_fight()
     return;
 }
 
-void game_controller::selected_card_hand(card_gen* card)
+void game_controller::selected_card_hand(int i)
 {
     if (p_turn != phase_turn::main1 && p_turn != phase_turn::main2) return;
+
+    auto* hand = current_player->get_hand();
+    auto* card = hand->get_card_x(i);
 
     if(card->get_categorie() == "sort")
     { 
         spell* u_cp = (spell*)card;
-        /* 
-        Lance le sort
-        si une target est necessaire, attendre la target
-        sinon, résoudre le sort pour le joueur qui le lance
-        */
-        return;
+        if(u_cp->get_classe() != "voleur" )
+        {
+            u_cp->resolve(current_player);
+        }
     }
     if(card->get_categorie() == "unite")
     { 
         unit* s_cp = (unit*)card;
-        /* 
-        pose l'unité sur le board
-        */
-        return;
+        current_player->summon_card(s_cp);
     }
+    hand->pop_i(i);
 }
 
 void game_controller::next_phase()
@@ -145,7 +145,6 @@ void game_controller::render(sf::RenderWindow& window)
     text.setFillColor(sf::Color::White);
     text.setPosition(20.f, 300.f);
     
-    // ligne magique 👇
     window.draw(text);
 
 }

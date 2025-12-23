@@ -56,7 +56,7 @@ class game_controller
         void resolve_fight();
 
         //phase d'invocation méthode
-        void selected_card_hand(card_gen* card);   
+        void selected_card_hand(int i);   
         
         void render(sf::RenderWindow& window);
 };
