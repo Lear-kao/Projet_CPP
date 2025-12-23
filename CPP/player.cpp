@@ -1,8 +1,11 @@
 #include "../HPP/player.hpp"
 #include <iostream>
+#include <string.h>
 #include "hand.hpp"
 #include "board.hpp"
 #include "deck.hpp"
+#include "unit.hpp"
+
 
 player::player(bool a)
 {
@@ -31,6 +34,45 @@ void player::render_deck(sf::RenderWindow& window)
     deck_player->render(window);
 }
 
+void player::render_life(sf::RenderWindow& window)
+{
+    sf::Font font;
+    if (!font.loadFromFile("assets_lib_g/arial.ttf")){
+        return;
+    }  
+    sf::Text text;
+    text.setFont(font);
+    text.setString(std::to_string(life));
+    text.setCharacterSize(25);
+    text.setFillColor(sf::Color::Black);
+    text.setPosition(700, 500);
+    window.draw(text);
+}
+
+void player::render_charge(sf::RenderWindow& window)
+{
+    sf::Font font;
+    if (!font.loadFromFile("assets_lib_g/arial.ttf")){
+        return;
+    }  
+    sf::Text text;
+    text.setFont(font);
+    text.setString(std::to_string(charge));
+    text.setCharacterSize(25);
+    text.setFillColor(sf::Color::Black);
+    text.setPosition(700, 400);
+    window.draw(text);
+}
+
+void player::render_general(sf::RenderWindow& window)
+{
+    render_charge(window);
+    render_deck(window);
+    render_hand(window);
+    render_board(window);
+    render_life(window);
+}
+
 void player::draw_card(void)
 {
     hand_player -> add_one(deck_player->pick_one());
@@ -47,9 +89,12 @@ void player::hitted(int damage)
     life -= damage;
 }
 
-void player::render_general(sf::RenderWindow& window)
+hand* player::get_hand( void )
 {
-    render_board(window);
-    render_deck(window);
-    render_hand(window);
+    return hand_player;
+}
+
+void player::summon_card(unit* unite)
+{
+    board_player->add_one(unite);
 }

@@ -1,6 +1,7 @@
 #include "../HPP/main_game.hpp"
 #include <SFML/Graphics.hpp>
 
+#include "../HPP/hand.hpp"
 
 void main_game::render( sf::RenderWindow& window)
 {
@@ -26,20 +27,20 @@ fonction à moddifier pour respecter l'encapsulation des données !!!
         {
             controller->next_phase();
         }
-    }
 
-    /*
-
-    // ---- clic sur hand ----
-    for(auto* card : m_player->hand) 
-    {
-        if(u->get_sprite().getGlobalBounds().contains(mousePos)) 
-        { 
-            controller->selected_card_hand(card);
-            return;
+        // ---- clic sur hand ----
+        hand* hand_p = r_player->get_hand();
+        for(int i = 0; i <  r_player->get_hand()->get_size(); i++) 
+        {
+            auto* card = hand_p->get_card_x(i);
+            if(card->get_sprite().getGlobalBounds().contains(mousePos)) 
+            { 
+                controller->selected_card_hand(i);
+                return;
+            }
         }
     }
-
+    /*
     // ---- clic sur board ----
     for(auto* u : m_player->board) 
     {

@@ -4,6 +4,11 @@
 #include <fstream>
 
 
+void heap_card::pop_i(int i)
+{
+    heap.erase(heap.begin() + i);
+}
+
 
 card_gen* heap_card::pick_one()
 {
@@ -23,4 +28,10 @@ void heap_card::add_one( card_gen* nc)
 int heap_card::get_size(void)
 {
     return heap.size();
+}
+
+
+card_gen* heap_card::get_card_x(int n)
+{
+    return heap[n];
 }

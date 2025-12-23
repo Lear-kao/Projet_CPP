@@ -17,9 +17,9 @@ class card_gen
         //librairie graphique
         sf::Texture texture;
         sf::Sprite sprite;
-        std::string get_classe(void);
-
+        
     public:
+        std::string get_classe(void);
         void set_classe(std::string c);//fait
         void set_categorie(std::string c);//fait
         std::string get_categorie(void);

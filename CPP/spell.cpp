@@ -27,9 +27,16 @@ void spell::resolve(unit* current_target)
 
 void spell::resolve(player* current_target)
 {
-    if(target == "player")
+    if(get_classe() == "guerrier")
     {
         current_target->healled(3);
         return;
     }
+    else if( get_classe() == "mage")
+    {
+        current_target->draw_card();
+        current_target->draw_card();
+        current_target->draw_card();
+    }
 }
+
