@@ -30,6 +30,7 @@ enum phase_fight
 class game_controller
 {
     private:
+        int tour_actuel = 1;
         //gestionnaire de phase
         phase_fight p_fight = phase_fight::not_in_fight;
         phase_turn p_turn = phase_turn::main1;

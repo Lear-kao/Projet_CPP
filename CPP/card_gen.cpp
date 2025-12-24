@@ -21,6 +21,11 @@ void card_gen::set_cost(int c)
     cost = c;
 }
 
+int card_gen::get_cost()
+{
+    return cost;
+}
+
 
 void card_gen::set_classe(std::string c)
 {
