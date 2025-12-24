@@ -94,7 +94,20 @@ hand* player::get_hand( void )
     return hand_player;
 }
 
+
+board* player::get_board(){
+    return board_player;
+}
+
 void player::summon_card(unit* unite)
 {
     board_player->add_one(unite);
+}
+
+void player::set_charge(int c){
+    charge = c;
+}
+
+int player::get_charge(){
+    return charge;
 }

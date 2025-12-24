@@ -15,7 +15,7 @@ class player
         deck *deck_player;
         hand *hand_player;
         board *board_player;
-        int charge = 0;
+        int charge = 1;
         int life = 20;
         bool bot;
     public:
@@ -27,7 +27,9 @@ class player
         void healled(int heal);
         bool is_dead();
         hand* get_hand( void );
-        std::vector<bool> get_board();
+        board* get_board(void);
+        void set_charge(int);
+        int get_charge(void);
     //lib_graph
         void render_general(sf::RenderWindow& window);
         void render_charge(sf::RenderWindow& window);

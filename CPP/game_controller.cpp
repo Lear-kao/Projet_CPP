@@ -3,6 +3,7 @@
 #include "../HPP/hand.hpp"
 #include "../HPP/unit.hpp"
 #include "../HPP/spell.hpp"
+#include "../HPP/board.hpp"
 #include "../HPP/class_button.hpp"
 
 
@@ -63,17 +64,48 @@ void game_controller::selected_card_hand(int i)
     if(card->get_categorie() == "sort")
     { 
         spell* u_cp = (spell*)card;
-        if(u_cp->get_classe() != "voleur" )
+        int cout_reel = card->get_cost();
+        board* b = current_player->get_board();
+        if(u_cp->get_classe() == "guerrier" )
         {
-            u_cp->resolve(current_player);
+            if(b->check("guerrier") == true){
+                cout_reel = 1;
+            }
+            if(current_player->get_charge()>=cout_reel){
+                u_cp->resolve(current_player);
+                current_player->set_charge(current_player->get_charge()-cout_reel);
+                hand->pop_i(i);
+            }
+        }
+        else if(u_cp->get_classe()=="mage"){
+            if(b->check("mage")==true){
+                cout_reel = 1;
+            }
+            if(current_player->get_charge()>=cout_reel){
+                u_cp->resolve(current_player);
+                current_player->set_charge(current_player->get_charge()-cout_reel);
+                hand->pop_i(i);
+            }
+        }
+        else{
+            if(b->check("voleur")){
+                cout_reel = 1;
+            }
+            if(current_player->get_charge()>=cout_reel){
+                current_player->set_charge(current_player->get_charge()-cout_reel);
+                hand->pop_i(i);
+            }
         }
     }
     if(card->get_categorie() == "unite")
     { 
-        unit* s_cp = (unit*)card;
-        current_player->summon_card(s_cp);
+        if(card->get_cost() <= current_player->get_charge()){
+            unit* s_cp = (unit*)card;
+            current_player->summon_card(s_cp);
+            current_player->set_charge(current_player->get_charge()-card->get_cost());
+            hand->pop_i(i);
+        }
     }
-    hand->pop_i(i);
 }
 
 void game_controller::next_phase()
@@ -81,9 +113,19 @@ void game_controller::next_phase()
     switch (p_turn)
     {
         case phase_turn::draw:
+            //distribution des charges :
+            if(tour_actuel%2==0){ //le joueur 2 joue quand le tour est pair
+                current_player->set_charge(tour_actuel/2);
+            }
+            else{ //le joueur 1 joue quand le tour est impair donc on ajoute un après division
+                current_player->set_charge(tour_actuel/2 + 1); 
+            }
+            if(current_player->get_charge() > 8){ //max charge = 8
+                current_player->set_charge(8);
+            }
             current_player->draw_card();
             p_turn = phase_turn::main1;
-            printf("darw\n");
+            printf("draw\n");
             break;
         case phase_turn::main1:
             p_turn = phase_turn::fight;
@@ -101,9 +143,10 @@ void game_controller::next_phase()
             break;
 
         case phase_turn::end:
-            /* player *temp = current_player;
+            player *temp = current_player;
             current_player = waiting_player;
-            waiting_player = temp; */
+            waiting_player = temp;
+            tour_actuel++;
             p_turn = phase_turn::draw;
             printf("end\n");
             break;

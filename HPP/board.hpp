@@ -15,6 +15,7 @@ class board: public heap_card
         bool is_max_size();
         void render(sf::RenderWindow& window);
         void untap_all( void );
+        bool check(std::string categorie);
         std::vector<card_gen*> attacking(int i);
 };
 

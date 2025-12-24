@@ -34,3 +34,16 @@ void board::untap_all( void )
         }
     }
 }
+
+bool board::check(std::string classe){
+    //vérifie si dans le board d'un joueur il y a une unité d'une certaine classe
+    //sert pour le calcul du coût d'un sort
+    size_t i = 0;
+    while(i < heap.size() && (heap[i]->get_classe() != classe)){
+        i++;
+    }
+    if(i < heap.size()){
+        return true;
+    }
+    return false;
+}
