@@ -41,17 +41,12 @@ void game_controller::selected_card_board(unit *u)
     }
     if(p_turn == phase_turn::selection_blocker)
     {
-        if(blocker == nullptr)
-        {
-            printf("what?\n");
-            select_blocker(u);
-        }
-        else select_blocker_target(u);
+        select_blocker(u);
     }
-    /* if(p_turn == phase_turn::main1 || p_turn == phase_turn::main2)
+    if(p_turn == phase_turn::main1 || p_turn == phase_turn::main2)
     {
         waiting_spell->resolve(u);
-    } */
+    }
     return;
     
 }
@@ -71,7 +66,6 @@ void game_controller::select_blocker(unit* u)
     /* 
     !!! attention, faire en sorte que un joueur ne puisse pas séléctionner les unitées du joueur adverse
     */
-    if(u->is_tapped())return;
     blocker = u;
 }
 
@@ -83,6 +77,7 @@ void game_controller::select_blocker_target(unit* u)
         if(u == list_fight[i].attacker)
         {
             list_fight[i].blocker = blocker;
+            waiting_player->get_board()->pop_i(blocker);
             blocker = nullptr;
         }
     }

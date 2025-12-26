@@ -67,7 +67,6 @@ class game_controller
         player* get_waiting_player( void );
         bool s_is_blocking(void);
 
-
         //phase d'invocation méthode
         void selected_card_hand(int i);   
         

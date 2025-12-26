@@ -62,12 +62,11 @@ void main_game::click_on_current_attacker(sf::Vector2f mousePos)
 {
     if(!controller->s_is_blocking()) return;
     std::vector<fight> l_fighter = controller->get_current_attacker();
-    for(int i = 0; i < l_fighter.size(); i++) 
+    for(long unsigned int i = 0; i < l_fighter.size(); i++) 
     {
         unit* card = (unit*)l_fighter[i].attacker;
         if(card->get_sprite().getGlobalBounds().contains(mousePos))
         {
-            printf("ici\n");
             controller->select_blocker_target(card);
             return;
         }
@@ -78,7 +77,7 @@ void main_game::click_on_board_current_player(sf::Vector2f mousePos)
 {
     if(controller->get_current_phase() != 2 && !controller->s_is_blocking()) return;
     board* board_p = controller->get_current_player()->get_board();
-    for(int i = 0; i < board_p->get_size(); i++) 
+    for( int i = 0; i < board_p->get_size(); i++) 
     {
         unit* card = (unit*)board_p->get_card_x(i);
         if(card->get_sprite().getGlobalBounds().contains(mousePos))
@@ -95,10 +94,8 @@ void main_game::click_on_board_current_player(sf::Vector2f mousePos)
 
 void main_game::click_on_board_waiting_player(sf::Vector2f mousePos)
 {
-    if(controller->get_current_phase() != 3) return;
-
     board* board_p = controller->get_waiting_player()->get_board();
-    for(int i = 0; i < board_p->get_size(); i++) 
+    for( int i = 0; i < board_p->get_size(); i++) 
     {
         unit* card = (unit*)board_p->get_card_x(i);
         if(card->get_sprite().getGlobalBounds().contains(mousePos))
@@ -106,7 +103,6 @@ void main_game::click_on_board_waiting_player(sf::Vector2f mousePos)
             if(!card->is_tapped())
             {
                 controller->selected_card_board(card);
-                board_p->pop_i(i);
                 return;
             }
         }
