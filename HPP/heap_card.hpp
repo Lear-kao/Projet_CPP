@@ -13,6 +13,7 @@ class heap_card
         std::vector<card_gen*> heap;
     public:
         void pop_i(int i);
+        void pop_i(unit* u);
         void suffle();//a faire(Noah)
         card_gen* pick_one();//fini
         void add_one( card_gen* nc);//a faire(Noah)
