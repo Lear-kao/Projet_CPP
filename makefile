@@ -1,17 +1,24 @@
 # ---------- CONFIG ----------
 NAME        := game
 CXX         := g++
-CXXFLAGS    := -Wall -Wextra -std=c++20 -I./HPP
-LDFLAGS     := -lsfml-graphics -lsfml-window -lsfml-system
-
 SRC_DIR     := CPP
 OBJ_DIR     := OFILE
+
+CXXFLAGS    := -Wall -Wextra -std=c++20 -I./HPP 
+DEBUGFLAGS  := -g -O0 -fno-omit-frame-pointer -D_GLIBCXX_DEBUG
+LDFLAGS     := -lsfml-graphics -lsfml-window -lsfml-system
 
 SRC         := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ         := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC))
 
 # ---------- RULES ----------
-all: $(NAME)
+all: debug
+
+debug: CXXFLAGS += $(DEBUGFLAGS)
+debug: $(NAME)
+
+release: CXXFLAGS += -O3
+release: $(NAME)
 
 $(NAME): $(OBJ)
 	$(CXX) $^ -o $@ $(LDFLAGS)

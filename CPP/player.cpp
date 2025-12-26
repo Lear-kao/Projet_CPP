@@ -17,6 +17,16 @@ player::player(bool a)
     {
         hand_player->add_one(deck_player->pick_one());
     }
+    if(bot)
+    {
+        UI_charge.set_position(50, 120);
+        UI_life.set_position(50,70);
+    }
+    else
+    {
+        UI_charge.set_position(700, 450);
+        UI_life.set_position(700,500);
+    }
 }
 
 void player::render_hand(sf::RenderWindow& window)
@@ -36,32 +46,12 @@ void player::render_deck(sf::RenderWindow& window)
 
 void player::render_life(sf::RenderWindow& window)
 {
-    sf::Font font;
-    if (!font.loadFromFile("assets_lib_g/arial.ttf")){
-        return;
-    }  
-    sf::Text text;
-    text.setFont(font);
-    text.setString(std::to_string(life));
-    text.setCharacterSize(25);
-    text.setFillColor(sf::Color::Black);
-    text.setPosition(700, 500);
-    window.draw(text);
+    UI_life.render(std::to_string(life),window);
 }
 
 void player::render_charge(sf::RenderWindow& window)
 {
-    sf::Font font;
-    if (!font.loadFromFile("assets_lib_g/arial.ttf")){
-        return;
-    }  
-    sf::Text text;
-    text.setFont(font);
-    text.setString(std::to_string(charge));
-    text.setCharacterSize(25);
-    text.setFillColor(sf::Color::Black);
-    text.setPosition(700, 400);
-    window.draw(text);
+    UI_charge.render(std::to_string(charge),window);
 }
 
 void player::render_general(sf::RenderWindow& window)
@@ -93,7 +83,6 @@ hand* player::get_hand( void )
 {
     return hand_player;
 }
-
 
 board* player::get_board(){
     return board_player;

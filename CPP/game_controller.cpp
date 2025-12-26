@@ -7,50 +7,90 @@
 #include "../HPP/class_button.hpp"
 
 
+bool game_controller::s_is_blocking(void)
+{
+    if(blocker) return true;
+    return false;
+}
 
+player* game_controller::get_current_player( void )
+{
+    return current_player;
+}
+
+phase_turn game_controller::get_current_phase( void )
+{
+    return p_turn;
+}
 
 void game_controller::selected_card_board(unit *u)
 {
-    if(u->is_tapped()) return;
-    if(p_turn == phase_turn::fight)
+    if(p_turn == phase_turn::selection_attacker)
     {
-        if(p_fight == phase_fight::selection_attacker)
+        select_attacker(u);
+    }
+    if(p_turn == phase_turn::selection_blocker)
+    {
+        if(blocker == nullptr)
         {
-            if(u->is_tapped()) 
-                return;
-            select_attacker(u);
-        }
-        if(p_fight == phase_fight::selection_blocker)
-        {
-            if(u->is_tapped()) 
-                return;
             select_blocker(u);
         }
-        return;
+        else select_blocker_target(u);
     }
-    waiting_spell->resolve(u);
+    /* if(p_turn == phase_turn::main1 || p_turn == phase_turn::main2)
+    {
+        waiting_spell->resolve(u);
+    } */
+    return;
+    
 }
 
 void game_controller::select_attacker(unit* u)
 {
-    attacker = u;
+    /* 
+    !!! attention, faire en sorte que un joueur ne puisse pas séléctionner les unitées du joueur adverse
+    */
+    if(u->is_tapped())return;
+    u->tap();
+    list_fight.push_back({u,nullptr});
 }
 
 void game_controller::select_blocker(unit* u)
 {
+    /* 
+    !!! attention, faire en sorte que un joueur ne puisse pas séléctionner les unitées du joueur adverse
+    */
+    if(u->is_tapped())return;
     blocker = u;
+}
+
+void game_controller::select_blocker_target(unit* u)
+{
+
+    for( int i = 0;  i < list_fight.size(); i++)
+    {
+        if(u == list_fight[i].attacker)
+        {
+            list_fight[i].blocker = blocker;
+            blocker = nullptr;
+        }
+    }
 }
 
 void game_controller::resolve_fight()
 {
-    if(blocker == NULL)
+    for( int i = 0; i < list_fight.size(); i++)
     {
-        waiting_player->hitted(attacker->get_strenght());
-        return ;
+        if(list_fight[i].blocker == nullptr)
+        {
+            waiting_player->hitted(list_fight[i].attacker->get_strenght());
+        }
     }
-    if(attacker->get_strenght() >= blocker->get_stamina()) blocker->killed();
-    if( blocker -> get_strenght() >= attacker->get_stamina()) attacker->killed();
-    attacker->tap();
+    /* 
+    faire se combattre les créatures avec le counter à faire
+    */
+    list_fight.clear();
+    blocker = nullptr;
     return;
 }
 
@@ -112,7 +152,7 @@ void game_controller::next_phase()
 {
     switch (p_turn)
     {
-        case phase_turn::draw:
+        case phase_turn::draw: 
             //distribution des charges :
             if(tour_actuel%2==0){ //le joueur 2 joue quand le tour est pair
                 current_player->set_charge(tour_actuel/2);
@@ -124,43 +164,45 @@ void game_controller::next_phase()
                 current_player->set_charge(8);
             }
             current_player->draw_card();
+            timer = 25.0;  
             p_turn = phase_turn::main1;
-            printf("draw\n");
             break;
         case phase_turn::main1:
-            p_turn = phase_turn::fight;
-            printf("main1\n");
+            p_turn = phase_turn::selection_attacker;
+            timer = 25.0;
             break;
 
-        case phase_turn::fight:
+        case phase_turn::selection_attacker:
+            p_turn = phase_turn::selection_blocker;
+            timer = 25.0;
+            break;
+
+        case phase_turn::selection_blocker:
             p_turn = phase_turn::main2;
-            printf("fight\n");
+            timer = 25.0;
+            printf("ouch\n");
+            resolve_fight();
             break;
 
         case phase_turn::main2:
+            timer = 0.0;
             p_turn = phase_turn::end;
-            printf("main2\n");
             break;
 
         case phase_turn::end:
+            timer = 0.0;
             player *temp = current_player;
             current_player = waiting_player;
             waiting_player = temp;
             tour_actuel++;
+            current_player->get_board()->untap_all();
             p_turn = phase_turn::draw;
-            printf("end\n");
             break;
     }
 }
 
 void game_controller::render(sf::RenderWindow& window)
 {
-    sf::Font font;
-    if (!font.loadFromFile("assets_lib_g/arial.ttf")){
-        return;
-    }  
-    sf::Text text;
-    text.setFont(font);
     std::string text_aff;
     switch(p_turn)
     {
@@ -171,8 +213,12 @@ void game_controller::render(sf::RenderWindow& window)
             text_aff.append("main");
             break;
 
-        case phase_turn::fight:
-            text_aff.append("fight");
+        case phase_turn::selection_attacker:
+            text_aff.append("select_attacker");
+            break;
+
+        case phase_turn::selection_blocker:
+            text_aff.append("select_blocker");
             break;
 
         case phase_turn::main2:
@@ -183,13 +229,19 @@ void game_controller::render(sf::RenderWindow& window)
             text_aff.append("end");
             break; 
     }
-    text.setString(text_aff);
-    text.setCharacterSize(24);
-    text.setFillColor(sf::Color::White);
-    text.setPosition(20.f, 300.f);
-    
-    window.draw(text);
+    afficheur_de_phase.render(text_aff,window);
 
+    std::string text_aff2 = std::to_string((int)timer);
+    affichage_timer.render(text_aff2,window);
+}
+
+void game_controller::update(float delta)
+{
+    timer -= delta;
+    if( timer <= 0 )
+    {
+        next_phase();
+    }
 }
 
 game_controller::game_controller(player *p1,player *p2)
@@ -202,4 +254,6 @@ game_controller::game_controller(player *p1,player *p2)
     {
         waiting_player = p2;
     }
+    affichage_timer.set_position(20,350);
+    afficheur_de_phase.set_position(20,300);
 }

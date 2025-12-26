@@ -2,13 +2,16 @@
 #include <SFML/Graphics.hpp>
 
 #include "../HPP/hand.hpp"
+#include "../HPP/board.hpp"
+
 
 void main_game::render( sf::RenderWindow& window)
 {
-    window.draw(board);
+    window.draw(board_);
     next_phase->render(window);
     controller->render(window);
     r_player->render_general(window);
+    bot->render_general(window);
 }
 
 
@@ -30,7 +33,7 @@ fonction à moddifier pour respecter l'encapsulation des données !!!
 
         // ---- clic sur hand ----
         hand* hand_p = r_player->get_hand();
-        for(int i = 0; i <  r_player->get_hand()->get_size(); i++) 
+        for(int i = 0; i <  hand_p->get_size(); i++) 
         {
             auto* card = hand_p->get_card_x(i);
             if(card->get_sprite().getGlobalBounds().contains(mousePos)) 
@@ -39,24 +42,33 @@ fonction à moddifier pour respecter l'encapsulation des données !!!
                 return;
             }
         }
-    }
-    /*
-    // ---- clic sur board ----
-    for(auto* u : m_player->board) 
-    {
-        if(u->get_sprite().getGlobalBounds().contains(mousePos))
+        if(controller->get_current_phase() == 2 || controller->s_is_blocking())
         {
-            controller->selected_card_board(u);
-            return;
+            board* board_p = controller->get_current_player()->get_board();
+            for(int i = 0; i < board_p->get_size(); i++) 
+            {
+                unit* card = (unit*)board_p->get_card_x(i);
+                if(card->get_sprite().getGlobalBounds().contains(mousePos))
+                {
+                    controller->selected_card_board(card);
+                    return;
+                }
+            }
         }
     }
-
+    /*
     for(auto* u : bot->board) {
         if(u->get_sprite().getGlobalBounds().contains(mousePos)) {
             controller->selected_card_board(u);
             return;
         }
     } */
+}
+
+void main_game::update(float d)
+{
+    delta = d;
+    controller->update(delta);
 }
 
 main_game::main_game(void)
@@ -68,5 +80,5 @@ main_game::main_game(void)
 void main_game::set_board( void )
 {
     texture.loadFromFile("assets_lib_g/board.png");
-    board.setTexture(texture);
+    board_.setTexture(texture);
 }

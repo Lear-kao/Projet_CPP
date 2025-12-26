@@ -2,10 +2,13 @@
 
 unit::unit(int cost){
     set_cost(cost);
+    strenght = cost;
+    stamina = cost;
 }
 
 void unit::render(sf::RenderWindow& window, int x, int y)
 {
+    if(is_tapped()) sprite.setRotation(35.f);
     sprite.setPosition(x,y);
     window.draw(sprite);
     return;
