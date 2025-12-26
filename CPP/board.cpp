@@ -4,7 +4,7 @@ void board::render(sf::RenderWindow& window )
 {
     for( int i = 0; i < get_size(); i++)
     {
-        heap[i]->render(window,i*40,border_y);
+        heap[i]->render(window,i*40+160,border_y);
     }
     return;
 }

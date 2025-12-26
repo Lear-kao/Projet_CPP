@@ -3,11 +3,13 @@
 
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include "class_UI.hpp"
 
 class deck;
 class board;
 class hand;
 class unit;
+class UI;
 
 class player
 {
@@ -18,6 +20,10 @@ class player
         int charge = 1;
         int life = 20;
         bool bot;
+
+        //variable interface utilisateur
+        UI UI_charge;
+        UI UI_life;
     public:
         player(bool a);
     //logic

@@ -35,7 +35,11 @@ deck::deck(bool bot) : is_bot(bot)
 
     sprite.setTexture(texture);
     if (!is_bot)
-        sprite.setPosition(700.f, 20.f);
+        sprite.setPosition(20.0, 500.0);
+    else
+    {
+        sprite.setPosition(660.0, 50.0);
+    }
 }
 
 

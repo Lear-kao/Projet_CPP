@@ -6,13 +6,14 @@
 #include "unit.hpp"
 #include "class_button.hpp"
 
-
+class board;
 
 class main_game
 {
     private:
         int turn = 0;
-        sf::Sprite board;
+        float delta; //le timer pour chaque frame, permet de gérer le temps sur l'update
+        sf::Sprite board_;
         sf::Texture texture;
         player *r_player = new player(false);
         player *bot = new player(true);
@@ -22,7 +23,7 @@ class main_game
         main_game(void);
         void set_board(void);
         void handleEvent(const sf::Event& event, sf::RenderWindow& window);
-        void update(void);
+        void update(float d);
         void render(sf::RenderWindow& window);
 };
 
