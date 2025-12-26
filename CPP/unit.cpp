@@ -8,7 +8,8 @@ unit::unit(int cost){
 
 void unit::render(sf::RenderWindow& window, int x, int y)
 {
-    if(is_tapped()) sprite.setRotation(35.f);
+    if(is_tapped()) sprite.setRotation(35.0);
+    else sprite.setRotation(0.0);
     sprite.setPosition(x,y);
     window.draw(sprite);
     return;

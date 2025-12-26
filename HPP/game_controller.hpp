@@ -62,7 +62,9 @@ class game_controller
         void resolve_fight();
 
         phase_turn get_current_phase( void );
+        std::vector<fight> get_current_attacker( void );
         player* get_current_player( void );
+        player* get_waiting_player( void );
         bool s_is_blocking(void);
 
 
@@ -70,6 +72,7 @@ class game_controller
         void selected_card_hand(int i);   
         
         void render(sf::RenderWindow& window);
+        void render_fight(sf::RenderWindow& window);
         void update(float delta);
 };
 
