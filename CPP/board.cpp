@@ -25,13 +25,10 @@ board::board(bool is_bot)
 
 void board::untap_all( void )
 {
-    for( int i = 0; i < heap.size(); i++)
+    for( long unsigned int i = 0; i < heap.size(); i++)
     {
-        unit *a = (unit*)heap[i];
-        if(a->is_tapped())
-        {
-            a->untap();
-        }
+        unit* u = (unit*)heap[i];
+        u->untap();
     }
 }
 

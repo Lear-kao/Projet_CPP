@@ -18,6 +18,16 @@ player* game_controller::get_current_player( void )
     return current_player;
 }
 
+player* game_controller::get_waiting_player( void )
+{
+    return waiting_player;
+}
+
+std::vector<fight> game_controller::get_current_attacker( void )
+{
+    return list_fight;
+}
+
 phase_turn game_controller::get_current_phase( void )
 {
     return p_turn;
@@ -33,6 +43,7 @@ void game_controller::selected_card_board(unit *u)
     {
         if(blocker == nullptr)
         {
+            printf("what?\n");
             select_blocker(u);
         }
         else select_blocker_target(u);
@@ -66,8 +77,8 @@ void game_controller::select_blocker(unit* u)
 
 void game_controller::select_blocker_target(unit* u)
 {
-
-    for( int i = 0;  i < list_fight.size(); i++)
+    if(blocker == nullptr) return;
+    for(long unsigned int i = 0;  i < list_fight.size(); i++)
     {
         if(u == list_fight[i].attacker)
         {
@@ -79,7 +90,7 @@ void game_controller::select_blocker_target(unit* u)
 
 void game_controller::resolve_fight()
 {
-    for( int i = 0; i < list_fight.size(); i++)
+    for( long unsigned int i = 0; i < list_fight.size(); i++)
     {
         if(list_fight[i].blocker == nullptr)
         {
@@ -89,6 +100,15 @@ void game_controller::resolve_fight()
     /* 
     faire se combattre les créatures avec le counter à faire
     */
+    for( long unsigned int i = 0; i < list_fight.size(); i++)
+    {
+        unit* t_unit = list_fight[i].blocker;
+        if(t_unit != nullptr)
+        {
+            waiting_player->get_board()->add_one(t_unit);
+        }
+        current_player->get_board()->add_one(list_fight[i].attacker);
+    }
     list_fight.clear();
     blocker = nullptr;
     return;
@@ -164,6 +184,7 @@ void game_controller::next_phase()
                 current_player->set_charge(8);
             }
             current_player->draw_card();
+            current_player->get_board()->untap_all();
             timer = 25.0;  
             p_turn = phase_turn::main1;
             break;
@@ -180,7 +201,6 @@ void game_controller::next_phase()
         case phase_turn::selection_blocker:
             p_turn = phase_turn::main2;
             timer = 25.0;
-            printf("ouch\n");
             resolve_fight();
             break;
 
@@ -195,7 +215,6 @@ void game_controller::next_phase()
             current_player = waiting_player;
             waiting_player = temp;
             tour_actuel++;
-            current_player->get_board()->untap_all();
             p_turn = phase_turn::draw;
             break;
     }
@@ -233,6 +252,23 @@ void game_controller::render(sf::RenderWindow& window)
 
     std::string text_aff2 = std::to_string((int)timer);
     affichage_timer.render(text_aff2,window);
+    render_fight(window);
+}
+
+void game_controller::render_fight(sf::RenderWindow& window)
+{
+    for( long unsigned int i = 0; i < list_fight.size(); i++)
+    {
+        //affichage de l'attaquant
+        list_fight[i].attacker->render(window,i*40+160,240);
+
+        //affichage du defenseur
+        unit* t_bl = list_fight[i].blocker;
+        if(t_bl != nullptr)
+        {
+            t_bl->render(window, i*40+160, 310);
+        }
+    }
 }
 
 void game_controller::update(float delta)
