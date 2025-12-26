@@ -26,6 +26,7 @@ class player
         UI UI_life;
     public:
         player(bool a);
+        void update(float delta);
     //logic
         void draw_card(void);
         void summon_card(unit* unite);

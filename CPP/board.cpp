@@ -32,7 +32,8 @@ void board::untap_all( void )
     }
 }
 
-bool board::check(std::string classe){
+bool board::check(std::string classe)
+{
     //vérifie si dans le board d'un joueur il y a une unité d'une certaine classe
     //sert pour le calcul du coût d'un sort
     size_t i = 0;
@@ -43,4 +44,16 @@ bool board::check(std::string classe){
         return true;
     }
     return false;
+}
+
+void board::update( void )
+{
+    for(long unsigned int i = 0; i < heap.size(); i++ )
+    {
+        unit* t_unit = (unit*)heap[i];
+        if(t_unit->is_dead())
+        {
+            pop_i(i);
+        }
+    }
 }

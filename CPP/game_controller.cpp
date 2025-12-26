@@ -35,20 +35,26 @@ phase_turn game_controller::get_current_phase( void )
 
 void game_controller::selected_card_board(unit *u)
 {
+    if(p_turn == phase_turn::main1 || p_turn == phase_turn::main2)
+    {
+        if(waiting_spell != nullptr)
+        {
+            waiting_spell->resolve(u);
+            waiting_spell = nullptr;
+        }
+        return;
+    }
+    if(u->is_tapped()) return;
     if(p_turn == phase_turn::selection_attacker)
     {
         select_attacker(u);
+        return;
     }
     if(p_turn == phase_turn::selection_blocker)
     {
         select_blocker(u);
+        return;
     }
-    if(p_turn == phase_turn::main1 || p_turn == phase_turn::main2)
-    {
-        waiting_spell->resolve(u);
-    }
-    return;
-    
 }
 
 void game_controller::select_attacker(unit* u)
@@ -118,35 +124,42 @@ void game_controller::selected_card_hand(int i)
 
     if(card->get_categorie() == "sort")
     { 
-        spell* u_cp = (spell*)card;
+        waiting_spell = (spell*)card;
         int cout_reel = card->get_cost();
         board* b = current_player->get_board();
-        if(u_cp->get_classe() == "guerrier" )
+        if(waiting_spell->get_classe() == "guerrier" )
         {
-            if(b->check("guerrier") == true){
+            if(b->check("guerrier") == true)
+            {
                 cout_reel = 1;
             }
             if(current_player->get_charge()>=cout_reel){
-                u_cp->resolve(current_player);
+                waiting_spell->resolve(current_player);
                 current_player->set_charge(current_player->get_charge()-cout_reel);
                 hand->pop_i(i);
             }
         }
-        else if(u_cp->get_classe()=="mage"){
-            if(b->check("mage")==true){
+        else if(waiting_spell->get_classe()=="mage")
+        {
+            if(b->check("mage")==true)
+            {
                 cout_reel = 1;
             }
-            if(current_player->get_charge()>=cout_reel){
-                u_cp->resolve(current_player);
+            if(current_player->get_charge()>=cout_reel)
+            {
+                waiting_spell->resolve(current_player);
                 current_player->set_charge(current_player->get_charge()-cout_reel);
                 hand->pop_i(i);
             }
         }
-        else{
-            if(b->check("voleur")){
+        else
+        {
+            if(b->check("voleur"))
+            {
                 cout_reel = 1;
             }
-            if(current_player->get_charge()>=cout_reel){
+            if(current_player->get_charge()>=cout_reel)
+            {
                 current_player->set_charge(current_player->get_charge()-cout_reel);
                 hand->pop_i(i);
             }
@@ -273,6 +286,8 @@ void game_controller::update(float delta)
     {
         next_phase();
     }
+    current_player->update(delta);
+    waiting_player->update(delta);
 }
 
 game_controller::game_controller(player *p1,player *p2)

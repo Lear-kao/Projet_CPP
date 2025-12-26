@@ -18,6 +18,7 @@ class unit: public card_gen
         int get_stamina(void); //fait
         void render(sf::RenderWindow& window, int x, int y);
         void killed( void ); //!!! cette fonction ne tue pas imédiatement la carte, elle doit être supprimé au prochain update() du board
+        bool is_dead( void );
 };
 
 #endif
