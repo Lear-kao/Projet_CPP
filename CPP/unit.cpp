@@ -44,3 +44,8 @@ void unit::killed(void)
 {
     alive = false;
 }
+
+bool unit::is_dead(void)
+{
+    return !alive;
+}

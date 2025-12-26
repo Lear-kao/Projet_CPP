@@ -18,11 +18,8 @@ void spell::render(sf::RenderWindow& window, int x, int y)
 
 void spell::resolve(unit* current_target)
 {
-    if(target == "unit")
-    {
-        current_target->killed();
-        return;
-    }
+    current_target->killed();
+    return;
 }
 
 void spell::resolve(player* current_target)

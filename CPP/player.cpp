@@ -100,3 +100,8 @@ void player::set_charge(int c){
 int player::get_charge(){
     return charge;
 }
+
+void player::update( float delta )
+{
+    board_player->update();
+}

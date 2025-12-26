@@ -17,6 +17,7 @@ class board: public heap_card
         void untap_all( void );
         bool check(std::string categorie);
         std::vector<card_gen*> attacking(int i);
+        void update(void);
 };
 
 #endif

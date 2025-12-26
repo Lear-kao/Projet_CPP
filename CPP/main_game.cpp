@@ -14,8 +14,6 @@ void main_game::render( sf::RenderWindow& window)
     bot->render_general(window);
 }
 
-
-
 void main_game::handleEvent(const sf::Event& event, sf::RenderWindow& window)
 /* 
 !!!
@@ -94,17 +92,15 @@ void main_game::click_on_board_current_player(sf::Vector2f mousePos)
 
 void main_game::click_on_board_waiting_player(sf::Vector2f mousePos)
 {
+    if(controller->get_current_phase() == 2 ) return;
     board* board_p = controller->get_waiting_player()->get_board();
     for( int i = 0; i < board_p->get_size(); i++) 
     {
         unit* card = (unit*)board_p->get_card_x(i);
         if(card->get_sprite().getGlobalBounds().contains(mousePos))
         {
-            if(!card->is_tapped())
-            {
-                controller->selected_card_board(card);
-                return;
-            }
+            controller->selected_card_board(card);
+            return;
         }
     }
 }
