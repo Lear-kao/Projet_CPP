@@ -5,6 +5,7 @@
 #include "../HPP/spell.hpp"
 #include "../HPP/board.hpp"
 #include "../HPP/class_button.hpp"
+#include  <iostream>
 
 
 bool game_controller::s_is_blocking(void)
@@ -83,7 +84,7 @@ void game_controller::select_blocker_target(unit* u)
         if(u == list_fight[i].attacker)
         {
             list_fight[i].blocker = blocker;
-            waiting_player->get_board()->pop_i(blocker);
+            waiting_player->get_board()->pop_i(waiting_player->get_board()->get_pos_board(blocker));
             blocker = nullptr;
         }
     }
@@ -91,24 +92,66 @@ void game_controller::select_blocker_target(unit* u)
 
 void game_controller::resolve_fight()
 {
-    for( long unsigned int i = 0; i < list_fight.size(); i++)
-    {
-        if(list_fight[i].blocker == nullptr)
-        {
-            waiting_player->hitted(list_fight[i].attacker->get_strenght());
-        }
-    }
-    /* 
-    faire se combattre les créatures avec le counter à faire
-    */
-    for( long unsigned int i = 0; i < list_fight.size(); i++)
+
+    board* atck = current_player->get_board();
+    board* blck = waiting_player->get_board();
+    for( size_t i = 0; i < list_fight.size(); i++)
     {
         unit* t_unit = list_fight[i].blocker;
+        unit* a_unit = list_fight[i].attacker;
         if(t_unit != nullptr)
         {
-            waiting_player->get_board()->add_one(t_unit);
+            int k;
+
+            int pv_attack = a_unit->get_stamina();
+            int strenght_attack = a_unit->get_strenght();
+            int pv_block = t_unit->get_stamina();
+            int strenght_block = t_unit->get_strenght();
+            std::cout << "avant combat:\n";
+            std::cout << strenght_attack << "/" << pv_attack << "\n";
+            std::cout << strenght_block << "/" << pv_block << "\n";
+            if(a_unit->counter(t_unit)){
+                pv_attack = pv_attack*2;
+                strenght_attack = strenght_attack*2;
+            }
+            if(t_unit->counter(a_unit)){
+                pv_block = pv_block*2;
+                strenght_block = strenght_block*2;
+            }
+            std::cout << "après bonus:\n";
+            std::cout << strenght_attack << "/" << pv_attack << "\n";
+            std::cout << strenght_block << "/" << pv_block << "\n";
+
+            //combat
+            pv_attack-=strenght_block;
+            pv_block-=strenght_attack;            
+            std::cout << "après combat:\n";
+            std::cout << strenght_attack << "/" << pv_attack << "\n";
+            std::cout << strenght_block << "/" << pv_block << "\n";
+
+            if(pv_attack <= 0){
+                k = atck->get_pos_board(a_unit);
+                if(k!=-1)
+                    atck->pop_i(k);
+            }
+            else{
+                atck->add_one(a_unit);
+            }
+            if(pv_block <= 0){
+                k = blck->get_pos_board(t_unit);
+                if(k!=-1)
+                    blck->pop_i(k);
+            }
+            else{
+                blck->add_one(t_unit);
+            }
+
         }
-        current_player->get_board()->add_one(list_fight[i].attacker);
+        else{
+            unit* a_unit = list_fight[i].attacker;
+            waiting_player->hitted(a_unit->get_strenght());
+            atck->add_one(a_unit);
+        }
     }
     list_fight.clear();
     blocker = nullptr;

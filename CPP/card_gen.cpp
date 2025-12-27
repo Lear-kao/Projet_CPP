@@ -61,4 +61,27 @@ sf::Sprite card_gen::get_sprite(void)
 }
 
 
+bool card_gen::counter(card_gen *ad){
+    std::string classe_opposant = ad->get_classe();
+    
+    if(classe == "guerrier"){
+        if(classe_opposant=="voleur"){
+            return true;
+        }
+        return false;
+    }
+    else if(classe == "voleur"){
+        if(classe_opposant=="mage"){
+            return true;
+        }
+        return false;
+    }
+    else{
+        if(classe_opposant=="guerrier"){
+            return true;
+        }
+        return false;
+    }
+    
+}
 

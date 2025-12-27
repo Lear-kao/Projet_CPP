@@ -57,3 +57,13 @@ void board::update( void )
         }
     }
 }
+
+int board::get_pos_board(card_gen* c){
+    size_t i;
+    for(i = 0 ; i < heap.size(); ++i){
+        if(heap[i] == c){
+            return (int) i;
+        }
+    }
+    return -1;
+}
