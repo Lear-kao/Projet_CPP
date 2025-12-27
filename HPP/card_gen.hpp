@@ -26,8 +26,7 @@ class card_gen
         void set_name(std::string n);//fait
         void set_cost(int c);//fait
         int get_cost(void);//fait
-        bool counter(card_gen *ad);//a faire (Noah)
-        bool support(card_gen *fr);//a faire (Noah)
+        bool counter(card_gen *ad);//fait
 
         //lib_graph
         void set_sprite(std::string path);//fait
