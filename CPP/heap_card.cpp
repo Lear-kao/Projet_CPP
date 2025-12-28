@@ -9,7 +9,7 @@ void heap_card::pop_i(int i)
     heap.erase(heap.begin() + i);
 }
 
-void heap_card::pop_i(unit* u)
+void heap_card::pop_i(card_gen* u)
 {
     for(long unsigned int i = 0;  i < heap.size(); i++)
     {
@@ -21,7 +21,6 @@ void heap_card::pop_i(unit* u)
     }
     
 }
-
 
 card_gen* heap_card::pick_one()
 {

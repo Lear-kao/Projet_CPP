@@ -8,54 +8,91 @@
 #include  <iostream>
 
 
-bool game_controller::s_is_blocking(void)
+void game_controller::selected_card_board(unit *u, player* p_clicked)
 {
-    if(blocker) return true;
-    return false;
-}
-
-player* game_controller::get_current_player( void )
-{
-    return current_player;
-}
-
-player* game_controller::get_waiting_player( void )
-{
-    return waiting_player;
-}
-
-std::vector<fight> game_controller::get_current_attacker( void )
-{
-    return list_fight;
-}
-
-phase_turn game_controller::get_current_phase( void )
-{
-    return p_turn;
-}
-
-void game_controller::selected_card_board(unit *u)
-{
-    if(p_turn == phase_turn::main1 || p_turn == phase_turn::main2)
+    if(p_clicked == current_player)
     {
-        if(waiting_spell != nullptr)
+        if(p_turn == phase_turn::selection_attacker)
+            select_attacker(u);
+            p_clicked -> get_board()->pop_i(u);
+        return;
+    }
+    else
+    {
+        if(p_turn == phase_turn::main1 || p_turn == phase_turn::main2)
         {
-            waiting_spell->resolve(u);
-            waiting_spell = nullptr;
+            if(waiting_spell != nullptr)
+            {
+                current_player->get_hand()->pop_i(waiting_spell);
+                waiting_spell->resolve(u);
+                waiting_spell = nullptr;
+            }
+            return;
         }
+        if(p_turn == phase_turn::selection_blocker)
+        {
+            select_blocker(u);
+            return;
+        }
+    }
+}
+
+void game_controller::selected_card_hand(card_gen* card, player* p_clicked)
+{
+    if(p_clicked != current_player || 
+        (p_turn != phase_turn::main1 && p_turn != phase_turn::main2))
+        return;
+    
+    if(card->get_categorie() == "sort")
+    { 
+        cast_spell((spell*)card);
         return;
     }
-    if(u->is_tapped()) return;
-    if(p_turn == phase_turn::selection_attacker)
+    if(card->get_categorie() == "unite")
+    { 
+        summon_unit((unit*)card);
+        return;
+    }
+}
+
+void game_controller::summon_unit(unit* casted)
+{
+    if(casted->get_cost() <= current_player->get_charge())
     {
-        select_attacker(u);
-        return;
+        current_player->summon_card(casted);
+        current_player->set_charge(current_player->get_charge()-casted->get_cost());
+        current_player->get_hand()->pop_i(casted);
+        for (int i =0;  i < current_player -> get_board()->get_size(); i++)
+        {
+            std::cout << current_player->get_board()->get_card_x(i)->get_classe() << "\n";
+        }
     }
-    if(p_turn == phase_turn::selection_blocker)
+}
+
+void game_controller::cast_spell(spell* casted )
+{
+    int cout_reel = casted->get_cost();
+    board* b = current_player->get_board();
+    std::string classe = casted->get_classe();
+
+    if(b->check(classe) == true)
     {
-        select_blocker(u);
-        return;
+        cout_reel = 1;
     }
+    if(current_player->get_charge()>=cout_reel)
+    {
+        if(classe != "voleur")
+        {
+            waiting_spell->resolve(current_player);
+            current_player->set_charge(current_player->get_charge()-cout_reel);
+            current_player->get_hand()->pop_i((card_gen*)casted);
+        }
+        else
+        {
+            waiting_spell = casted;
+        }
+    }
+    
 }
 
 void game_controller::select_attacker(unit* u)
@@ -107,9 +144,7 @@ void game_controller::resolve_fight()
             int strenght_attack = a_unit->get_strenght();
             int pv_block = t_unit->get_stamina();
             int strenght_block = t_unit->get_strenght();
-            std::cout << "avant combat:\n";
-            std::cout << strenght_attack << "/" << pv_attack << "\n";
-            std::cout << strenght_block << "/" << pv_block << "\n";
+
             if(a_unit->counter(t_unit)){
                 pv_attack = pv_attack*2;
                 strenght_attack = strenght_attack*2;
@@ -118,16 +153,10 @@ void game_controller::resolve_fight()
                 pv_block = pv_block*2;
                 strenght_block = strenght_block*2;
             }
-            std::cout << "après bonus:\n";
-            std::cout << strenght_attack << "/" << pv_attack << "\n";
-            std::cout << strenght_block << "/" << pv_block << "\n";
 
             //combat
             pv_attack-=strenght_block;
-            pv_block-=strenght_attack;            
-            std::cout << "après combat:\n";
-            std::cout << strenght_attack << "/" << pv_attack << "\n";
-            std::cout << strenght_block << "/" << pv_block << "\n";
+            pv_block-=strenght_attack; 
 
             if(pv_attack <= 0){
                 k = atck->get_pos_board(a_unit);
@@ -156,67 +185,6 @@ void game_controller::resolve_fight()
     list_fight.clear();
     blocker = nullptr;
     return;
-}
-
-void game_controller::selected_card_hand(int i)
-{
-    if (p_turn != phase_turn::main1 && p_turn != phase_turn::main2) return;
-
-    auto* hand = current_player->get_hand();
-    auto* card = hand->get_card_x(i);
-
-    if(card->get_categorie() == "sort")
-    { 
-        waiting_spell = (spell*)card;
-        int cout_reel = card->get_cost();
-        board* b = current_player->get_board();
-        if(waiting_spell->get_classe() == "guerrier" )
-        {
-            if(b->check("guerrier") == true)
-            {
-                cout_reel = 1;
-            }
-            if(current_player->get_charge()>=cout_reel){
-                waiting_spell->resolve(current_player);
-                current_player->set_charge(current_player->get_charge()-cout_reel);
-                hand->pop_i(i);
-            }
-        }
-        else if(waiting_spell->get_classe()=="mage")
-        {
-            if(b->check("mage")==true)
-            {
-                cout_reel = 1;
-            }
-            if(current_player->get_charge()>=cout_reel)
-            {
-                waiting_spell->resolve(current_player);
-                current_player->set_charge(current_player->get_charge()-cout_reel);
-                hand->pop_i(i);
-            }
-        }
-        else
-        {
-            if(b->check("voleur"))
-            {
-                cout_reel = 1;
-            }
-            if(current_player->get_charge()>=cout_reel)
-            {
-                current_player->set_charge(current_player->get_charge()-cout_reel);
-                hand->pop_i(i);
-            }
-        }
-    }
-    if(card->get_categorie() == "unite")
-    { 
-        if(card->get_cost() <= current_player->get_charge()){
-            unit* s_cp = (unit*)card;
-            current_player->summon_card(s_cp);
-            current_player->set_charge(current_player->get_charge()-card->get_cost());
-            hand->pop_i(i);
-        }
-    }
 }
 
 void game_controller::next_phase()
@@ -331,6 +299,11 @@ void game_controller::update(float delta)
     }
     current_player->update(delta);
     waiting_player->update(delta);
+}
+
+std::vector<fight> game_controller::get_current_attacker( void )
+{
+    return list_fight;
 }
 
 game_controller::game_controller(player *p1,player *p2)
