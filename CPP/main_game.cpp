@@ -29,14 +29,15 @@ fonction à moddifier pour respecter l'encapsulation des données !!!
             controller->next_phase();
         }
 
-        // ---- clic sur hand ----
+        // ------- clic sur hand --------
         click_on_hand(mousePos);
 
-        // -- click sur le board -
+        // ----- click sur le board -----
         click_on_board(mousePos);
+
+        // -- click sur les attaquants --
         click_on_current_attacker(mousePos);
 
-        
     }
 }
 

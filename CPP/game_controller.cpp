@@ -12,8 +12,10 @@ void game_controller::selected_card_board(unit *u, player* p_clicked)
     if(p_clicked == current_player)
     {
         if(p_turn == phase_turn::selection_attacker)
+        {
             select_attacker(u);
             p_clicked -> get_board()->pop_i(u);
+        }
         return;
     }
     else
