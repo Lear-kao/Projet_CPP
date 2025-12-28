@@ -5,7 +5,6 @@
 #include "../HPP/spell.hpp"
 #include "../HPP/board.hpp"
 #include "../HPP/class_button.hpp"
-#include  <iostream>
 
 
 bool game_controller::s_is_blocking(void)
@@ -84,7 +83,7 @@ void game_controller::select_blocker_target(unit* u)
         if(u == list_fight[i].attacker)
         {
             list_fight[i].blocker = blocker;
-            waiting_player->get_board()->pop_i(waiting_player->get_board()->get_pos_board(blocker));
+            waiting_player->get_board()->pop_i(blocker);
             blocker = nullptr;
         }
     }
@@ -101,15 +100,10 @@ void game_controller::resolve_fight()
         unit* a_unit = list_fight[i].attacker;
         if(t_unit != nullptr)
         {
-            int k;
-
             int pv_attack = a_unit->get_stamina();
             int strenght_attack = a_unit->get_strenght();
             int pv_block = t_unit->get_stamina();
             int strenght_block = t_unit->get_strenght();
-            std::cout << "avant combat:\n";
-            std::cout << strenght_attack << "/" << pv_attack << "\n";
-            std::cout << strenght_block << "/" << pv_block << "\n";
             if(a_unit->counter(t_unit)){
                 pv_attack = pv_attack*2;
                 strenght_attack = strenght_attack*2;
@@ -118,33 +112,19 @@ void game_controller::resolve_fight()
                 pv_block = pv_block*2;
                 strenght_block = strenght_block*2;
             }
-            std::cout << "après bonus:\n";
-            std::cout << strenght_attack << "/" << pv_attack << "\n";
-            std::cout << strenght_block << "/" << pv_block << "\n";
 
             //combat
             pv_attack-=strenght_block;
             pv_block-=strenght_attack;            
-            std::cout << "après combat:\n";
-            std::cout << strenght_attack << "/" << pv_attack << "\n";
-            std::cout << strenght_block << "/" << pv_block << "\n";
 
             if(pv_attack <= 0){
-                k = atck->get_pos_board(a_unit);
-                if(k!=-1)
-                    atck->pop_i(k);
-            }
-            else{
-                atck->add_one(a_unit);
+                a_unit->killed();
             }
             if(pv_block <= 0){
-                k = blck->get_pos_board(t_unit);
-                if(k!=-1)
-                    blck->pop_i(k);
+                t_unit->killed();
             }
-            else{
-                blck->add_one(t_unit);
-            }
+            atck->add_one(a_unit);
+            blck->add_one(t_unit);
 
         }
         else{

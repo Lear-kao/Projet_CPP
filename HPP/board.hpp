@@ -16,7 +16,6 @@ class board: public heap_card
         void render(sf::RenderWindow& window);
         void untap_all( void );
         bool check(std::string categorie);
-        int get_pos_board(card_gen* c);
         std::vector<card_gen*> attacking(int i);
         void update(void);
 };
