@@ -5,7 +5,6 @@
 #include "../HPP/spell.hpp"
 #include "../HPP/board.hpp"
 #include "../HPP/class_button.hpp"
-#include  <iostream>
 
 
 void game_controller::selected_card_board(unit *u, player* p_clicked)
@@ -62,10 +61,6 @@ void game_controller::summon_unit(unit* casted)
         current_player->summon_card(casted);
         current_player->set_charge(current_player->get_charge()-casted->get_cost());
         current_player->get_hand()->pop_i(casted);
-        for (int i =0;  i < current_player -> get_board()->get_size(); i++)
-        {
-            std::cout << current_player->get_board()->get_card_x(i)->get_classe() << "\n";
-        }
     }
 }
 
@@ -121,7 +116,7 @@ void game_controller::select_blocker_target(unit* u)
         if(u == list_fight[i].attacker)
         {
             list_fight[i].blocker = blocker;
-            waiting_player->get_board()->pop_i(waiting_player->get_board()->get_pos_board(blocker));
+            waiting_player->get_board()->pop_i(blocker);
             blocker = nullptr;
         }
     }
@@ -138,8 +133,6 @@ void game_controller::resolve_fight()
         unit* a_unit = list_fight[i].attacker;
         if(t_unit != nullptr)
         {
-            int k;
-
             int pv_attack = a_unit->get_stamina();
             int strenght_attack = a_unit->get_strenght();
             int pv_block = t_unit->get_stamina();
@@ -156,24 +149,17 @@ void game_controller::resolve_fight()
 
             //combat
             pv_attack-=strenght_block;
+
             pv_block-=strenght_attack; 
 
             if(pv_attack <= 0){
-                k = atck->get_pos_board(a_unit);
-                if(k!=-1)
-                    atck->pop_i(k);
-            }
-            else{
-                atck->add_one(a_unit);
+                a_unit->killed();
             }
             if(pv_block <= 0){
-                k = blck->get_pos_board(t_unit);
-                if(k!=-1)
-                    blck->pop_i(k);
+                t_unit->killed();
             }
-            else{
-                blck->add_one(t_unit);
-            }
+            atck->add_one(a_unit);
+            blck->add_one(t_unit);
 
         }
         else{
