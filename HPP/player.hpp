@@ -8,6 +8,7 @@
 class deck;
 class board;
 class hand;
+class card_gen;
 class unit;
 class UI;
 
@@ -28,6 +29,9 @@ class player
         player(bool a);
         void update(float delta);
     //logic
+        unit* card_clicked_board(sf::Vector2f mousePos);
+        card_gen* card_clicked_hand(sf::Vector2f mousePos);
+
         void draw_card(void);
         void summon_card(unit* unite);
         void hitted(int damage);

@@ -1,6 +1,7 @@
 #include "../HPP/player.hpp"
 #include <iostream>
 #include <string.h>
+#include "card_gen.hpp"
 #include "hand.hpp"
 #include "board.hpp"
 #include "deck.hpp"
@@ -99,6 +100,32 @@ void player::set_charge(int c){
 
 int player::get_charge(){
     return charge;
+}
+
+unit* player::card_clicked_board(sf::Vector2f mousePos)
+{
+    for( int i = 0; i < board_player->get_size(); i++) 
+    {
+        unit* card = (unit*)board_player->get_card_x(i);
+        if(card->get_sprite().getGlobalBounds().contains(mousePos))
+        {
+            return card;
+        }
+    }
+    return nullptr;
+}
+
+card_gen* player::card_clicked_hand(sf::Vector2f mousePos)
+{
+    for( int i = 0; i < hand_player->get_size(); i++) 
+    {
+        card_gen* card = hand_player->get_card_x(i);
+        if(card->get_sprite().getGlobalBounds().contains(mousePos))
+        {
+            return card;
+        }
+    }
+    return nullptr;
 }
 
 void player::update( float delta )

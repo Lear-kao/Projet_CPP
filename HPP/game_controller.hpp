@@ -54,22 +54,21 @@ class game_controller
         game_controller(player *p1, player *p2);
         void next_phase(void);
 
+        std::vector<fight> get_current_attacker( void );
+        
         //phase de combat méthode
-        void selected_card_board(unit *u);
+        void selected_card_board(unit *u, player* p_clicked);
         void select_attacker(unit* u);
         void select_blocker(unit *u);
         void select_blocker_target(unit* u);
         void resolve_fight();
 
-        phase_turn get_current_phase( void );
-        std::vector<fight> get_current_attacker( void );
-        player* get_current_player( void );
-        player* get_waiting_player( void );
-        bool s_is_blocking(void);
-
         //phase d'invocation méthode
-        void selected_card_hand(int i);   
-        
+        void selected_card_hand(card_gen* card, player* p_clicked);   
+        void cast_spell(spell* casted );
+        void summon_unit(unit* casted);
+
+
         void render(sf::RenderWindow& window);
         void render_fight(sf::RenderWindow& window);
         void update(float delta);
