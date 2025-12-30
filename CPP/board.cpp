@@ -53,7 +53,8 @@ void board::update( void )
         unit* t_unit = (unit*)heap[i];
         if(t_unit->is_dead())
         {
-            pop_i(i);
+            pop_card(t_unit);
         }
     }
 }
+

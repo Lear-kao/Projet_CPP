@@ -5,11 +5,15 @@
 #include <SFML/Graphics.hpp>
 #include "class_UI.hpp"
 
+#define BOARD 0
+#define HAND 1
+
 class deck;
 class board;
 class hand;
 class card_gen;
 class unit;
+class spell;
 class UI;
 
 class player
@@ -27,21 +31,28 @@ class player
         UI UI_life;
     public:
         player(bool a);
-        void update(float delta);
-    //logic
-        unit* card_clicked_board(sf::Vector2f mousePos);
-        card_gen* card_clicked_hand(sf::Vector2f mousePos);
 
-        void draw_card(void);
-        void summon_card(unit* unite);
-        void hitted(int damage);
-        void healled(int heal);
+    //méthode utilitaire
         bool is_dead();
-        hand* get_hand( void );
-        board* get_board(void);
+        void pop_from(int from, card_gen* who);
         void set_charge(int);
         int get_charge(void);
-    //lib_graph
+
+    //méthode de jeu
+        void new_turn( int charge);
+        void draw_card(void);
+        void hitted(int damage);
+        void healled(int heal);
+        void add_board(card_gen* card);
+        void summon_card(unit* unite);
+        spell* cast_spell(spell* casted);
+
+    //méthode d'interaction
+        unit* card_clicked_board(sf::Vector2f mousePos);
+        card_gen* card_clicked_hand(sf::Vector2f mousePos);
+        void update(float delta);
+
+    //méthode d'affichage
         void render_general(sf::RenderWindow& window);
         void render_charge(sf::RenderWindow& window);
         void render_deck(sf::RenderWindow& window);

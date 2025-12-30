@@ -24,11 +24,12 @@ class main_game
         void set_board(void);
 
         //gestion des evenements
+        player* who_s_dead( void );
         void handleEvent(const sf::Event& event, sf::RenderWindow& window);
         void click_on_hand(sf::Vector2f mousePos);
         void click_on_current_attacker(sf::Vector2f mousePos);
         void click_on_board(sf::Vector2f mousePos);
-        void update(float d);
+        bool update(float d);
         void render(sf::RenderWindow& window);
 };
 

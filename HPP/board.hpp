@@ -12,7 +12,6 @@ class board: public heap_card
         int border_y;
     public:
         board(bool is_bot);
-        bool is_max_size();
         void render(sf::RenderWindow& window);
         void untap_all( void );
         bool check(std::string categorie);

@@ -20,6 +20,14 @@ bool hand::is_max_size()
     return false;
 }
 
+void hand::update( void )
+{
+    if(is_max_size())
+    {
+        heap.erase(heap.begin());
+    }
+}
+
 hand::hand(bool is_bot)
 {
     if(is_bot)

@@ -3,7 +3,7 @@
 
 #include "heap_card.hpp"
 
-#define MAX_SIZE 6
+#define MAX_SIZE 8
 
 class hand: public heap_card
 {
@@ -12,8 +12,9 @@ class hand: public heap_card
         int border_y;
     public:
         hand(bool is_bot);
-        bool is_max_size();
+        bool is_max_size(void);
         void render(sf::RenderWindow& window);
+        void update( void );
         card_gen* play_one(int i);
 };
 

@@ -10,10 +10,12 @@ int main() {
     sf::Clock clock;
     main_game game;
     float delta;
-    while (window.isOpen()) {
+    while (window.isOpen()) 
+    {
         sf::Event event;
         delta = clock.restart().asSeconds();
-        while (window.pollEvent(event)) {
+        while (window.pollEvent(event)) 
+        {
             if (event.type == sf::Event::Closed)
                 window.close();
             game.handleEvent(event,window);
@@ -22,6 +24,6 @@ int main() {
         window.clear(sf::Color::Black);
         game.render(window);
         window.display();
-        game.update(delta);
+        if(game.update(delta) == true) window.close();
     }
 }
