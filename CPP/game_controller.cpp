@@ -1,3 +1,4 @@
+#include <iostream>
 #include "../HPP/game_controller.hpp"
 #include "../HPP/player.hpp"
 #include "../HPP/hand.hpp"
@@ -37,9 +38,7 @@ void game_controller::selected_card_board(unit *u, player* p_clicked)
         {
             if(waiting_spell != nullptr)
             {
-                current_player->pop_from(BOARD,waiting_spell);
-                waiting_spell->resolve(u);
-                waiting_spell = nullptr;
+                target_spell = u;
             }
             return;
         }
@@ -81,7 +80,12 @@ void game_controller::summon_unit(unit* casted)
 
 void game_controller::spell_clicked(spell* casted )
 {
-    waiting_spell = current_player->cast_spell(casted);
+    if(casted->get_classe() != "voleur")
+    {
+        std::cout << "here\n";
+        current_player->cast_spell(casted, current_player);
+    }
+    waiting_spell = casted; 
 }
 
 void game_controller::select_attacker(unit* u)
@@ -104,10 +108,10 @@ void game_controller::select_blocker(unit* u)
 
 void game_controller::select_blocker_target(unit* u)
 {
-    if(blocker == nullptr) return;
+    if(blocker == nullptr ) return;
     for(long unsigned int i = 0;  i < list_fight.size(); i++)
     {
-        if(u == list_fight[i].attacker)
+        if(u == list_fight[i].attacker && list_fight[i].blocker == nullptr)
         {
             list_fight[i].blocker = blocker;
             waiting_player->pop_from(BOARD,blocker);
@@ -177,6 +181,8 @@ void game_controller::next_phase()
         case phase_turn::main1:
             p_turn = phase_turn::selection_attacker;
             timer = 25.0;
+            target_spell = nullptr;
+            waiting_spell = nullptr;
             break;
 
         case phase_turn::selection_attacker:
@@ -187,6 +193,8 @@ void game_controller::next_phase()
         case phase_turn::selection_blocker:
             p_turn = phase_turn::main2;
             timer = 25.0;
+            target_spell = nullptr;
+            waiting_spell = nullptr;
             resolve_fight();
             break;
 
@@ -208,18 +216,20 @@ void game_controller::next_phase()
 
 int game_controller::get_current_charge( void )
 {
+    int c_charge;
     if(tour_actuel%2==0)
     { //le joueur 2 joue quand le tour est pair
-        return tour_actuel/2;
+        c_charge =  tour_actuel/2;
     }
     else
     { //le joueur 1 joue quand le tour est impair donc on ajoute un après division
-        return tour_actuel/2 + 1; 
+        c_charge = tour_actuel/2 + 1; 
     }
-    if(current_player->get_charge() > 8)
+    if(c_charge > 8)
     { //max charge = 8
-        return 8;
+        c_charge = 8;
     }
+    return c_charge;
 }
 
 void game_controller::render(sf::RenderWindow& window)
@@ -280,6 +290,12 @@ void game_controller::update(float delta)
     {
         next_phase();
     }
+    if(target_spell != nullptr && waiting_spell != nullptr)
+    {
+        current_player->cast_spell(waiting_spell,target_spell);
+        waiting_spell = nullptr;
+        target_spell = nullptr;
+    }
     current_player->update(delta);
     waiting_player->update(delta);
 }
@@ -299,6 +315,6 @@ game_controller::game_controller(player *p1,player *p2)
     {
         waiting_player = p2;
     }
-    affichage_timer.set_position(20,350);
-    afficheur_de_phase.set_position(20,300);
+    affichage_timer.set_position(20,430);
+    afficheur_de_phase.set_position(20,460);
 }

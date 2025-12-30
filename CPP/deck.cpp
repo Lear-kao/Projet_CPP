@@ -7,8 +7,6 @@
 deck::deck(bool bot) : is_bot(bot)
 {
     std::ifstream f("DOC/cards.txt");
-    if (!f)
-        throw std::runtime_error("cards.txt introuvable");
 
     std::string chemin, categorie, classe;
     int charge;
@@ -35,10 +33,10 @@ deck::deck(bool bot) : is_bot(bot)
 
     sprite.setTexture(texture);
     if (!is_bot)
-        sprite.setPosition(20.0, 500.0);
+        sprite.setPosition(128, 515);
     else
     {
-        sprite.setPosition(660.0, 50.0);
+        sprite.setPosition(631, 20);
     }
 }
 

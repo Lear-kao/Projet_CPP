@@ -37,6 +37,8 @@ class game_controller
         phase_turn p_turn = phase_turn::main1;
         //phase principale
         spell* waiting_spell = nullptr; //variable d'attente si une cible est necessaire pour le sort (kill)
+        unit* target_spell = nullptr;
+        
         //phase de combat
         std::vector<fight> list_fight;
         unit *blocker = nullptr;
