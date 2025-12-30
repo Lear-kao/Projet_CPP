@@ -7,6 +7,9 @@
 #include "spell.hpp"
 #include <vector>
 
+#define MIDDLE_X 380
+#define MIDDLE_y 300
+
 class heap_card
 {
     protected:

@@ -2,9 +2,13 @@
 
 void board::render(sf::RenderWindow& window )
 {
-    for( int i = 0; i < get_size(); i++)
+    const int spacing = 43;
+    int total_width = (heap.size() - 1) * spacing;
+    int start_x = border_x - total_width / 2;
+
+    for(int i = 0; i < heap.size(); i++)
     {
-        heap[i]->render(window,i*40+160,border_y);
+        heap[i]->render(window, start_x + i * spacing, border_y);
     }
     return;
 }
@@ -13,13 +17,13 @@ board::board(bool is_bot)
 {
     if(is_bot)
     {
-        border_x = 20;
-        border_y = 80;
+        border_x = MIDDLE_X;
+        border_y = 115;
     }
     else 
     {
-        border_x = 20;
-        border_y = 380;
+        border_x = MIDDLE_X;
+        border_y = 420;
     }
 }
 

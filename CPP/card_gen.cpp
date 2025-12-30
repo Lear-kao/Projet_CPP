@@ -42,9 +42,6 @@ void card_gen::set_name(std::string n)
     name = n;
 }
 
-
-
-
 /* 
 fonction pur la mise en place de l'apparence graphique, 
 seul point vraiment sensible de cette partie 

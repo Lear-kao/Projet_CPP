@@ -1,3 +1,4 @@
+#include <iostream>
 #include "player.hpp"
 #include <iostream>
 #include <string.h>
@@ -22,13 +23,13 @@ player::player(bool a)
     }
     if(bot)
     {
-        UI_charge.set_position(50, 120);
-        UI_life.set_position(50,70);
+        UI_charge.set_position(40, 80);
+        UI_life.set_position(50,30);
     }
     else
     {
-        UI_charge.set_position(700, 450);
-        UI_life.set_position(700,500);
+        UI_charge.set_position(750, 500);
+        UI_life.set_position(720,550);
     }
 }
 
@@ -106,7 +107,7 @@ void player::summon_card(unit* unite)
     board_player->add_one(unite);
 }
 
-spell* player::cast_spell(spell* casted)
+void player::cast_spell(spell* casted, unit* target)
 {
     std::string classe = casted->get_classe();
     int cout_reel = casted->get_cost();
@@ -116,19 +117,26 @@ spell* player::cast_spell(spell* casted)
     }
     if( charge >= cout_reel)
     {
-        if(classe != "voleur")
-        {
-            casted->resolve(this);
-            set_charge(charge-cout_reel);
-            pop_from(HAND,(card_gen*)casted);
-            return nullptr;
-        }
-        else
-        {
-            return casted;
-        }
+        casted->resolve(target);
+        set_charge(charge-cout_reel);
+        pop_from(HAND,(card_gen*)casted);
     }
-    return nullptr;
+}
+
+void player::cast_spell(spell* casted, player* target)
+{
+    std::string classe = casted->get_classe();
+    int cout_reel = casted->get_cost();
+    if(board_player->check(classe) == true)
+    {
+        cout_reel = 1;
+    }
+    if( charge >= cout_reel)
+    {
+        casted->resolve(target);
+        set_charge(charge-cout_reel);
+        pop_from(HAND,(card_gen*)casted);
+    }
 }
 
 void player::add_board(card_gen* card)

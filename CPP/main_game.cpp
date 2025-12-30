@@ -104,7 +104,7 @@ player* main_game::who_s_dead( void )
 
 main_game::main_game(void)
 {
-    next_phase->set_loc(700,300);
+    next_phase->set_loc(718,402);
     set_board();
 }
 

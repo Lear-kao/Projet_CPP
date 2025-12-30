@@ -15,7 +15,6 @@ void spell::render(sf::RenderWindow& window, int x, int y)
     return;
 }
 
-
 void spell::resolve(unit* current_target)
 {
     current_target->killed();

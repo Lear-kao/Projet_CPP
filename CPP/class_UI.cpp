@@ -6,8 +6,8 @@ UI::UI()
         return;
     }
     texte.setFont(font);
-    texte.setCharacterSize(25);
-    texte.setFillColor(sf::Color::Black);
+    texte.setCharacterSize(16);
+    texte.setFillColor(sf::Color::White);
 }
 
 void UI::render( std::string text_, sf::RenderWindow& window)
