@@ -6,6 +6,19 @@
 #include "../HPP/board.hpp"
 #include "../HPP/class_button.hpp"
 
+unit* game_controller::clicked_attacker(sf::Vector2f mousePos)
+{
+    for(long unsigned int i = 0; i < list_fight.size(); i++) 
+    {
+        unit* card = list_fight[i].attacker;
+        if(card->get_sprite().getGlobalBounds().contains(mousePos))
+        {
+            select_blocker_target(card);
+            return card;
+        }
+    }
+    return nullptr;
+}
 
 void game_controller::selected_card_board(unit *u, player* p_clicked)
 {
@@ -14,7 +27,7 @@ void game_controller::selected_card_board(unit *u, player* p_clicked)
         if(p_turn == phase_turn::selection_attacker)
         {
             select_attacker(u);
-            p_clicked -> get_board()->pop_i(u);
+            p_clicked -> pop_from(BOARD,u);
         }
         return;
     }
@@ -24,7 +37,7 @@ void game_controller::selected_card_board(unit *u, player* p_clicked)
         {
             if(waiting_spell != nullptr)
             {
-                current_player->get_hand()->pop_i(waiting_spell);
+                current_player->pop_from(BOARD,waiting_spell);
                 waiting_spell->resolve(u);
                 waiting_spell = nullptr;
             }
@@ -46,7 +59,7 @@ void game_controller::selected_card_hand(card_gen* card, player* p_clicked)
     
     if(card->get_categorie() == "sort")
     { 
-        cast_spell((spell*)card);
+        spell_clicked((spell*)card);
         return;
     }
     if(card->get_categorie() == "unite")
@@ -62,34 +75,13 @@ void game_controller::summon_unit(unit* casted)
     {
         current_player->summon_card(casted);
         current_player->set_charge(current_player->get_charge()-casted->get_cost());
-        current_player->get_hand()->pop_i(casted);
+        current_player->pop_from(HAND,casted);
     }
 }
 
-void game_controller::cast_spell(spell* casted )
+void game_controller::spell_clicked(spell* casted )
 {
-    int cout_reel = casted->get_cost();
-    board* b = current_player->get_board();
-    std::string classe = casted->get_classe();
-
-    if(b->check(classe) == true)
-    {
-        cout_reel = 1;
-    }
-    if(current_player->get_charge()>=cout_reel)
-    {
-        if(classe != "voleur")
-        {
-            waiting_spell->resolve(current_player);
-            current_player->set_charge(current_player->get_charge()-cout_reel);
-            current_player->get_hand()->pop_i((card_gen*)casted);
-        }
-        else
-        {
-            waiting_spell = casted;
-        }
-    }
-    
+    waiting_spell = current_player->cast_spell(casted);
 }
 
 void game_controller::select_attacker(unit* u)
@@ -118,7 +110,7 @@ void game_controller::select_blocker_target(unit* u)
         if(u == list_fight[i].attacker)
         {
             list_fight[i].blocker = blocker;
-            waiting_player->get_board()->pop_i(blocker);
+            waiting_player->pop_from(BOARD,blocker);
             blocker = nullptr;
         }
     }
@@ -126,9 +118,6 @@ void game_controller::select_blocker_target(unit* u)
 
 void game_controller::resolve_fight()
 {
-
-    board* atck = current_player->get_board();
-    board* blck = waiting_player->get_board();
     for( size_t i = 0; i < list_fight.size(); i++)
     {
         unit* t_unit = list_fight[i].blocker;
@@ -160,14 +149,14 @@ void game_controller::resolve_fight()
             if(pv_block <= 0){
                 t_unit->killed();
             }
-            atck->add_one(a_unit);
-            blck->add_one(t_unit);
+            current_player->add_board(a_unit);
+            waiting_player->add_board(t_unit);
 
         }
         else{
             unit* a_unit = list_fight[i].attacker;
             waiting_player->hitted(a_unit->get_strenght());
-            atck->add_one(a_unit);
+            current_player->add_board(a_unit);
         }
     }
     list_fight.clear();
@@ -180,18 +169,8 @@ void game_controller::next_phase()
     switch (p_turn)
     {
         case phase_turn::draw: 
-            //distribution des charges :
-            if(tour_actuel%2==0){ //le joueur 2 joue quand le tour est pair
-                current_player->set_charge(tour_actuel/2);
-            }
-            else{ //le joueur 1 joue quand le tour est impair donc on ajoute un après division
-                current_player->set_charge(tour_actuel/2 + 1); 
-            }
-            if(current_player->get_charge() > 8){ //max charge = 8
-                current_player->set_charge(8);
-            }
-            current_player->draw_card();
-            current_player->get_board()->untap_all();
+            //distribution des charges :            
+            current_player->new_turn(get_current_charge());
             timer = 25.0;  
             p_turn = phase_turn::main1;
             break;
@@ -224,6 +203,22 @@ void game_controller::next_phase()
             tour_actuel++;
             p_turn = phase_turn::draw;
             break;
+    }
+}
+
+int game_controller::get_current_charge( void )
+{
+    if(tour_actuel%2==0)
+    { //le joueur 2 joue quand le tour est pair
+        return tour_actuel/2;
+    }
+    else
+    { //le joueur 1 joue quand le tour est impair donc on ajoute un après division
+        return tour_actuel/2 + 1; 
+    }
+    if(current_player->get_charge() > 8)
+    { //max charge = 8
+        return 8;
     }
 }
 

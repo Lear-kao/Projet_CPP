@@ -27,7 +27,6 @@ struct fight
     unit* blocker = nullptr;
 };
 
-
 class game_controller
 {
     private:
@@ -50,12 +49,17 @@ class game_controller
         UI afficheur_de_phase;
         UI affichage_timer;
 
+        int get_current_charge( void );
+
     public:
         game_controller(player *p1, player *p2);
         void next_phase(void);
 
         std::vector<fight> get_current_attacker( void );
         
+        //click sur les attaquants méthode
+        unit* clicked_attacker(sf::Vector2f mousePos);
+
         //phase de combat méthode
         void selected_card_board(unit *u, player* p_clicked);
         void select_attacker(unit* u);
@@ -65,7 +69,7 @@ class game_controller
 
         //phase d'invocation méthode
         void selected_card_hand(card_gen* card, player* p_clicked);   
-        void cast_spell(spell* casted );
+        void spell_clicked(spell* casted );
         void summon_unit(unit* casted);
 
 

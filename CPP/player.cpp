@@ -1,4 +1,4 @@
-#include "../HPP/player.hpp"
+#include "player.hpp"
 #include <iostream>
 #include <string.h>
 #include "card_gen.hpp"
@@ -6,6 +6,8 @@
 #include "board.hpp"
 #include "deck.hpp"
 #include "unit.hpp"
+#include "spell.hpp"
+
 
 
 player::player(bool a)
@@ -27,6 +29,25 @@ player::player(bool a)
     {
         UI_charge.set_position(700, 450);
         UI_life.set_position(700,500);
+    }
+}
+
+void player::new_turn(int n_charge)
+{
+    draw_card();
+    board_player->untap_all();
+    charge = n_charge;
+}
+
+void player::pop_from(int from, card_gen* who)
+{
+    if(from == HAND)
+    {
+        hand_player->pop_card(who);
+    }
+    else if(from == BOARD)
+    {
+        board_player->pop_card(who);
     }
 }
 
@@ -80,25 +101,49 @@ void player::hitted(int damage)
     life -= damage;
 }
 
-hand* player::get_hand( void )
-{
-    return hand_player;
-}
-
-board* player::get_board(){
-    return board_player;
-}
-
 void player::summon_card(unit* unite)
 {
     board_player->add_one(unite);
 }
 
-void player::set_charge(int c){
+spell* player::cast_spell(spell* casted)
+{
+    std::string classe = casted->get_classe();
+    int cout_reel = casted->get_cost();
+    if(board_player->check(classe) == true)
+    {
+        cout_reel = 1;
+    }
+    if( charge >= cout_reel)
+    {
+        if(classe != "voleur")
+        {
+            casted->resolve(this);
+            set_charge(charge-cout_reel);
+            pop_from(HAND,(card_gen*)casted);
+            return nullptr;
+        }
+        else
+        {
+            return casted;
+        }
+    }
+    return nullptr;
+}
+
+void player::add_board(card_gen* card)
+{
+    board_player->add_one(card);
+    return;
+}
+
+void player::set_charge(int c)
+{
     charge = c;
 }
 
-int player::get_charge(){
+int player::get_charge( void )
+{
     return charge;
 }
 
@@ -128,7 +173,14 @@ card_gen* player::card_clicked_hand(sf::Vector2f mousePos)
     return nullptr;
 }
 
+bool player::is_dead( void )
+{
+    if( life <= 0 ) return true;
+    return false;
+}
+
 void player::update( float delta )
 {
+    hand_player->update();
     board_player->update();
 }

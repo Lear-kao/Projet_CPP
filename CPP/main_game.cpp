@@ -1,8 +1,10 @@
 #include "../HPP/main_game.hpp"
 #include <SFML/Graphics.hpp>
 
+#include <iostream>
 #include "../HPP/hand.hpp"
 #include "../HPP/board.hpp"
+
 
 
 void main_game::render( sf::RenderWindow& window)
@@ -16,28 +18,27 @@ void main_game::render( sf::RenderWindow& window)
 
 void main_game::handleEvent(const sf::Event& event, sf::RenderWindow& window)
 /* 
-!!!
-fonction à moddifier pour respecter l'encapsulation des données !!!
+Appelle les différents fonctions pour que le joueurs puisse intéragir avec la fenêtre
 */
 {
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
     {
         sf::Vector2f mousePos = window.mapPixelToCoords({event.mouseButton.x, event.mouseButton.y});
 
+        // ----- clic sur le prochain tour -----
         if (next_phase->get_sprite().getGlobalBounds().contains(mousePos))
         {
             controller->next_phase();
         }
 
-        // ------- clic sur hand --------
+        // ----- clic sur hand -----
         click_on_hand(mousePos);
 
-        // ----- click sur le board -----
+        // ----- clic sur le board -----
         click_on_board(mousePos);
 
-        // -- click sur les attaquants --
+        // ----- clic sur les attaquants -----
         click_on_current_attacker(mousePos);
-
     }
 }
 
@@ -62,16 +63,7 @@ void main_game::click_on_hand(sf::Vector2f mousePos)
 void main_game::click_on_current_attacker(sf::Vector2f mousePos)
 {
     //unit* t_unit = controller->is_attacker_clicker(sf::Vector2f mousePos);
-    std::vector<fight> l_fighter = controller->get_current_attacker();
-    for(long unsigned int i = 0; i < l_fighter.size(); i++) 
-    {
-        unit* card = (unit*)l_fighter[i].attacker;
-        if(card->get_sprite().getGlobalBounds().contains(mousePos))
-        {
-            controller->select_blocker_target(card);
-            return;
-        }
-    }
+    controller->clicked_attacker(mousePos);
 }
 
 void main_game::click_on_board(sf::Vector2f mousePos)
@@ -91,10 +83,23 @@ void main_game::click_on_board(sf::Vector2f mousePos)
     }
 }
 
-void main_game::update(float d)
+bool main_game::update(float delta)
 {
-    delta = d;
     controller->update(delta);
+    player* dead = who_s_dead();
+    if(dead)
+    {
+        std::cout << "nice\n";
+        return true;
+    }
+    return false;
+}
+
+player* main_game::who_s_dead( void )
+{
+    if(r_player->is_dead()) return r_player;
+    if(bot->is_dead()) return bot;
+    return nullptr;
 }
 
 main_game::main_game(void)
