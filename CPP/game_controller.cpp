@@ -186,6 +186,12 @@ void game_controller::next_phase()
             break;
 
         case phase_turn::selection_attacker:
+            if(list_fight.size() == 0)
+            {
+                p_turn = phase_turn::main2;
+                timer = 25.0;
+                break;
+            }
             p_turn = phase_turn::selection_blocker;
             timer = 25.0;
             break;
