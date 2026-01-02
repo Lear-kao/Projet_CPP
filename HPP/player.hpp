@@ -37,6 +37,7 @@ class player
         void pop_from(int from, card_gen* who);
         void set_charge(int);
         int get_charge(void);
+        virtual bool is_bot() {return false;}
 
     //méthode de jeu
         void new_turn( int charge);

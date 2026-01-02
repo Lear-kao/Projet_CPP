@@ -1,6 +1,7 @@
 #include <iostream>
 #include "../HPP/game_controller.hpp"
 #include "../HPP/player.hpp"
+#include "../HPP/bot.hpp"
 #include "../HPP/hand.hpp"
 #include "../HPP/unit.hpp"
 #include "../HPP/spell.hpp"
@@ -292,6 +293,20 @@ void game_controller::render_fight(sf::RenderWindow& window)
 void game_controller::update(float delta)
 {
     timer -= delta;
+
+    if(current_player->is_bot() && p_turn !=  phase_turn::selection_blocker){
+        bot* player_bot = (bot*) current_player;
+        player_bot->add_to_think_bot(delta);
+        if(player_bot->get_think_bot() >= 1){
+            bot_turn();
+            player_bot->reset_think();
+        }
+    }
+
+    if(!current_player->is_bot() && p_turn == phase_turn::selection_blocker){
+        bot_play_blocker();
+    }
+
     if( timer <= 0 )
     {
         next_phase();
@@ -323,4 +338,28 @@ game_controller::game_controller(player *p1,player *p2)
     }
     affichage_timer.set_position(20,430);
     afficheur_de_phase.set_position(20,460);
+}
+
+
+void game_controller::bot_turn(){
+    if(p_turn == phase_turn::main1 || p_turn == phase_turn::main2){
+        bot_play_main();
+    }
+
+    if(p_turn == phase_turn::selection_attacker){
+        bot_play_attacker();
+    }   
+}
+
+void game_controller::bot_play_main(){
+    for(size_t i = 0; i < current_player->hand.size())
+    next_phase();
+}
+
+void game_controller::bot_play_attacker(){
+    next_phase();
+}
+
+void game_controller::bot_play_blocker(){
+    next_phase();
 }

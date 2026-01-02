@@ -74,6 +74,12 @@ class game_controller
         void spell_clicked(spell* casted );
         void summon_unit(unit* casted);
 
+        //tour du bot
+        void bot_turn(); 
+        void bot_play_main();
+        void bot_play_attacker();
+        void bot_play_blocker();
+
 
         void render(sf::RenderWindow& window);
         void render_fight(sf::RenderWindow& window);
