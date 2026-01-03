@@ -36,7 +36,7 @@ void hand::render( sf::RenderWindow& window, bool hidden )
     const int spacing = 43;
     int total_width = (heap.size() - 1) * spacing;
     int start_x = border_x - total_width / 2;
-    for(int i = 0; i < heap.size(); i++)
+    for(size_t i = 0; i < heap.size(); i++)
     {
         heap[i]->render(window, start_x + i * spacing, border_y, hidden);
     }
@@ -71,6 +71,7 @@ void hand::update( void )
     //si la taille maximale de la main est atteinte on supprime la dernière carte de la main.
     if(is_max_size())
     {
+        delete heap.front();
         heap.erase(heap.begin());
     }
 }

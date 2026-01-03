@@ -32,6 +32,28 @@ void heap_card::pop_card( card_gen* u )
 }
 
 /* 
+Objectif : Supprime et déttruit la carte passé en paramètre du vecteur la contenant.
+Entrée :
+    - Un pointeur vers une carte.
+Sortie : 
+    - void
+*/
+void heap_card::destroy_card( card_gen* u )
+{
+    //parcour le vecteur jusqu'à trouver la carte et la supprime.
+    for(long unsigned int i = 0;  i < heap.size(); i++)
+    {
+        if(u == heap[i])
+        {
+            delete heap[i];
+            heap.erase(heap.begin() + i);
+            return;
+        }
+    }
+    
+}
+
+/* 
 Objectif : Récupérer la dernière carte de la pile.
 Entrée :
     - void

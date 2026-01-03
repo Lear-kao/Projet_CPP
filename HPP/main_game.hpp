@@ -21,13 +21,14 @@ class main_game
         float delta; //le timer pour chaque frame, permet de gérer le temps sur l'update
         sf::Sprite board_;
         sf::Texture texture;
-        player *r_player = new player(0);
-        bot *b_player = new bot();
-        game_controller *controller = new game_controller(r_player,b_player);
-        gen_button *next_phase = new gen_button("assets_lib_g/button_next_phase.png");
+        player *r_player;
+        bot *b_player;
+        game_controller *controller;
+        gen_button *next_phase;
     
         public:
         main_game(void);
+        ~main_game();
         void set_board(void);
 
         //gestion des evenements

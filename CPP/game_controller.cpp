@@ -497,7 +497,7 @@ void game_controller::bot_play_main()
 }
 
 /* 
-Objectif : Le bot attaque avec la moitié de ses créatures sur le board
+Objectif : Le bot attaque avec la moitié de ses unités + 1 sur le board
 Entrée : 
     void
 Sortie :
@@ -517,7 +517,7 @@ void game_controller::bot_play_attacker( void )
 
 /* 
 Objectif : Le bot bloque avec l'unité la plus pertinente, une unité bloque si elle 
-        tue l'unité attaquante.
+        tue l'unité attaquante ou si le bot peut perdre la partie s'il ne bloque pas.
 Entrée : 
     void
 Sortie :

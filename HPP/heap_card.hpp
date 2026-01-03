@@ -21,7 +21,7 @@ protected:
     public:
         virtual ~heap_card();
         void pop_card(card_gen* u);
-        void suffle();
+        void destroy_card( card_gen* u );
         card_gen* pick_one();
         void add_one( card_gen* nc);
         card_gen *get_card_x(int n);
