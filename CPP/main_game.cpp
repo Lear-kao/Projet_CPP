@@ -84,21 +84,19 @@ void main_game::click_on_board( sf::Vector2f mousePos )
 bool main_game::update( float delta )
 {
     controller->update(delta);
-    player* dead = who_s_dead();
-    if(dead)
+    if(r_player->is_dead()) 
     {
-        std::cout << "nice\n";
+        std::cout << "Pas de chance vous avez perdu!\n Si vous avez du mal avec les règles n'ésitez pas à les relir et sinon il faudra pratiquer ;) \n";
+        return true;
+    }
+    if(b_player->is_dead()) 
+    {
+        std::cout << "Félicitation vous avez gagné!\n Continuer de pratiquer et si le \n coeur des developpers leurs en dit \nils feront un jour un mode joueur contre joueur!";
         return true;
     }
     return false;
 }
 
-player* main_game::who_s_dead( void )
-{
-    if(r_player->is_dead()) return r_player;
-    if(b_player->is_dead()) return b_player;
-    return nullptr;
-}
 
 main_game::main_game( void )
 {
