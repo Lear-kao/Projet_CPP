@@ -243,7 +243,7 @@ void player::hitted(int damage)
 }
 
 /* 
-Objectif :
+Objectif : Invoquer une créature sur le terrain.
 Entrée :
     -
 Sortie : 
@@ -255,11 +255,12 @@ void player::summon_card(unit* unite)
 }
 
 /* 
-Objectif :
+Objectif : Lancer le sort passé en paramètre sur l'unité aussi passée en paramètre.
 Entrée :
-    -
+    - Une carte de sort.
+    - Une unité.
 Sortie : 
-    -
+    - void
 */
 void player::cast_spell(spell* casted, unit* target)
 {
@@ -278,11 +279,12 @@ void player::cast_spell(spell* casted, unit* target)
 }
 
 /* 
-Objectif :
+Objectif : Lancer le sort passé en paramètre sur le joueur aussi passé en paramètre.
 Entrée :
-    -
+    - Une carte de sort.
+    - Un joueur.
 Sortie : 
-    -
+    - void
 */
 void player::cast_spell(spell* casted, player* target)
 {
@@ -301,24 +303,11 @@ void player::cast_spell(spell* casted, player* target)
 }
 
 /* 
-Objectif :
+Objectif : Assigner la valeur c à la variable charge.
 Entrée :
-    -
+    - Un entier.
 Sortie : 
-    -
-*/
-void player::add_board(card_gen* card)
-{
-    board_player->add_one(card);
-    return;
-}
-
-/* 
-Objectif :
-Entrée :
-    -
-Sortie : 
-    -
+    - void
 */
 void player::set_charge(int c)
 {
@@ -326,11 +315,11 @@ void player::set_charge(int c)
 }
 
 /* 
-Objectif :
+Objectif : Renvoie combien de charge possède le joueur.
 Entrée :
-    -
+    - void
 Sortie : 
-    -
+    - Un entier.
 */
 int player::get_charge( void )
 {
@@ -390,11 +379,11 @@ card_gen* player::card_clicked_hand(sf::Vector2f mousePos)
 }
 
 /* 
-Objectif :
+Objectif : Renvoie si le joueur est mort ou non.
 Entrée :
-    -
+    - void
 Sortie : 
-    -
+    - Un booléen.
 */
 bool player::is_dead( void )
 {
@@ -403,11 +392,11 @@ bool player::is_dead( void )
 }
 
 /* 
-Objectif :
+Objectif : méthode appellé à chaque tic qui sert a executer les méthodes devant être activée automatiquement.
 Entrée :
-    -
-Sortie : 
-    -
+    - Un flotant delta indiquant le temps écoulé depuis la dernière itération.
+Sortie :
+    - void
 */
 void player::update( [[maybe_unused]] float delta )
 {

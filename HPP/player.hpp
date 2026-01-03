@@ -52,7 +52,6 @@ class player
         void draw_card(void);
         void hitted(int damage);
         void healled(int heal);
-        void add_board(card_gen* card);
         void summon_card(unit* unite);
         void cast_spell(spell* casted, unit* target);
         void cast_spell(spell* casted, player* target);

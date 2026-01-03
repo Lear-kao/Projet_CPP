@@ -319,8 +319,8 @@ void game_controller::resolve_fight( void )
             {
                 t_unit->killed();
             }
-            current_player->add_board(a_unit);
-            waiting_player->add_board(t_unit);
+            current_player->summon_card(a_unit);
+            waiting_player->summon_card(t_unit);
 
         }
         else
@@ -328,7 +328,7 @@ void game_controller::resolve_fight( void )
             //l'unité frappe directement le joueur attaqué si personne ne bloque
             unit* a_unit = list_fight[i].attacker;
             waiting_player->hitted(a_unit->get_strenght());
-            current_player->add_board(a_unit);
+            current_player->summon_card(a_unit);
         }
     }
     list_fight.clear();
