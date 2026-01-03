@@ -1,7 +1,6 @@
 #include <iostream>
-#include "player.hpp"
-#include <iostream>
 #include <string.h>
+#include "player.hpp"
 #include "card_gen.hpp"
 #include "hand.hpp"
 #include "board.hpp"
@@ -14,11 +13,11 @@
 
 
 /* 
-Objectif :
+Objectif : Constructeur de la class player.
 Entrée :
-    -
+    - Un booléen indiquant si il s'agit d'un bot ou non.
 Sortie : 
-    -
+    - void
 */
 player::player(bool bot)
 {
@@ -44,11 +43,11 @@ player::player(bool bot)
 
 
 /* 
-Objectif :
+Objectif : Afficher la main.
 Entrée :
-    -
+    - L'objet sfml correspondant à la fenêtre.
 Sortie : 
-    -
+    - void
 */
 void player::render_hand(sf::RenderWindow& window)
 {
@@ -56,11 +55,11 @@ void player::render_hand(sf::RenderWindow& window)
 }
 
 /* 
-Objectif :
+Objectif : Afficher le terrain.
 Entrée :
-    -
+    - L'objet sfml correspondant à la fenêtre.
 Sortie : 
-    -
+    - void
 */
 void player::render_board(sf::RenderWindow& window)
 {
@@ -68,11 +67,11 @@ void player::render_board(sf::RenderWindow& window)
 }
 
 /* 
-Objectif :
+Objectif : Afficher le deck.
 Entrée :
-    -
+    - L'objet sfml correspondant à la fenêtre.
 Sortie : 
-    -
+    - void
 */
 void player::render_deck(sf::RenderWindow& window)
 {
@@ -80,11 +79,11 @@ void player::render_deck(sf::RenderWindow& window)
 }
 
 /* 
-Objectif :
+Objectif : Affciher le nombre de point de vie possédé par le joueur.
 Entrée :
-    -
+    - L'objet sfml correspondant à la fenêtre.
 Sortie : 
-    -
+    - void
 */
 void player::render_life(sf::RenderWindow& window)
 {
@@ -92,11 +91,11 @@ void player::render_life(sf::RenderWindow& window)
 }
 
 /* 
-Objectif :
+Objectif : Afficher le nombre de charge possédé par le joueur.
 Entrée :
-    -
+    - L'objet sfml correspondant à la fenêtre.
 Sortie : 
-    -
+    - void
 */
 void player::render_charge(sf::RenderWindow& window)
 {
@@ -104,11 +103,11 @@ void player::render_charge(sf::RenderWindow& window)
 }
 
 /* 
-Objectif :
+Objectif : Afficher les différents elements appartenant au joueur.
 Entrée :
-    -
+    - L'objet sfml correspondant à la fenêtre.
 Sortie : 
-    -
+    - void
 */
 void player::render_general(sf::RenderWindow& window)
 {
@@ -120,11 +119,11 @@ void player::render_general(sf::RenderWindow& window)
 }
 
 /* 
-Objectif :
+Objectif : Signaler au joueur qu'il commence un nouveau tour.
 Entrée :
-    -
+    - Un entier représentant le nombre de charge qu'il possède.
 Sortie : 
-    -
+    - void
 */
 void player::new_turn(int n_charge)
 {
@@ -134,13 +133,14 @@ void player::new_turn(int n_charge)
 }
 
 /* 
-Objectif :
+Objectif : Enlever une carte appartenant a un objet board ou hand de celui-ci.
 Entrée :
-    -
+    - Un entier defined dans le hpp correspondant à BOARD ou HAND.
+    - Un pointeur vers une carte.
 Sortie : 
-    -
+    - void
 */
-void player::pop_from(int from, card_gen* who)
+void player::pop_from( int from, card_gen* who )
 {
     if(from == HAND)
     {
@@ -153,73 +153,59 @@ void player::pop_from(int from, card_gen* who)
 }
 
 /* 
-Objectif :
+Objectif : Récupérer le nombre de carte dans la main du joueur.
 Entrée :
-    -
-Sortie : 
-    -
+    - void
+Sortie :  
+    - Un size_t (long unsigned int)
 */
-size_t player::get_player_hand_size(){
+size_t player::get_player_hand_size( void )
+{
     return hand_player->get_size();
 }
 
 /* 
-Objectif :
+Objectif : Récupérer la carte à l'emplacement i de la main du joueur.
 Entrée :
-    -
+    - Un entier.
 Sortie : 
-    -
+    - Un pointeur sur une carte.
 */
-card_gen* player::get_card_from_hand(int i){
+card_gen* player::get_card_from_hand( int i )
+{
     return hand_player->get_card_x(i);
 }
 
 /* 
-Objectif :
+Objectif : Récupérer le nombre d'unité que le joueur possède sur le terrain.
 Entrée :
-    -
+    - void
 Sortie : 
-    -
+    - Un size_t (long unsigned int)
 */
-size_t player::get_player_board_size(){
+size_t player::get_player_board_size( void )
+{
     return board_player->get_size();
 }
 
 /* 
-Objectif :
+Objectif : Récupérer la carte à l'emplacement i du terrain.
 Entrée :
-    -
+    - Un entier i.
 Sortie : 
-    -
+    - Un pointeur vers une carte.
 */
-card_gen* player::get_card_from_board(int i){
+card_gen* player::get_card_from_board( int i )
+{
     return board_player->get_card_x(i);
 }
 
-/* 
-Objectif :
+/*
+Objectif : Demander au joueur de piocher une carte.
 Entrée :
-    -
+    - void
 Sortie : 
-    -
-*/
-int player::charge_min_hand(){
-    int charge_min = 10;
-    for(size_t i = 0; i < get_player_hand_size() ; ++i){
-        card_gen * card = get_card_from_hand(i);
-        if(card->get_cost() < charge_min){
-            charge_min = card->get_cost();
-        }
-    }
-    return charge_min;
-}
-
-/* 
-Objectif :
-Entrée :
-    -
-Sortie : 
-    -
+    - void
 */
 void player::draw_card(void)
 {
@@ -228,11 +214,11 @@ void player::draw_card(void)
 }
 
 /* 
-Objectif :
-Entrée :
-    -
+Objectif : Signaler au joueur qu'il a gagné de la vie.
+Entrée : 
+    - Un entier.
 Sortie : 
-    -
+    - void
 */
 void player::healled(int heal)
 {
@@ -240,11 +226,11 @@ void player::healled(int heal)
 }
 
 /* 
-Objectif :
+Objectif : Signaler au joueur qu'il a perdu des points de vie.
 Entrée :
-    -
+    - Un entier.
 Sortie : 
-    -
+    - void
 */
 void player::hitted(int damage)
 {

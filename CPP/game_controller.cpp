@@ -16,7 +16,7 @@ Entrée :
 Sortie : 
     - void
 */
-game_controller::game_controller(player *p1,player *p2)
+game_controller::game_controller( player *p1,player *p2 )
 {
     if(p1 != nullptr)
     {
@@ -37,7 +37,7 @@ Entrée :
 Sortie : 
     - void
 */
-void game_controller::render(sf::RenderWindow& window)
+void game_controller::render( sf::RenderWindow& window )
 {
     //création du texte en fonction de la phase
     std::string text_aff;
@@ -83,7 +83,7 @@ Entrée :
 Sortie : 
     - void
 */
-void game_controller::render_fight(sf::RenderWindow& window)
+void game_controller::render_fight( sf::RenderWindow& window )
 {
     for( long unsigned int i = 0; i < list_fight.size(); i++)
     {
@@ -106,7 +106,7 @@ Entrée :
 Sortie : 
     - void
 */
-void game_controller::clicked_attacker(sf::Vector2f mousePos)
+void game_controller::clicked_attacker( sf::Vector2f mousePos )
 {
     for(long unsigned int i = 0; i < list_fight.size(); i++) 
     {
@@ -129,7 +129,7 @@ Entrée :
 Sortie : 
     - void
 */
-void game_controller::selected_card_board(unit *u, player* p_clicked)
+void game_controller::selected_card_board( unit *u, player* p_clicked )
 {
 
     if(p_clicked == current_player)
@@ -170,7 +170,7 @@ Entrée :
 Sortie : 
     - void
 */
-void game_controller::selected_card_hand(card_gen* card, player* p_clicked)
+void game_controller::selected_card_hand( card_gen* card, player* p_clicked )
 {
     if(p_clicked != current_player || 
         (p_turn != phase_turn::main1 && p_turn != phase_turn::main2))
@@ -230,7 +230,7 @@ Entrée :
 Sortie : 
     - void
 */
-void game_controller::select_attacker(unit* u)
+void game_controller::select_attacker( unit* u )
 {
     if(u->is_tapped())return;
     u->tap();
@@ -244,7 +244,7 @@ Entrée :
 Sortie : 
     - void
 */
-void game_controller::select_blocker(unit* u)
+void game_controller::select_blocker( unit* u )
 {
     if(u->is_tapped()) return;
     blocker = u;
@@ -257,7 +257,7 @@ Entrée :
 Sortie : 
     - void
 */
-void game_controller::select_blocker_target(unit* u)
+void game_controller::select_blocker_target( unit* u )
 {
     if(blocker == nullptr ) return;
     for(long unsigned int i = 0;  i < list_fight.size(); i++)
@@ -418,11 +418,11 @@ int game_controller::get_current_charge( void )
 }
 
 /* 
-Objectif :
+Objectif : Getter de la liste des combattants.
 Entrée :
-    -
+    - void
 Sortie : 
-    -
+    - Un vecteur de la structure fight.
 */
 std::vector<fight> game_controller::get_current_attacker( void )
 {
@@ -432,11 +432,12 @@ std::vector<fight> game_controller::get_current_attacker( void )
 /* 
 Objectif :
 Entrée :
-    -
+    - 
 Sortie : 
     -
 */
-void game_controller::bot_turn(){
+void game_controller::bot_turn()
+{
     if(p_turn == phase_turn::main1 || p_turn == phase_turn::main2){
         bot_play_main();
     }
@@ -453,20 +454,28 @@ Entrée :
 Sortie : 
     -
 */
-void game_controller::bot_play_main(){
-    int charge_min = current_player->charge_min_hand();
-    while(current_player->get_charge() >= charge_min){
-        for(size_t i = 0; i < current_player->get_player_hand_size() ; ++i){
+void game_controller::bot_play_main( void )
+{
+    bot* clanker = (bot*)current_player;
+    int charge_min = clanker->charge_min_hand();
+    while(current_player->get_charge() >= charge_min)
+    {
+        for(size_t i = 0; i < current_player->get_player_hand_size() ; ++i)
+        {
             card_gen* current_card = current_player->get_card_from_hand(i);
-            if(current_card->get_cost() == charge_min){
-                if(current_card->get_categorie() == "sort"){
+            if(current_card->get_cost() == charge_min)
+            {
+                if(current_card->get_categorie() == "sort")
+                {
                     spell * casted = (spell*) current_card;
-                    if(casted->get_classe() == "voleur" && waiting_player->get_player_board_size() == 0){
+                    if(casted->get_classe() == "voleur" && waiting_player->get_player_board_size() == 0)
+                    {
                         continue;
                     }
                     else{
                         spell_clicked(casted);
-                        if(casted->get_classe() == "voleur"){
+                        if(casted->get_classe() == "voleur")
+                        {
                             target_spell = (unit*) waiting_player->get_card_from_board(0);
                             current_player->cast_spell(waiting_spell,target_spell);
                             waiting_spell = nullptr;
@@ -474,11 +483,12 @@ void game_controller::bot_play_main(){
                         }
                     }
                 }
-                else{
+                else
+                {
                     unit* t_unit = (unit*) current_card;
                     summon_unit(t_unit);
                 }
-                charge_min = current_player->charge_min_hand();
+                charge_min = clanker->charge_min_hand();
                 break;
             }
         }
@@ -493,7 +503,8 @@ Entrée :
 Sortie : 
     -
 */
-void game_controller::bot_play_attacker(){
+void game_controller::bot_play_attacker( void )
+{
     size_t board_size = current_player->get_player_board_size();
     if(board_size!=0){
         for(size_t i = 0; i < board_size/2 +1;++i){
@@ -511,7 +522,8 @@ Entrée :
 Sortie : 
     -
 */
-void game_controller::bot_play_blocker(){
+void game_controller::bot_play_blocker( void )
+{
     for(size_t i =0 ; i < list_fight.size();++i){
         unit* t_attacker = list_fight[i].attacker;
         size_t board_size = waiting_player->get_player_board_size();
@@ -538,12 +550,12 @@ void game_controller::bot_play_blocker(){
     next_phase();
 }
 
-/* 
-Objectif :
+/*
+Objectif : méthode appellé à chaque tic qui sert a executer les méthodes devant être activée automatiquement.
 Entrée :
-    -
-Sortie : 
-    -
+    - Delta le temps ecoulé depuis la dernière itération générale de la boucle.
+Sortie :
+    - void
 */
 void game_controller::update(float delta)
 {

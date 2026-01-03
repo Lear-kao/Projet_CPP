@@ -9,10 +9,11 @@ class bot : public player{
         std::vector<card_gen*> carte_prioritaire;
     public:
         bot();
-        void reset_think();
-        void add_to_think_bot(float delta);
-        float get_think_bot();
-        bool is_bot() override {return true;}
+        int charge_min_hand( void );
+        void reset_think( void );
+        void add_to_think_bot( float delta );
+        float get_think_bot( void );
+        bool is_bot( void ) override {return true;}
 };
 
 #endif

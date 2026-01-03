@@ -4,23 +4,25 @@
 #include "../HPP/player.hpp"
 
 /* 
-Objectif :
+Objectif : Constructeur de la class spell hérité de card_gen.
 Entrée :
-    -
+    - Un entier représentant le coût en charge.
 Sortie : 
-    -
+    - void
 */
-spell::spell(int v_e)
+spell::spell( int v_e )
 {
     set_cost(v_e);
 }
 
 /* 
-Objectif :
+Objectif : Afficher la carte à la position x,y ou bien de dos ou bien de face.
 Entrée :
-    -
+    - 2 entiers x et y.
+    - Un booléen indiquant si la carte est face cachée.
+    - L'objet sfml représentant la fenêtre.
 Sortie : 
-    -
+    - void
 */
 void spell::render(sf::RenderWindow& window, int x, int y, bool hidden)
 {
@@ -37,11 +39,11 @@ void spell::render(sf::RenderWindow& window, int x, int y, bool hidden)
 }
 
 /* 
-Objectif :
+Objectif : Méthode suchargée en fonction de quelle cible est désignée pour le sort. Ici une unité ennemie.
 Entrée :
-    -
+    - Un pointeur vers une unité ennemie.
 Sortie : 
-    -
+    - void
 */
 void spell::resolve(unit* current_target)
 {
@@ -50,11 +52,11 @@ void spell::resolve(unit* current_target)
 }
 
 /* 
-Objectif :
+Objectif :  Méthode suchargée en fonction de quelle cible est désignée pour le sort. Ici le joueur ayant lancé le sort.
 Entrée :
-    -
+    - Un pointeur vers le joueur ayaent lancé le sort.
 Sortie : 
-    -
+    - void
 */
 void spell::resolve(player* current_target)
 {

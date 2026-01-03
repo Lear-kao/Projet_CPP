@@ -43,7 +43,6 @@ class player
         card_gen* get_card_from_board(int);
         size_t get_player_hand_size();
         size_t get_player_board_size();
-        int charge_min_hand();
         virtual bool is_bot() {return false;}
 
     //méthode de jeu
