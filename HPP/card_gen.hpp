@@ -18,17 +18,6 @@ class card_gen
         sf::Texture texture;
         sf::Sprite sprite;
         sf::Texture texture_back;
-<<<<<<< Updated upstream
-        sf::Sprite sprite_back;       
-
-    public:
-    //setter
-        void set_classe(std::string c);
-        void set_categorie(std::string c);
-        void set_name(std::string n);
-        void set_cost(int c);
-
-=======
         sf::Sprite sprite_back;
 
         
@@ -40,7 +29,6 @@ class card_gen
         void set_name(std::string n);
         void set_cost(int c);
 
->>>>>>> Stashed changes
         void set_sprite(std::string path);
 
     //getter

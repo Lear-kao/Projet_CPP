@@ -16,7 +16,7 @@ class unit: public card_gen
         bool is_tapped( void ); //vérifie si l'unité est tappée
         int get_strenght(void); //fait
         int get_stamina(void); //fait
-        void render(sf::RenderWindow& window, int x, int y);
+        void render(sf::RenderWindow& window, int x, int y, bool hidden);
         void killed( void ); //!!! cette fonction ne tue pas imédiatement la carte, elle doit être supprimé au prochain update() du board
         bool is_dead( void );
 };

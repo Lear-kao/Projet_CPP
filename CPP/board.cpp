@@ -1,8 +1,6 @@
 #include "../HPP/board.hpp"
 
 /* 
-<<<<<<< Updated upstream
-=======
 Objectif : Constructeur de la class board hérité de la class heap_card.
 Entrée :
     - Un booléen représentant si le propriétaire de l'objet est un bot ou non.
@@ -25,7 +23,6 @@ board::board(bool is_bot)
 }
 
 /* 
->>>>>>> Stashed changes
 Objectif : Calculer la position et appeller les méthodes d'affichages de chaques cartes.
 Entrée :
     - L'objet d'affichage de sfml
