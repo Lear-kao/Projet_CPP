@@ -4,6 +4,12 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
+
+/* 
+Objectif : Représenter des bouttons dans le jeu pour plus facilement 
+intéragir avec l'interface.
+POint à améliorer, en faire un héritier de UI permettrais d'étendre les possibilités que la class offre.
+*/
 class gen_button
 {
     private:

@@ -27,6 +27,13 @@ struct fight
     unit* blocker = nullptr;
 };
 
+
+/* 
+Objectif : La class game_controller sert "d'arbitre" au jeu, il va gérer les étapes du jeu, 
+qui intéragit, qui doit être actif, ect. 
+Point à améliorer, améliorer l'encapsulation des données en faisant en sorte qu'il delègue plus 
+certaines tâches aux objets qu'il manipule.
+*/
 class game_controller
 {
     private:

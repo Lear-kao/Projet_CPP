@@ -8,8 +8,104 @@
 #include "../HPP/board.hpp"
 #include "../HPP/class_button.hpp"
 
+/* 
+Objectif : Constructeur de la class game_controller.
+Entrée :
+    - Des pointeurs vers les objets représentants les 2 joueurs.
+Sortie : 
+    - void
+*/
+game_controller::game_controller( player *p1,player *p2 )
+{
+    if(p1 != nullptr)
+    {
+        current_player = p1;
+    }
+    if(p2 != nullptr)
+    {
+        waiting_player = p2;
+    }
+    affichage_timer.set_position(20,430);
+    afficheur_de_phase.set_position(20,460);
+}
 
-void game_controller::clicked_attacker(sf::Vector2f mousePos)
+/* 
+Objectif : Afficher les elements propre au game controller tel que la phase du tour, le timer ou les combats pendant le tour.
+Entrée :
+    - L'objet sfml de la fenêtre.
+Sortie : 
+    - void
+*/
+void game_controller::render( sf::RenderWindow& window )
+{
+    //création du texte en fonction de la phase
+    std::string text_aff;
+    switch(p_turn)
+    {
+        case phase_turn::draw:
+            text_aff.append("draw");
+            break;
+        case phase_turn::main1:
+            text_aff.append("main");
+            break;
+
+        case phase_turn::selection_attacker:
+            text_aff.append("select_attacker");
+            break;
+
+        case phase_turn::selection_blocker:
+            text_aff.append("select_blocker");
+            break;
+
+        case phase_turn::main2:
+            text_aff.append("main");
+            break;
+
+        case phase_turn::end:
+            text_aff.append("end");
+            break; 
+    }
+    afficheur_de_phase.render(text_aff,window);
+
+    //affiche le timer
+    std::string text_aff2 = std::to_string((int)timer);
+    affichage_timer.render(text_aff2,window);
+    //afficher les combattants
+    render_fight(window);
+}
+
+/* 
+Objectif : Afficher les différentes unités présente dans que ce soit attaquant ou bloqueurs les uns en face des autres
+        en fonction de qui bloque qui.
+Entrée :
+    - L'objet sfml de la fenêtre.
+Sortie : 
+    - void
+*/
+void game_controller::render_fight( sf::RenderWindow& window )
+{
+    for( long unsigned int i = 0; i < list_fight.size(); i++)
+    {
+        //affichage de l'attaquant
+        list_fight[i].attacker->render(window,i*40+160,215, false);
+
+        //affichage du defenseur
+        unit* t_bl = list_fight[i].blocker;
+        if(t_bl != nullptr)
+        {
+            t_bl->render(window, i*40+160, 310, false);
+        }
+    }
+}
+
+/* 
+Objectif : Détecte en fonction d'un vecteur si un attaquant a été cliqué et agis en fonction.
+Entrée :
+    - Un vecteur de 2 flotants propre à sfml.
+Sortie : 
+    - void
+*/
+void game_controller::clicked_attacker( sf::Vector2f mousePos )
 {
     for(long unsigned int i = 0; i < list_fight.size(); i++) 
     {
@@ -24,12 +120,22 @@ void game_controller::clicked_attacker(sf::Vector2f mousePos)
     return ;
 }
 
-void game_controller::selected_card_board(unit *u, player* p_clicked)
+/* 
+Objectif : Reçois une unité et un joueur et en fonction de la phase du jeu agit différement.
+Entrée :
+    - Un pointeur vers une unitée.
+    - Un pointeur vers un joueur.
+Sortie : 
+    - void
+*/
+void game_controller::selected_card_board( unit *u, player* p_clicked )
 {
+
     if(p_clicked == current_player)
     {
         if(p_turn == phase_turn::selection_attacker)
         {
+            //si les conditions si dessus sont remplies le joueur attaque avec l'unité appellée.
             select_attacker(u);
             p_clicked -> pop_from(BOARD,u);
         }
@@ -41,26 +147,38 @@ void game_controller::selected_card_board(unit *u, player* p_clicked)
         {
             if(waiting_spell != nullptr)
             {
+                //si les conditions si dessus sont remplies le joueur lance un sort.
                 target_spell = u;
             }
             return;
         }
         if(p_turn == phase_turn::selection_blocker)
         {
+            //si les conditions si dessus sont remplies le joueur attaqué selectionne quel unité bloque.
             select_blocker(u);
             return;
         }
     }
 }
 
-void game_controller::selected_card_hand(card_gen* card, player* p_clicked)
+/* 
+Objectif : Reçois une carte et un joueur et en fonction de la phase du jeu agit différement.
+Entrée :
+    - Un pointeur vers une unitée.
+    - Un pointeur vers un joueur.
+Sortie : 
+    - void
+*/
+void game_controller::selected_card_hand( card_gen* card, player* p_clicked )
 {
     if(p_clicked != current_player || 
         (p_turn != phase_turn::main1 && p_turn != phase_turn::main2))
+        //si ce n'est le bon joueur ou la bonne pahse du jeu on quitte immédiatement.
         return;
     
+    //on essaie de lancer ou un sort ou une unité 
     if(card->get_categorie() == "sort")
-    { 
+    {
         spell_clicked((spell*)card);
         return;
     }
@@ -71,7 +189,14 @@ void game_controller::selected_card_hand(card_gen* card, player* p_clicked)
     }
 }
 
-void game_controller::summon_unit(unit* casted)
+/* 
+Objectif : Invoquer sur le board du joueur actuel l'unité cliqué si cela est possible.
+Entrée :
+    - Une unité.
+Sortie : 
+    - void
+*/
+void game_controller::summon_unit( unit* casted )
 {
     if(casted->get_cost() <= current_player->get_charge())
     {
@@ -81,7 +206,14 @@ void game_controller::summon_unit(unit* casted)
     }
 }
 
-void game_controller::spell_clicked(spell* casted )
+/* 
+Objectif : Active un sort du joueur actuel si cela est possible.
+Entrée :
+    - Un sort.
+Sortie : 
+    - void
+*/
+void game_controller::spell_clicked( spell* casted )
 {
     if(casted->get_classe() != "voleur")
     {
@@ -89,26 +221,46 @@ void game_controller::spell_clicked(spell* casted )
         {
             return;
         }
-        std::cout << "here\n";
         current_player->cast_spell(casted, current_player);
     }
     waiting_spell = casted; 
 }
 
-void game_controller::select_attacker(unit* u)
+/* 
+Objectif : Séléctionne comme attaquant l'unité si celle ci n'est pas engagée.
+Entrée :
+    - Une unité.
+Sortie : 
+    - void
+*/
+void game_controller::select_attacker( unit* u )
 {
     if(u->is_tapped())return;
     u->tap();
     list_fight.push_back({u,nullptr});
 }
 
-void game_controller::select_blocker(unit* u)
+/* 
+Objectif : Séléctionne comme bloqueur l'unité si celle ci n'est pas engagée.
+Entrée :
+    - Une unité.
+Sortie : 
+    - void
+*/
+void game_controller::select_blocker( unit* u )
 {
     if(u->is_tapped()) return;
     blocker = u;
 }
 
-void game_controller::select_blocker_target(unit* u)
+/* 
+Objectif : Séléctionner quel unité attaquante sera bloquée par le bloqueur courant.
+Entrée :
+    - Une unité.
+Sortie : 
+    - void
+*/
+void game_controller::select_blocker_target( unit* u )
 {
     if(blocker == nullptr ) return;
     for(long unsigned int i = 0;  i < list_fight.size(); i++)
@@ -122,47 +274,61 @@ void game_controller::select_blocker_target(unit* u)
     }
 }
 
-void game_controller::resolve_fight()
+/* 
+Objectif : Executer les combats entre les unités puis les renvoyer chez leurs propriétaires.
+Entrée :
+    - void
+Sortie : 
+    - void
+*/
+void game_controller::resolve_fight( void )
 {
+    //parcour la liste des combats
     for( size_t i = 0; i < list_fight.size(); i++)
     {
         unit* t_unit = list_fight[i].blocker;
         unit* a_unit = list_fight[i].attacker;
         if(t_unit != nullptr)
         {
+            //calcule la force réel des unité en fonction de la classe adverse puis fait se battre les unités.
             int pv_attack = a_unit->get_stamina();
             int strenght_attack = a_unit->get_strenght();
             int pv_block = t_unit->get_stamina();
             int strenght_block = t_unit->get_strenght();
 
-            if(a_unit->counter(t_unit)){
+            if(a_unit->counter(t_unit))
+            {
                 pv_attack = pv_attack*2;
                 strenght_attack = strenght_attack*2;
             }
-            if(t_unit->counter(a_unit)){
+            if(t_unit->counter(a_unit))
+            {
                 pv_block = pv_block*2;
                 strenght_block = strenght_block*2;
             }
 
-            //combat
             pv_attack-=strenght_block;
 
             pv_block-=strenght_attack; 
 
-            if(pv_attack <= 0){
+            if(pv_attack <= 0)
+            {
                 a_unit->killed();
             }
-            if(pv_block <= 0){
+            if(pv_block <= 0)
+            {
                 t_unit->killed();
             }
-            current_player->add_board(a_unit);
-            waiting_player->add_board(t_unit);
+            current_player->summon_card(a_unit);
+            waiting_player->summon_card(t_unit);
 
         }
-        else{
+        else
+        {
+            //l'unité frappe directement le joueur attaqué si personne ne bloque
             unit* a_unit = list_fight[i].attacker;
             waiting_player->hitted(a_unit->get_strenght());
-            current_player->add_board(a_unit);
+            current_player->summon_card(a_unit);
         }
     }
     list_fight.clear();
@@ -170,7 +336,14 @@ void game_controller::resolve_fight()
     return;
 }
 
-void game_controller::next_phase()
+/* 
+Objectif : Execute les opérations d'entrée dans la phase suivante puis entre dans la phase suivante.
+Entrée :
+    - void
+Sortie : 
+    - void
+*/
+void game_controller::next_phase( void )
 {
     switch (p_turn)
     {
@@ -222,6 +395,13 @@ void game_controller::next_phase()
     }
 }
 
+/* 
+Objectif : Calcule le nombre de charge actuel pour les joueurs.
+Entrée :
+    - void
+Sortie : 
+    - Un entier correspondant au nombre de charge donné au joueur.
+*/
 int game_controller::get_current_charge( void )
 {
     int c_charge;
@@ -240,118 +420,30 @@ int game_controller::get_current_charge( void )
     return c_charge;
 }
 
-void game_controller::render(sf::RenderWindow& window)
-{
-    std::string text_aff;
-    switch(p_turn)
-    {
-        case phase_turn::draw:
-            text_aff.append("draw");
-            break;
-        case phase_turn::main1:
-            text_aff.append("main");
-            break;
-
-        case phase_turn::selection_attacker:
-            text_aff.append("select_attacker");
-            break;
-
-        case phase_turn::selection_blocker:
-            text_aff.append("select_blocker");
-            break;
-
-        case phase_turn::main2:
-            text_aff.append("main");
-            break;
-
-        case phase_turn::end:
-            text_aff.append("end");
-            break; 
-    }
-    afficheur_de_phase.render(text_aff,window);
-
-    std::string text_aff2 = std::to_string((int)timer);
-    affichage_timer.render(text_aff2,window);
-    render_fight(window);
-}
-
-void game_controller::render_fight(sf::RenderWindow& window)
-{
-    for( long unsigned int i = 0; i < list_fight.size(); i++)
-    {
-        //affichage de l'attaquant
-        list_fight[i].attacker->render(window,i*40+160,215, false);
-
-        //affichage du defenseur
-        unit* t_bl = list_fight[i].blocker;
-        if(t_bl != nullptr)
-        {
-            t_bl->render(window, i*40+160, 310, false);
-        }
-    }
-}
-
-void game_controller::update(float delta)
-{
-    timer -= delta;
-    if((current_player->is_bot() && p_turn !=  phase_turn::selection_blocker)){
-        bot* player_bot;
-        player_bot = (bot*) current_player;
-        player_bot->add_to_think_bot(delta);
-        if(player_bot->get_think_bot() >= 1){
-            bot_turn();
-            player_bot->reset_think();
-        }
-    }
-
-    if(waiting_player->is_bot() && p_turn == phase_turn::selection_blocker){
-        bot_play_blocker();
-    }   
-
-    if( timer <= 0 )
-    {
-        next_phase();
-    }
-    if(target_spell != nullptr && waiting_spell != nullptr)
-    {
-        current_player->cast_spell(waiting_spell,target_spell);
-        waiting_spell = nullptr;
-        target_spell = nullptr;
-    }
-    current_player->update(delta);
-    waiting_player->update(delta);
-}
-
+/* 
+Objectif : Getter de la liste des combattants.
+Entrée :
+    - void
+Sortie : 
+    - Un vecteur de la structure fight.
+*/
 std::vector<fight> game_controller::get_current_attacker( void )
 {
     return list_fight;
 }
 
-game_controller::game_controller(player *p1,player *p2)
+/* 
+Objectif : Joue le tour du bot selon la phase du tour  :
+    main1 ou main2: il pose des cartes
+    selection_attacker: il attaque
+    selection_blocker: il bloque
+Entrée : 
+    void
+Sortie :
+    void
+*/
+void game_controller::bot_turn()
 {
-    if(p1 != nullptr)
-    {
-        current_player = p1;
-    }
-    if(p2 != nullptr)
-    {
-        waiting_player = p2;
-    }
-    affichage_timer.set_position(20,430);
-    afficheur_de_phase.set_position(20,460);
-}
-
-void game_controller::bot_turn(){
-    /* 
-    Objectif : Joue le tour du bot selon la phase du tour  :
-        main1 ou main2: il pose des cartes
-        selection_attacker: il attaque
-        selection_blocker: il bloque
-    Entrée : 
-        void
-    Sortie :
-        void
-    */
     if(p_turn == phase_turn::main1 || p_turn == phase_turn::main2){
         bot_play_main();
     }
@@ -361,16 +453,18 @@ void game_controller::bot_turn(){
     }
 }
 
-void game_controller::bot_play_main(){
-    /* 
-    Objectif : Le bot pose les cartes les moins chers pour pouvoir poser le plus d'unités
+/* 
+Objectif : Le bot pose les cartes les moins chers pour pouvoir poser le plus d'unités
     et utiliser le plus de sort dans un tour
-    Entrée : 
-        void
-    Sortie :
-        void
-    */
-    int charge_min = current_player->charge_min_hand();
+Entrée : 
+    void
+Sortie :
+    void
+*/
+void game_controller::bot_play_main()
+{
+    bot* clanker = (bot*)current_player;
+    int charge_min = clanker->charge_min_hand();
     while(current_player->get_charge() >= charge_min){
         for(size_t i = 0; i < current_player->get_player_hand_size() ; ++i){
             card_gen* current_card = current_player->get_card_from_hand(i);
@@ -394,7 +488,7 @@ void game_controller::bot_play_main(){
                     unit* t_unit = (unit*) current_card;
                     summon_unit(t_unit);
                 }
-                charge_min = current_player->charge_min_hand();
+                charge_min = clanker->charge_min_hand();
                 break;
             }
         }
@@ -402,14 +496,15 @@ void game_controller::bot_play_main(){
     next_phase();
 }
 
-void game_controller::bot_play_attacker(){
-    /* 
-    Objectif : Le bot attaque avec la moitié de ses créatures sur le board
-    Entrée : 
-        void
-    Sortie :
-        void
-    */
+/* 
+Objectif : Le bot attaque avec la moitié de ses créatures sur le board
+Entrée : 
+    void
+Sortie :
+    void
+*/
+void game_controller::bot_play_attacker()
+{
     size_t board_size = current_player->get_player_board_size();
     if(board_size!=0){
         for(size_t i = 0; i < board_size/2 +1;++i){
@@ -420,15 +515,16 @@ void game_controller::bot_play_attacker(){
     next_phase();
 }
 
-void game_controller::bot_play_blocker(){
-    /* 
-    Objectif : Le bot bloque avec l'unité la plus pertinente, une unité bloque si elle 
-    tue l'unité attaquante.
-    Entrée : 
-        void
-    Sortie :
-        void
-    */
+/* 
+Objectif : Le bot bloque avec l'unité la plus pertinente, une unité bloque si elle 
+        tue l'unité attaquante.
+Entrée : 
+    void
+Sortie :
+    void
+*/
+void game_controller::bot_play_blocker()
+{
     for(size_t i =0 ; i < list_fight.size();++i){
         unit* t_attacker = list_fight[i].attacker;
         size_t board_size = waiting_player->get_player_board_size();
@@ -443,7 +539,8 @@ void game_controller::bot_play_blocker(){
             //ou si seulement la créature attaquante meurt
             if((block_counter_attacker && blocker_stam*2 >= attacker_stam) ||
             (!attack_counter_block && blocker_stam >= attacker_stam) ||
-            (attack_counter_block && blocker_stam >= 2*attacker_stam)){
+            (attack_counter_block && blocker_stam >= 2*attacker_stam))
+            {
                 select_blocker(t_unit);
                 select_blocker_target(t_attacker);
             }
@@ -473,4 +570,42 @@ void game_controller::bot_play_blocker(){
     }
     
     next_phase();
+}
+
+/* 
+Objectif : méthode appellé à chaque tic qui sert a executer les méthodes devant être activée automatiquement.
+Entrée :
+    - Un flotant delta correspondant à l'écart de temps entre 2 itérations.
+Sortie :
+    - void
+*/
+void game_controller::update(float delta)
+{
+    timer -= delta;
+    if((current_player->is_bot() && p_turn !=  phase_turn::selection_blocker)){
+        bot* player_bot;
+        player_bot = (bot*) current_player;
+        player_bot->add_to_think_bot(delta);
+        if(player_bot->get_think_bot() >= 1){
+            bot_turn();
+            player_bot->reset_think();
+        }
+    }
+
+    if(waiting_player->is_bot() && p_turn == phase_turn::selection_blocker){
+        bot_play_blocker();
+    }   
+
+    if( timer <= 0 )
+    {
+        next_phase();
+    }
+    if(target_spell != nullptr && waiting_spell != nullptr)
+    {
+        current_player->cast_spell(waiting_spell,target_spell);
+        waiting_spell = nullptr;
+        target_spell = nullptr;
+    }
+    current_player->update(delta);
+    waiting_player->update(delta);
 }

@@ -1,47 +1,70 @@
 #include "../HPP/bot.hpp"
+#include "../HPP/card_gen.hpp"
 
-bot::bot() : player(true)
-{
 /* 
-    Objectif : Constructeur de la classe bot héritée de player
-    Entrée : 
-        void
-    Sortie :
-        void
+Objectif : COnstructeur de la class bot.
+Entrée :
+    - void
+Sortie : 
+    - void
 */
-    //Appelle le constructeur de player en mettant true pour préciser que c'est un bot
+bot::bot( void ) : player(true)
+{//appelle simplement le contructeur de player avec true pour indiquer qu'il s'agit d'un bot.
 }
 
-void bot::reset_think(){
-    /* 
-    Objectif : Reset le temps de réflexion du bot à 0
-    Entrée : 
-        void
-    Sortie :
-        void
-    */
+/* 
+Objectif : Redémarre le timer qui indique que le bot réfléchis.
+Entrée :
+    - void
+Sortie : 
+    - void
+*/
+void bot::reset_think( void )
+{
     think_bot = 0;
 }
 
-void bot::add_to_think_bot(float delta){
-    /* 
-    Objectif : Ajoute delta au temps de réflexion du bot 
-    (delta étant le temps entre la dernière itération et la suivante)
-    Entrée :
-        float delta
-    Sortie :
-        void
-    */
+/* 
+Objectif : Soustraie delta au timer de reflexion du bot pour simuler la reflexion du bot.
+Entrée :
+    - Un flotant delta correspondant au temps depuis la dernière itération. 
+Sortie : 
+    - void
+*/
+void bot::add_to_think_bot( float delta )
+{
     think_bot+=delta;
 }
 
-float bot::get_think_bot(){
-    /* 
-    Objectif : Récupère le temps de réflexion du bot
-    Entrée :
-        void
-    Sortie :
-        float
-    */
+/* 
+Objectif : Retourne ou en est le timer de reflexion du bot.
+Entrée :
+    - void 
+Sortie : 
+    - Un flotant.
+*/
+float bot::get_think_bot( void )
+{
     return think_bot;
+}
+
+/* 
+Objectif : 
+Entrée :
+    -
+Sortie : 
+    - 
+*/
+int bot::charge_min_hand()
+{
+    int charge_min = 10;
+    for(size_t i = 0; i < get_player_hand_size() ; ++i)
+    {
+        card_gen * card = get_card_from_hand(i);
+        if(card->get_cost() < charge_min)
+        {
+            charge_min = card->get_cost();
+        }
+    }
+    return charge_min;
 }
