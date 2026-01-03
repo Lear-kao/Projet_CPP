@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "game_controller.hpp"
 #include "player.hpp"
+#include "bot.hpp"
 #include "unit.hpp"
 #include "class_button.hpp"
 
@@ -15,9 +16,9 @@ class main_game
         float delta; //le timer pour chaque frame, permet de gérer le temps sur l'update
         sf::Sprite board_;
         sf::Texture texture;
-        player *r_player = new player(false);
-        player *bot = new player(true);
-        game_controller *controller = new game_controller(r_player,bot);
+        player *r_player = new player(0);
+        bot *b_player = new bot();
+        game_controller *controller = new game_controller(r_player,b_player);
         gen_button *next_phase = new gen_button("assets_lib_g/button_next_phase.png");
     public:
         main_game(void);

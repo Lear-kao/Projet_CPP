@@ -31,7 +31,7 @@ void heap_card::add_one( card_gen* nc)
     heap.push_back(nc);
 }
 
-int heap_card::get_size(void)
+size_t heap_card::get_size(void)
 {
     return heap.size();
 }

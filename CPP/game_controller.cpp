@@ -293,7 +293,6 @@ void game_controller::render_fight(sf::RenderWindow& window)
 void game_controller::update(float delta)
 {
     timer -= delta;
-
     if(current_player->is_bot() && p_turn !=  phase_turn::selection_blocker){
         bot* player_bot = (bot*) current_player;
         player_bot->add_to_think_bot(delta);
@@ -303,7 +302,7 @@ void game_controller::update(float delta)
         }
     }
 
-    if(!current_player->is_bot() && p_turn == phase_turn::selection_blocker){
+    if(waiting_player->is_bot() && p_turn == phase_turn::selection_blocker){
         bot_play_blocker();
     }
 
@@ -352,14 +351,72 @@ void game_controller::bot_turn(){
 }
 
 void game_controller::bot_play_main(){
-    for(size_t i = 0; i < current_player->hand.size())
+    int charge_min = current_player->charge_min_hand();
+    while(current_player->get_charge() >= charge_min){
+        for(size_t i = 0; i < current_player->get_player_hand_size() ; ++i){
+            card_gen* current_card = current_player->get_card_from_hand(i);
+            if(current_card->get_cost() == charge_min){
+                if(current_card->get_categorie() == "sort"){
+                    spell * casted = (spell*) current_card;
+                    if(casted->get_classe() == "voleur" && waiting_player->get_player_board_size() == 0){
+                        continue;
+                    }
+                    else{
+                        spell_clicked(casted);
+                        if(casted->get_classe() == "voleur"){
+                            target_spell = (unit*) waiting_player->get_card_from_board(0);
+                            current_player->cast_spell(waiting_spell,target_spell);
+                            waiting_spell = nullptr;
+                            target_spell = nullptr;
+                        }
+                    }
+                }
+                else{
+                    unit* t_unit = (unit*) current_card;
+                    summon_unit(t_unit);
+                }
+                charge_min = current_player->charge_min_hand();
+                break;
+            }
+        }
+    }
     next_phase();
 }
 
 void game_controller::bot_play_attacker(){
+    size_t board_size = current_player->get_player_board_size();
+    if(board_size!=0){
+        for(size_t i = 0; i < board_size/2 +1;++i){
+            unit* t_unit = (unit*) current_player->get_card_from_board(0); 
+            selected_card_board(t_unit,current_player);
+        }
+    }
     next_phase();
 }
 
 void game_controller::bot_play_blocker(){
+    for(size_t i =0 ; i < list_fight.size();++i){
+        unit* t_attacker = list_fight[i].attacker;
+        size_t board_size = waiting_player->get_player_board_size();
+        for(size_t j =0 ; j < board_size ; ++j){
+            unit* t_unit = (unit*) waiting_player->get_card_from_board(j);
+            if(!t_unit->is_tapped()){
+                bool attack_counter_block = t_attacker->counter(t_unit);
+                bool block_counter_attacker = t_unit->counter(t_attacker);
+                int blocker_stam = t_unit->get_stamina();
+                int attacker_stam = t_attacker->get_stamina();
+                
+                //Le bot bloque avec cette créature seulement si les deux meurent 
+                //ou si seulement la créature attaquante meurt
+                if((block_counter_attacker && blocker_stam*2 >= attacker_stam) ||
+                (!attack_counter_block && blocker_stam >= attacker_stam) ||
+                (attack_counter_block && blocker_stam >= 2*attacker_stam)){
+                    select_blocker(t_unit);
+                    select_blocker_target(t_attacker);
+                }
+                break;
+            }
+        }
+    }
     next_phase();
 }
