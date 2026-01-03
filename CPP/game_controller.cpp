@@ -8,6 +8,7 @@
 #include "../HPP/board.hpp"
 #include "../HPP/class_button.hpp"
 
+
 void game_controller::clicked_attacker(sf::Vector2f mousePos)
 {
     for(long unsigned int i = 0; i < list_fight.size(); i++) 
@@ -84,6 +85,10 @@ void game_controller::spell_clicked(spell* casted )
 {
     if(casted->get_classe() != "voleur")
     {
+        if(waiting_player->get_player_board_size() == 0)
+        {
+            return;
+        }
         std::cout << "here\n";
         current_player->cast_spell(casted, current_player);
     }
@@ -289,8 +294,9 @@ void game_controller::render_fight(sf::RenderWindow& window)
 void game_controller::update(float delta)
 {
     timer -= delta;
-    if(current_player->is_bot() && p_turn !=  phase_turn::selection_blocker){
-        bot* player_bot = (bot*) current_player;
+    if((current_player->is_bot() && p_turn !=  phase_turn::selection_blocker)){
+        bot* player_bot;
+        player_bot = (bot*) current_player;
         player_bot->add_to_think_bot(delta);
         if(player_bot->get_think_bot() >= 1){
             bot_turn();
@@ -300,7 +306,7 @@ void game_controller::update(float delta)
 
     if(waiting_player->is_bot() && p_turn == phase_turn::selection_blocker){
         bot_play_blocker();
-    }
+    }   
 
     if( timer <= 0 )
     {
@@ -336,16 +342,34 @@ game_controller::game_controller(player *p1,player *p2)
 }
 
 void game_controller::bot_turn(){
+    /* 
+    Objectif : Joue le tour du bot selon la phase du tour  :
+        main1 ou main2: il pose des cartes
+        selection_attacker: il attaque
+        selection_blocker: il bloque
+    Entrée : 
+        void
+    Sortie :
+        void
+    */
     if(p_turn == phase_turn::main1 || p_turn == phase_turn::main2){
         bot_play_main();
     }
 
     if(p_turn == phase_turn::selection_attacker){
         bot_play_attacker();
-    }   
+    }
 }
 
 void game_controller::bot_play_main(){
+    /* 
+    Objectif : Le bot pose les cartes les moins chers pour pouvoir poser le plus d'unités
+    et utiliser le plus de sort dans un tour
+    Entrée : 
+        void
+    Sortie :
+        void
+    */
     int charge_min = current_player->charge_min_hand();
     while(current_player->get_charge() >= charge_min){
         for(size_t i = 0; i < current_player->get_player_hand_size() ; ++i){
@@ -379,6 +403,13 @@ void game_controller::bot_play_main(){
 }
 
 void game_controller::bot_play_attacker(){
+    /* 
+    Objectif : Le bot attaque avec la moitié de ses créatures sur le board
+    Entrée : 
+        void
+    Sortie :
+        void
+    */
     size_t board_size = current_player->get_player_board_size();
     if(board_size!=0){
         for(size_t i = 0; i < board_size/2 +1;++i){
@@ -390,28 +421,56 @@ void game_controller::bot_play_attacker(){
 }
 
 void game_controller::bot_play_blocker(){
+    /* 
+    Objectif : Le bot bloque avec l'unité la plus pertinente, une unité bloque si elle 
+    tue l'unité attaquante.
+    Entrée : 
+        void
+    Sortie :
+        void
+    */
     for(size_t i =0 ; i < list_fight.size();++i){
         unit* t_attacker = list_fight[i].attacker;
         size_t board_size = waiting_player->get_player_board_size();
         for(size_t j =0 ; j < board_size ; ++j){
             unit* t_unit = (unit*) waiting_player->get_card_from_board(j);
-            if(!t_unit->is_tapped()){
-                bool attack_counter_block = t_attacker->counter(t_unit);
-                bool block_counter_attacker = t_unit->counter(t_attacker);
-                int blocker_stam = t_unit->get_stamina();
-                int attacker_stam = t_attacker->get_stamina();
-                
-                //Le bot bloque avec cette créature seulement si les deux meurent 
-                //ou si seulement la créature attaquante meurt
-                if((block_counter_attacker && blocker_stam*2 >= attacker_stam) ||
-                (!attack_counter_block && blocker_stam >= attacker_stam) ||
-                (attack_counter_block && blocker_stam >= 2*attacker_stam)){
-                    select_blocker(t_unit);
-                    select_blocker_target(t_attacker);
-                }
+            bool attack_counter_block = t_attacker->counter(t_unit);
+            bool block_counter_attacker = t_unit->counter(t_attacker);
+            int blocker_stam = t_unit->get_stamina();
+            int attacker_stam = t_attacker->get_stamina();
+            
+            //Le bot bloque avec cette créature seulement si les deux meurent 
+            //ou si seulement la créature attaquante meurt
+            if((block_counter_attacker && blocker_stam*2 >= attacker_stam) ||
+            (!attack_counter_block && blocker_stam >= attacker_stam) ||
+            (attack_counter_block && blocker_stam >= 2*attacker_stam)){
+                select_blocker(t_unit);
+                select_blocker_target(t_attacker);
+            }
+            break;
+        }
+    }
+    //calcule s'il meurt après que toutes les unités sans bloquants aient attaquées
+    int degats_max = 0;
+    for(size_t i =0 ; i < list_fight.size();++i){
+        unit* attacker = list_fight[i].attacker;
+        if(list_fight[i].blocker == nullptr){
+            degats_max += attacker->get_strenght();
+        }
+    }
+    if(degats_max>=waiting_player->get_pv()){ //si le bot meurt:
+        for(size_t i =0 ; i < list_fight.size();++i){
+            unit* t_attacker = list_fight[i].attacker;
+            size_t board_size = waiting_player->get_player_board_size();
+            for(size_t j =0 ; j < board_size ; ++j){
+                unit* t_unit = (unit*) waiting_player->get_card_from_board(j);
+                //aucune des créatures ne bat celle d'en face donc on choisit la première qui vient
+                select_blocker(t_unit);
+                select_blocker_target(t_attacker);
                 break;
             }
         }
     }
+    
     next_phase();
 }

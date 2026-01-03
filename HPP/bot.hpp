@@ -6,7 +6,6 @@
 class bot : public player{
     private:
         float think_bot = 2; //le temps de réflexion du bot
-        std::vector<card_gen*> carte_prioritaire;
     public:
         bot();
         void reset_think();

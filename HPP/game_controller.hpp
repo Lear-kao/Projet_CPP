@@ -55,6 +55,7 @@ class game_controller
 
     public:
         game_controller(player *p1, player *p2);
+        virtual ~game_controller()= default;
         void next_phase(void);
 
         std::vector<fight> get_current_attacker( void );

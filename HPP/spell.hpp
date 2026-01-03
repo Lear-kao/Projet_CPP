@@ -12,6 +12,7 @@ class spell: public card_gen
         std::string target;
     public:
         spell(int v_e);
+        virtual ~spell();
         void render(sf::RenderWindow& window, int x, int y, bool hidden);
         std::string type_target();
         void resolve(unit* current_target);

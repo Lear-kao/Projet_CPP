@@ -3,6 +3,14 @@
 #include "../HPP/unit.hpp"
 #include <fstream>
 
+
+heap_card::~heap_card(){
+    for(size_t  i = 0 ; i < heap.size() ; ++i){
+        delete heap[i];
+    }
+    heap.clear();
+}
+
 void heap_card::pop_card(card_gen* u)
 {
     for(long unsigned int i = 0;  i < heap.size(); i++)
