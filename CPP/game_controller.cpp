@@ -571,3 +571,41 @@ void game_controller::bot_play_blocker()
     
     next_phase();
 }
+
+/* 
+Objectif : méthode appellé à chaque tic qui sert a executer les méthodes devant être activée automatiquement.
+Entrée :
+    - Un flotant delta correspondant à l'écart de temps entre 2 itérations.
+Sortie :
+    - void
+*/
+void game_controller::update(float delta)
+{
+    timer -= delta;
+    if((current_player->is_bot() && p_turn !=  phase_turn::selection_blocker)){
+        bot* player_bot;
+        player_bot = (bot*) current_player;
+        player_bot->add_to_think_bot(delta);
+        if(player_bot->get_think_bot() >= 1){
+            bot_turn();
+            player_bot->reset_think();
+        }
+    }
+
+    if(waiting_player->is_bot() && p_turn == phase_turn::selection_blocker){
+        bot_play_blocker();
+    }   
+
+    if( timer <= 0 )
+    {
+        next_phase();
+    }
+    if(target_spell != nullptr && waiting_spell != nullptr)
+    {
+        current_player->cast_spell(waiting_spell,target_spell);
+        waiting_spell = nullptr;
+        target_spell = nullptr;
+    }
+    current_player->update(delta);
+    waiting_player->update(delta);
+}
