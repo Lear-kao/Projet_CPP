@@ -28,7 +28,7 @@ class main_game
     
         public:
         main_game(void);
-        ~main_game();
+        //~main_game();
         void set_board(void);
 
         //gestion des evenements

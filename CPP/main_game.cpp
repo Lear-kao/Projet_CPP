@@ -15,12 +15,12 @@ main_game::main_game()
 }
 
 
-main_game::~main_game(void){
+/* main_game::~main_game(void){
     delete r_player;
     delete b_player;
     delete controller;
     delete next_phase;
-}
+} */
 
 void main_game::render( sf::RenderWindow& window )
 {

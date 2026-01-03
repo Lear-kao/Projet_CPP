@@ -39,8 +39,6 @@ class player
     public:
         player(bool);
         virtual ~player();
-        player(const player&) = delete;
-        player& operator=(const player&) = delete;
 
     //méthode utilitaire
         bool is_dead();
