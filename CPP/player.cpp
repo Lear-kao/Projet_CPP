@@ -10,13 +10,9 @@
 #include "spell.hpp"
 
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 
-player::player(bool a)
-=======
-=======
->>>>>>> Stashed changes
+
+
 /* 
 Objectif :
 Entrée :
@@ -24,12 +20,11 @@ Entrée :
 Sortie : 
     -
 */
-player::player(bool side)
->>>>>>> Stashed changes
+player::player(bool bot)
 {
-    hand_player = new hand(side);
-    deck_player = new deck(side);
-    board_player = new board(side);
+    hand_player = new hand(bot);
+    deck_player = new deck(bot);
+    board_player = new board(bot);
 
     for( int i = 0; i< 5; i ++)
     {
@@ -157,45 +152,6 @@ void player::pop_from(int from, card_gen* who)
     }
 }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-void player::render_hand(sf::RenderWindow& window)
-{
-    hand_player->render(window,is_bot());
-}
-
-void player::render_board(sf::RenderWindow& window)
-{
-    board_player->render(window);
-}
-
-void player::render_deck(sf::RenderWindow& window)
-{
-    deck_player->render(window);
-}
-
-void player::render_life(sf::RenderWindow& window)
-{
-    UI_life.render(std::to_string(life),window);
-}
-
-void player::render_charge(sf::RenderWindow& window)
-{
-    UI_charge.render(std::to_string(charge),window);
-}
-
-void player::render_general(sf::RenderWindow& window)
-{
-    render_charge(window);
-    render_deck(window);
-    render_hand(window);
-    render_board(window);
-    render_life(window);
-}
-
-=======
-=======
->>>>>>> Stashed changes
 /* 
 Objectif :
 Entrée :
@@ -265,10 +221,6 @@ Entrée :
 Sortie : 
     -
 */
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 void player::draw_card(void)
 {
     hand_player -> add_one(deck_player->pick_one());
@@ -447,12 +399,6 @@ bool player::is_dead( void )
     return false;
 }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-void player::update( float delta )
-=======
-=======
->>>>>>> Stashed changes
 /* 
 Objectif :
 Entrée :
@@ -461,7 +407,6 @@ Sortie :
     -
 */
 void player::update( [[maybe_unused]] float delta )
->>>>>>> Stashed changes
 {
     hand_player->update();
     board_player->update();
