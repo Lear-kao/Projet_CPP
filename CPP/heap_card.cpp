@@ -3,6 +3,13 @@
 #include "../HPP/unit.hpp"
 #include <fstream>
 
+/* 
+Objectif :
+Entrée :
+    -
+Sortie : 
+    -
+*/
 void heap_card::pop_card(card_gen* u)
 {
     for(long unsigned int i = 0;  i < heap.size(); i++)
@@ -16,6 +23,13 @@ void heap_card::pop_card(card_gen* u)
     
 }
 
+/* 
+Objectif :
+Entrée :
+    -
+Sortie : 
+    -
+*/
 card_gen* heap_card::pick_one()
 {
     if(heap.empty()) return NULL;
@@ -25,18 +39,41 @@ card_gen* heap_card::pick_one()
 
 }
 
-
+/* 
+Objectif :
+Entrée :
+    -
+Sortie : 
+    -
+*/
 void heap_card::add_one( card_gen* nc)
 {
     heap.push_back(nc);
 }
 
+<<<<<<< Updated upstream
 int heap_card::get_size(void)
+=======
+/* 
+Objectif :
+Entrée :
+    -
+Sortie : 
+    -
+*/
+size_t heap_card::get_size(void)
+>>>>>>> Stashed changes
 {
     return heap.size();
 }
 
-
+/* 
+Objectif :
+Entrée :
+    -
+Sortie : 
+    -
+*/
 card_gen* heap_card::get_card_x(int n)
 {
     return heap[n];

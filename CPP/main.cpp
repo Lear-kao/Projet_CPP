@@ -1,11 +1,20 @@
 #include <SFML/Graphics.hpp>
+#include <unistd.h>
+
 #include "../HPP/main_game.hpp"
-#include "../HPP/hand.hpp"
 
 
 int turn = 0;
 
-int main() {
+int main() 
+{
+    int pid = fork();
+    if(pid == 0)
+    {
+        execlp("xdg-open", "xdg-open", "Regle_du_jeu.pdf", (char*)nullptr);
+        return 0;
+    }
+
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Base");
     sf::Clock clock;
     main_game game;

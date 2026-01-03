@@ -14,14 +14,15 @@ class heap_card
 {
     protected:
         std::vector<card_gen*> heap;
+
     public:
         void pop_card(card_gen* u);
-        void suffle();//a faire(Noah)
-        card_gen* pick_one();//fini
-        void add_one( card_gen* nc);//a faire(Noah)
+        void suffle();
+        card_gen* pick_one();
+        void add_one( card_gen* nc);
         card_gen *get_card_x(int n);
-        int get_size(void);//a faire(Noah)
-        virtual void render(sf::RenderWindow& window) = 0;
+        size_t get_size(void);
+        virtual void render(sf::RenderWindow& window, bool hidden) = 0;
 };
 
 

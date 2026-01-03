@@ -1,7 +1,6 @@
-#include "../HPP/main_game.hpp"
 #include <SFML/Graphics.hpp>
-
 #include <iostream>
+#include "../HPP/main_game.hpp"
 #include "../HPP/hand.hpp"
 #include "../HPP/board.hpp"
 

@@ -4,6 +4,13 @@
 #include <algorithm>
 #include <random>
 
+/* 
+Objectif :
+Entrée :
+    -
+Sortie : 
+    -
+*/
 deck::deck(bool bot) : is_bot(bot)
 {
     std::ifstream f("DOC/cards.txt");
@@ -40,12 +47,25 @@ deck::deck(bool bot) : is_bot(bot)
     }
 }
 
-
-void deck::render(sf::RenderWindow& window)
+/* 
+Objectif :
+Entrée :
+    -
+Sortie : 
+    -
+*/
+void deck::render(sf::RenderWindow& window, [[maybe_unused]] bool hidden)
 {
     window.draw(sprite);
 }
 
+/* 
+Objectif :
+Entrée :
+    -
+Sortie : 
+    -
+*/
 void deck::shuffle( void )
 {
     std::mt19937 rng{std::random_device{}()};
