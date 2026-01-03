@@ -6,6 +6,10 @@ unit::unit(int cost){
     stamina = cost;
 }
 
+unit::~unit(){
+    
+}
+
 void unit::render(sf::RenderWindow& window, int x, int y, bool hidden)
 {
     if(hidden)

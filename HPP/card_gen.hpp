@@ -22,6 +22,7 @@ class card_gen
         sf::Sprite sprite_back;
         
     public:
+        virtual ~card_gen() = default;
         std::string get_classe(void);
         void set_classe(std::string c);//fait
         void set_categorie(std::string c);//fait

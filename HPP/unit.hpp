@@ -11,6 +11,7 @@ class unit: public card_gen
         bool alive = true;
     public:
         unit(int cost);
+        virtual ~unit();
         void tap( void ); //engage l'unitée
         void untap(void); //désengage l'unitée
         bool is_tapped( void ); //vérifie si l'unité est tappée

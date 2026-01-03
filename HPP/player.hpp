@@ -33,12 +33,14 @@ class player
 
     public:
         player(bool);
+        virtual ~player();
 
     //méthode utilitaire
         bool is_dead();
         void pop_from(int from, card_gen* who);
         void set_charge(int);
         int get_charge(void);
+        int get_pv();
         card_gen* get_card_from_hand(int);
         card_gen* get_card_from_board(int);
         size_t get_player_hand_size();

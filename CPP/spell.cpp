@@ -9,6 +9,10 @@ spell::spell(int v_e)
     set_cost(v_e);
 }
 
+spell::~spell(){
+    
+}
+
 void spell::render(sf::RenderWindow& window, int x, int y, bool hidden)
 {
     if(hidden)

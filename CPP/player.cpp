@@ -31,6 +31,14 @@ player::player(bool side)
     }
 }
 
+
+player::~player(){
+    delete deck_player;
+    delete hand_player;
+    delete board_player;
+}
+
+
 void player::new_turn(int n_charge)
 {
     draw_card();
@@ -178,6 +186,17 @@ void player::set_charge(int c)
 int player::get_charge( void )
 {
     return charge;
+}
+
+int player::get_pv(){
+    /* 
+    Objectif : Retourne le nombre de pv d'un joueur
+    Entrée :
+        void
+    Sortie :
+        int (les pv du joueur)
+    */
+    return life;
 }
 
 unit* player::card_clicked_board(sf::Vector2f mousePos)
