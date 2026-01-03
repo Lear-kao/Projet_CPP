@@ -3,6 +3,13 @@
 #include "../HPP/unit.hpp"
 #include <fstream>
 
+heap_card::~heap_card(){
+    for(size_t  i = 0 ; i < heap.size() ; ++i){
+        delete heap[i];
+    }
+    heap.clear();
+}
+
 /* 
 Objectif : Supprime la carte passé en paramètre du vecteur la contenant.
 Entrée :

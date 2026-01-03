@@ -41,6 +41,11 @@ player::player(bool bot)
     }
 }
 
+player::~player(){
+    delete deck_player;
+    delete hand_player;
+    delete board_player;
+}
 
 /* 
 Objectif : Afficher la main.
@@ -333,11 +338,23 @@ int player::get_charge( void )
 }
 
 /* 
-Objectif :
+Objectif : Récupérer les points de vie du joueur.
 Entrée :
-    -
+    - void
 Sortie : 
-    -
+    - Un entier.
+*/
+int player::get_pv( void )
+{
+    return life;
+}
+
+/* 
+Objectif : Renvoyer la carte sur laquelle le joueur a cliqué si il a cliqué sur une carte de son terrain.
+Entrée :
+    - La position ou la souris a cliqué grâce à un objet sfml.
+Sortie : 
+    - Une carte.
 */
 unit* player::card_clicked_board(sf::Vector2f mousePos)
 {
@@ -353,11 +370,11 @@ unit* player::card_clicked_board(sf::Vector2f mousePos)
 }
 
 /* 
-Objectif :
+Objectif : Renvoyer la carte sur laquelle le joueur a cliqué si il a cliqué sur une carte de sa main.
 Entrée :
-    -
+    - La position ou la souris a cliqué grâce à un objet sfml.
 Sortie : 
-    -
+    - Une carte.
 */
 card_gen* player::card_clicked_hand(sf::Vector2f mousePos)
 {

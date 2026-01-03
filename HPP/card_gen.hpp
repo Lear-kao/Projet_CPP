@@ -26,7 +26,6 @@ class card_gen
         void set_categorie(std::string c);
         void set_name(std::string n);
         void set_cost(int c);
-
         void set_sprite(std::string path);
 
     //getter

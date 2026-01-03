@@ -16,6 +16,7 @@ protected:
         std::vector<card_gen*> heap;
 
     public:
+        virtual ~heap_card();
         void pop_card(card_gen* u);
         void suffle();
         card_gen* pick_one();

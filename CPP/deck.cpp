@@ -59,6 +59,8 @@ Entrée :
 Sortie :
     - void
 */
+
+
 void deck::render(sf::RenderWindow& window, [[maybe_unused]] bool hidden)
 {
     window.draw(sprite);
