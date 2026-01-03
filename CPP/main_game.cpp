@@ -62,7 +62,6 @@ void main_game::click_on_hand(sf::Vector2f mousePos)
 
 void main_game::click_on_current_attacker(sf::Vector2f mousePos)
 {
-    //unit* t_unit = controller->is_attacker_clicker(sf::Vector2f mousePos);
     controller->clicked_attacker(mousePos);
 }
 

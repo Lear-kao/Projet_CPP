@@ -66,7 +66,6 @@ card_gen* player::get_card_from_board(int i){
     return board_player->get_card_x(i);
 }
 
-
 int player::charge_min_hand(){
     int charge_min = 10;
     for(size_t i = 0; i < get_player_hand_size() ; ++i){
@@ -80,7 +79,7 @@ int player::charge_min_hand(){
 
 void player::render_hand(sf::RenderWindow& window)
 {
-    hand_player->render(window);
+    hand_player->render(window,is_bot());
 }
 
 void player::render_board(sf::RenderWindow& window)
@@ -183,7 +182,7 @@ int player::get_charge( void )
 
 unit* player::card_clicked_board(sf::Vector2f mousePos)
 {
-    for( int i = 0; i < board_player->get_size(); i++) 
+    for( long unsigned int i = 0; i < board_player->get_size(); i++) 
     {
         unit* card = (unit*)board_player->get_card_x(i);
         if(card->get_sprite().getGlobalBounds().contains(mousePos))
@@ -196,7 +195,7 @@ unit* player::card_clicked_board(sf::Vector2f mousePos)
 
 card_gen* player::card_clicked_hand(sf::Vector2f mousePos)
 {
-    for( int i = 0; i < hand_player->get_size(); i++) 
+    for( long unsigned int i = 0; i < hand_player->get_size(); i++) 
     {
         card_gen* card = hand_player->get_card_x(i);
         if(card->get_sprite().getGlobalBounds().contains(mousePos))
@@ -213,7 +212,7 @@ bool player::is_dead( void )
     return false;
 }
 
-void player::update( float delta )
+void player::update( [[maybe_unused]] float delta )
 {
     hand_player->update();
     board_player->update();

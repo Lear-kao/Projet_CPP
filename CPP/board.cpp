@@ -1,6 +1,6 @@
 #include "../HPP/board.hpp"
 
-void board::render(sf::RenderWindow& window )
+void board::render(sf::RenderWindow& window, [[maybe_unused]] bool hidden)
 {
     const int spacing = 43;
     int total_width = (heap.size() - 1) * spacing;
@@ -8,7 +8,7 @@ void board::render(sf::RenderWindow& window )
 
     for(size_t i = 0; i < heap.size(); i++)
     {
-        heap[i]->render(window, start_x + i * spacing, border_y);
+        heap[i]->render(window, start_x + i * spacing, border_y, false);
     }
     return;
 }

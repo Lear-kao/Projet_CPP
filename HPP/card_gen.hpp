@@ -17,6 +17,9 @@ class card_gen
         //librairie graphique
         sf::Texture texture;
         sf::Sprite sprite;
+
+        sf::Texture texture_back;
+        sf::Sprite sprite_back;
         
     public:
         std::string get_classe(void);
@@ -31,7 +34,7 @@ class card_gen
         //lib_graph
         void set_sprite(std::string path);//fait
         sf::Sprite get_sprite(void);
-        virtual void render(sf::RenderWindow& window, int x, int y) = 0;//en cours
+        virtual void render(sf::RenderWindow& window, int x, int y, bool hidden) = 0;
         bool isClicked(sf::Vector2f mouse);
 };
 

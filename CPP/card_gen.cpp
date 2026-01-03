@@ -26,7 +26,6 @@ int card_gen::get_cost()
     return cost;
 }
 
-
 void card_gen::set_classe(std::string c)
 {
     classe = c;
@@ -42,21 +41,19 @@ void card_gen::set_name(std::string n)
     name = n;
 }
 
-/* 
-fonction pur la mise en place de l'apparence graphique, 
-seul point vraiment sensible de cette partie 
-*/
 void card_gen::set_sprite(std::string path)
 {
     texture.loadFromFile(path);
     sprite.setTexture(texture);
+    
+    texture_back.loadFromFile("assets_lib_g/back_card.png");
+    sprite_back.setTexture(texture_back);
 }
 
 sf::Sprite card_gen::get_sprite(void)
 {
     return sprite;
 }
-
 
 bool card_gen::counter(card_gen *ad){
     std::string classe_opposant = ad->get_classe();

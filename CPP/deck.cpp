@@ -40,8 +40,7 @@ deck::deck(bool bot) : is_bot(bot)
     }
 }
 
-
-void deck::render(sf::RenderWindow& window)
+void deck::render(sf::RenderWindow& window, [[maybe_unused]] bool hidden)
 {
     window.draw(sprite);
 }

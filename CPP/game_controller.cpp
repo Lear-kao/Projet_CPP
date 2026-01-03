@@ -8,18 +8,19 @@
 #include "../HPP/board.hpp"
 #include "../HPP/class_button.hpp"
 
-unit* game_controller::clicked_attacker(sf::Vector2f mousePos)
+void game_controller::clicked_attacker(sf::Vector2f mousePos)
 {
     for(long unsigned int i = 0; i < list_fight.size(); i++) 
     {
         unit* card = list_fight[i].attacker;
         if(card->get_sprite().getGlobalBounds().contains(mousePos))
         {
+            if(blocker == nullptr) return;
             select_blocker_target(card);
-            return card;
+            return ;
         }
     }
-    return nullptr;
+    return ;
 }
 
 void game_controller::selected_card_board(unit *u, player* p_clicked)
@@ -91,9 +92,6 @@ void game_controller::spell_clicked(spell* casted )
 
 void game_controller::select_attacker(unit* u)
 {
-    /* 
-    !!! attention, faire en sorte que un joueur ne puisse pas séléctionner les unitées du joueur adverse
-    */
     if(u->is_tapped())return;
     u->tap();
     list_fight.push_back({u,nullptr});
@@ -101,9 +99,7 @@ void game_controller::select_attacker(unit* u)
 
 void game_controller::select_blocker(unit* u)
 {
-    /* 
-    !!! attention, faire en sorte que un joueur ne puisse pas séléctionner les unitées du joueur adverse
-    */
+    if(u->is_tapped()) return;
     blocker = u;
 }
 
@@ -279,13 +275,13 @@ void game_controller::render_fight(sf::RenderWindow& window)
     for( long unsigned int i = 0; i < list_fight.size(); i++)
     {
         //affichage de l'attaquant
-        list_fight[i].attacker->render(window,i*40+160,240);
+        list_fight[i].attacker->render(window,i*40+160,215, false);
 
         //affichage du defenseur
         unit* t_bl = list_fight[i].blocker;
         if(t_bl != nullptr)
         {
-            t_bl->render(window, i*40+160, 310);
+            t_bl->render(window, i*40+160, 310, false);
         }
     }
 }
@@ -338,7 +334,6 @@ game_controller::game_controller(player *p1,player *p2)
     affichage_timer.set_position(20,430);
     afficheur_de_phase.set_position(20,460);
 }
-
 
 void game_controller::bot_turn(){
     if(p_turn == phase_turn::main1 || p_turn == phase_turn::main2){

@@ -60,7 +60,7 @@ class game_controller
         std::vector<fight> get_current_attacker( void );
         
         //click sur les attaquants méthode
-        unit* clicked_attacker(sf::Vector2f mousePos);
+        void clicked_attacker(sf::Vector2f mousePos);
 
         //phase de combat méthode
         void selected_card_board(unit *u, player* p_clicked);

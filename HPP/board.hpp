@@ -12,7 +12,7 @@ class board: public heap_card
         int border_y;
     public:
         board(bool is_bot);
-        void render(sf::RenderWindow& window);
+        void render(sf::RenderWindow& window, bool hidden = false);
         void untap_all( void );
         bool check(std::string categorie);
         std::vector<card_gen*> attacking(int i);

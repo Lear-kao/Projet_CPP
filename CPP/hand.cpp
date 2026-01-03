@@ -1,14 +1,14 @@
+#include <iostream>
 #include "../HPP/hand.hpp"
 
-void hand::render(sf::RenderWindow& window)
+void hand::render(sf::RenderWindow& window, bool hidden)
 {
     const int spacing = 43;
     int total_width = (heap.size() - 1) * spacing;
     int start_x = border_x - total_width / 2;
-
     for(int i = 0; i < heap.size(); i++)
     {
-        heap[i]->render(window, start_x + i * spacing, border_y);
+        heap[i]->render(window, start_x + i * spacing, border_y, hidden);
     }
     return;
 }

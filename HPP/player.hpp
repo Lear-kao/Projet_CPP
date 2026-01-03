@@ -30,6 +30,7 @@ class player
         //variable interface utilisateur
         UI UI_charge;
         UI UI_life;
+
     public:
         player(bool);
 
