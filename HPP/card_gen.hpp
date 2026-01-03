@@ -5,6 +5,13 @@
 #include <string>
 #include <cstring> //Pour utiliser strcomp
 
+
+/* 
+Objectif : Classe représentant la carte a nus de notre jeu, elle ne possède aucun attribut de gameplay,
+simplement les méthodes pour le mettre en oeuvre.
+Le point a améliorer est sans aucun doute les setters et getters très clairement moches et dangereux
+en terme d'encapsulation.
+*/
 class card_gen
 {
     private:

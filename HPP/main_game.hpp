@@ -9,6 +9,11 @@
 
 class board;
 
+/* 
+Objectif : Avoir un socle sur lequel les joueurs et le game controller peuvent se reposer pour
+executer leurs tâches.
+Point à améliorer, étendre le champ de détéction du main game qui se content de repérer les clicks de souris.
+*/
 class main_game
 {
     private:
@@ -20,7 +25,8 @@ class main_game
         bot *b_player = new bot();
         game_controller *controller = new game_controller(r_player,b_player);
         gen_button *next_phase = new gen_button("assets_lib_g/button_next_phase.png");
-    public:
+    
+        public:
         main_game(void);
         void set_board(void);
 

@@ -10,6 +10,9 @@
 #define MIDDLE_X 380
 #define MIDDLE_y 300
 
+/* 
+Objectif : Classe générale pour une pile de carte, elle possède toutes les méthodes utiles à ses enfants.
+*/
 class heap_card
 {
 protected:

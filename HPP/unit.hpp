@@ -2,6 +2,10 @@
 #define UNIT_HPP
 #include "card_gen.hpp"
 
+/*  
+Objectif : Class hérité de card_gen représentanat les unités invoqués pendant la partie.
+Point à améliorer, augmenter la diversité et les possiblités qu'offrent les unités.
+*/
 class unit: public card_gen
 {
     private: 

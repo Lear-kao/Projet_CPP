@@ -3,6 +3,11 @@
 
 #include "player.hpp"
 
+/* 
+Objectif : Class hérité de player servant a représenter le robot que vous affrontez. 
+Le point principal à améliorer est le manque d'action executé depuis cette class
+, en effet la plupart sont faites depuis le game_controller.
+*/
 class bot : public player{
     private:
         float think_bot = 2; //le temps de réflexion du bot
