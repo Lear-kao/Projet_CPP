@@ -1,6 +1,7 @@
 #include "../HPP/hand.hpp"
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 void hand::render(sf::RenderWindow& window)
 {
     const int spacing = 43;
@@ -13,6 +14,8 @@ void hand::render(sf::RenderWindow& window)
     }
     return;
 }
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 

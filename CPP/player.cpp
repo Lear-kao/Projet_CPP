@@ -11,9 +11,12 @@
 
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 player::player(bool a)
 =======
+=======
+>>>>>>> Stashed changes
 /* 
 Objectif :
 Entrée :
@@ -155,6 +158,7 @@ void player::pop_from(int from, card_gen* who)
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 void player::render_hand(sf::RenderWindow& window)
 {
     hand_player->render(window);
@@ -190,6 +194,8 @@ void player::render_general(sf::RenderWindow& window)
 }
 
 =======
+=======
+>>>>>>> Stashed changes
 /* 
 Objectif :
 Entrée :
@@ -259,6 +265,9 @@ Entrée :
 Sortie : 
     -
 */
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 void player::draw_card(void)
 {
@@ -439,8 +448,11 @@ bool player::is_dead( void )
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 void player::update( float delta )
 =======
+=======
+>>>>>>> Stashed changes
 /* 
 Objectif :
 Entrée :

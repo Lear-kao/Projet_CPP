@@ -49,7 +49,10 @@ int card_gen::get_cost()
     return cost;
 }
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 /* 
 Objectif : Setter de la variable classe.
 Entrée :

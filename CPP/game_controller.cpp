@@ -8,8 +8,11 @@
 #include "../HPP/class_button.hpp"
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 unit* game_controller::clicked_attacker(sf::Vector2f mousePos)
 =======
+=======
+>>>>>>> Stashed changes
 /* 
 Objectif : Constructeur de la class game_controller.
 Entrée :
@@ -400,6 +403,7 @@ int game_controller::get_current_charge( void )
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 void game_controller::render(sf::RenderWindow& window)
 {
     std::string text_aff;
@@ -469,6 +473,8 @@ void game_controller::update(float delta)
 }
 
 =======
+=======
+>>>>>>> Stashed changes
 /* 
 Objectif :
 Entrée :
@@ -476,12 +482,16 @@ Entrée :
 Sortie : 
     -
 */
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 std::vector<fight> game_controller::get_current_attacker( void )
 {
     return list_fight;
 }
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 game_controller::game_controller(player *p1,player *p2)
 {
@@ -496,6 +506,8 @@ game_controller::game_controller(player *p1,player *p2)
     affichage_timer.set_position(20,430);
     afficheur_de_phase.set_position(20,460);
 =======
+=======
+>>>>>>> Stashed changes
 /* 
 Objectif :
 Entrée :
@@ -640,5 +652,8 @@ void game_controller::update(float delta)
     }
     current_player->update(delta);
     waiting_player->update(delta);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 }

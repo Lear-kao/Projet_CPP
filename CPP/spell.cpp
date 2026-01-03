@@ -15,8 +15,11 @@ spell::spell(int v_e)
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 void spell::render(sf::RenderWindow& window, int x, int y)
 =======
+=======
+>>>>>>> Stashed changes
 /* 
 Objectif :
 Entrée :
