@@ -114,11 +114,11 @@ sf::Sprite card_gen::get_sprite(void)
 }
 
 /* 
-Objectif :
+Objectif : Renvoie si la classe de la carte passée en paramètre bats (voir règle) la classe de la carte. 
 Entrée :
-    -
+    - Un pointeur vers une card_gen.
 Sortie : 
-    -
+    - Un booléen.
 */
 bool card_gen::counter(card_gen *ad){
     std::string classe_opposant = ad->get_classe();
