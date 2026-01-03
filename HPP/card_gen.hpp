@@ -28,6 +28,8 @@ class card_gen
         sf::Sprite sprite_back;
         
     public:
+    //destructeur
+        virtual ~card_gen() = default;
     //setter
         void set_classe(std::string c);
         void set_categorie(std::string c);

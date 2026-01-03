@@ -15,6 +15,9 @@ class UI
         sf::Text texte;
     public:
         UI();
+        UI(const UI&) = delete;
+        UI& operator=(const UI&) = delete;
+
         void set_position(float x, float y);
         void render(std::string text_, sf::RenderWindow& window);
 };

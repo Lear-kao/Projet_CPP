@@ -4,7 +4,23 @@
 #include "../HPP/hand.hpp"
 #include "../HPP/board.hpp"
 
+main_game::main_game()
+{
+    r_player = new player(0);
+    b_player = new bot();
+    controller = new game_controller(r_player, b_player);
+    next_phase = new gen_button("assets_lib_g/button_next_phase.png");
+    next_phase->set_loc(718,402);
+    set_board();
+}
 
+
+main_game::~main_game(void){
+    delete r_player;
+    delete b_player;
+    delete controller;
+    delete next_phase;
+}
 
 void main_game::render( sf::RenderWindow& window )
 {
@@ -97,12 +113,6 @@ bool main_game::update( float delta )
     return false;
 }
 
-
-main_game::main_game( void )
-{
-    next_phase->set_loc(718,402);
-    set_board();
-}
 
 void main_game::set_board( void )
 {

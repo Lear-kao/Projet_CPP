@@ -41,6 +41,14 @@ player::player( bool bot )
     }
 }
 
+/* 
+Objectif : Destructeur de la class player. Appelle les destructeurs de deck_player, hand_player
+et board_player.
+Entrée :
+    - Un booléen indiquant si il s'agit d'un bot ou non.
+Sortie : 
+    - void
+*/
 player::~player( void )
 {
     delete deck_player;
@@ -159,7 +167,20 @@ void player::pop_from( int from, card_gen* who )
 }
 
 /* 
-Objectif : Récupérer le nombre de carte dans la main du joueur.
+Objectif : Récupérer les points de vie du joueur.
+Entrée :
+    - void
+Sortie : 
+    - Un entier.
+*/
+int player::get_pv( void )
+{
+    return life;
+}
+
+
+/* 
+Objectif : Récupérer le nombre de carte dans la main du bot.
 Entrée :
     - void
 Sortie :  
@@ -171,7 +192,7 @@ size_t player::get_player_hand_size( void )
 }
 
 /* 
-Objectif : Récupérer la carte à l'emplacement i de la main du joueur.
+Objectif : Récupérer la carte à l'emplacement i de la main du bot.
 Entrée :
     - Un entier.
 Sortie : 
@@ -183,7 +204,7 @@ card_gen* player::get_card_from_hand( int i )
 }
 
 /* 
-Objectif : Récupérer le nombre d'unité que le joueur possède sur le terrain.
+Objectif : Récupérer le nombre d'unité que le bot possède sur le terrain.
 Entrée :
     - void
 Sortie : 
@@ -325,18 +346,6 @@ Sortie :
 int player::get_charge( void )
 {
     return charge;
-}
-
-/* 
-Objectif : Récupérer les points de vie du joueur.
-Entrée :
-    - void
-Sortie : 
-    - Un entier.
-*/
-int player::get_pv( void )
-{
-    return life;
 }
 
 /* 

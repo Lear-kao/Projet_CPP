@@ -1,8 +1,11 @@
 #include "../HPP/bot.hpp"
 #include "../HPP/card_gen.hpp"
+#include "hand.hpp"
+#include "board.hpp"
+#include "deck.hpp"
 
 /* 
-Objectif : COnstructeur de la class bot.
+Objectif : Constructeur de la class bot.
 Entrée :
     - void
 Sortie : 
@@ -41,7 +44,7 @@ Objectif : Retourne ou en est le timer de reflexion du bot.
 Entrée :
     - void 
 Sortie : 
-    - Un flotant.
+    - Le timer de reflexion du bot.
 */
 float bot::get_think_bot( void )
 {
@@ -49,15 +52,15 @@ float bot::get_think_bot( void )
 }
 
 /* 
-Objectif : 
+Objectif : Retourne la charge de la carte la moins cher de la main du bot.
 Entrée :
-    -
+    - void
 Sortie : 
-    - 
+    - L'entier charge_min qui représente le coût de la carte la moins cher.
 */
 int bot::charge_min_hand( void )
 {
-    int charge_min = 10;
+    int charge_min = 4; //La carte la plus cher du deck est de 4
     for(size_t i = 0; i < get_player_hand_size() ; ++i)
     {
         card_gen * card = get_card_from_hand(i);

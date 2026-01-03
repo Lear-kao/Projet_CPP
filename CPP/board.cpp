@@ -70,8 +70,8 @@ Sortie :
 */
 bool board::check( std::string classe )
 {
-    size_t i = 0;
-    for(i; i < heap.size(); i++) 
+    size_t i;
+    for(i=0; i < heap.size(); i++) 
     {
         if(heap[i]->get_classe() == classe) return true;
     }
@@ -93,7 +93,7 @@ void board::update( void )
         unit* t_unit = (unit*)heap[i];
         if(t_unit->is_dead())
         {
-            pop_card(t_unit);
+            destroy_card(t_unit);
         }
     }
 }
