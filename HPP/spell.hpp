@@ -6,6 +6,11 @@
 class player;
 class unit;
 
+/*  
+Objectif : Class hérité de card_gen représentanat les sorts lancés pendant la partie.
+Point à améliorer, la manière dont les sorts de voleurs sont gérés est beaucoup trop contraignante
+pour ajouter d'autres sorts.
+*/
 class spell: public card_gen
 {
     private: 

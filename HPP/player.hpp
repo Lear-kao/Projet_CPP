@@ -16,6 +16,11 @@ class unit;
 class spell;
 class UI;
 
+/* 
+Objectif : Objet représentant le joueur, il vas donc manipuler presque l'ensemble des objets qui ont 
+été crée lors du projet.
+Point à améliorer, faire une classe parente à bot et player afin d'éviter une hérédité assez étrange.
+*/
 class player
 {
     private:
@@ -45,7 +50,6 @@ class player
         card_gen* get_card_from_board(int);
         size_t get_player_hand_size();
         size_t get_player_board_size();
-        int charge_min_hand();
         virtual bool is_bot() {return false;}
 
     //méthode de jeu
@@ -53,7 +57,6 @@ class player
         void draw_card(void);
         void hitted(int damage);
         void healled(int heal);
-        void add_board(card_gen* card);
         void summon_card(unit* unite);
         void cast_spell(spell* casted, unit* target);
         void cast_spell(spell* casted, player* target);

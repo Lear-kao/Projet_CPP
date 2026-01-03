@@ -5,6 +5,13 @@
 #include <string>
 #include <cstring> //Pour utiliser strcomp
 
+
+/* 
+Objectif : Classe représentant la carte a nus de notre jeu, elle ne possède aucun attribut de gameplay,
+simplement les méthodes pour le mettre en oeuvre.
+Le point a améliorer est sans aucun doute les setters et getters très clairement moches et dangereux
+en terme d'encapsulation.
+*/
 class card_gen
 {
     private:
@@ -17,23 +24,24 @@ class card_gen
         //librairie graphique
         sf::Texture texture;
         sf::Sprite sprite;
-
         sf::Texture texture_back;
         sf::Sprite sprite_back;
         
     public:
-        virtual ~card_gen() = default;
-        std::string get_classe(void);
-        void set_classe(std::string c);//fait
-        void set_categorie(std::string c);//fait
-        std::string get_categorie(void);
-        void set_name(std::string n);//fait
-        void set_cost(int c);//fait
-        int get_cost(void);//fait
-        bool counter(card_gen *ad);//fait
+    //setter
+        void set_classe(std::string c);
+        void set_categorie(std::string c);
+        void set_name(std::string n);
+        void set_cost(int c);
+        void set_sprite(std::string path);
 
-        //lib_graph
-        void set_sprite(std::string path);//fait
+    //getter
+        std::string get_classe(void);
+        std::string get_categorie(void);
+        int get_cost(void);
+        bool counter(card_gen *ad);
+
+    //lib_graph
         sf::Sprite get_sprite(void);
         virtual void render(sf::RenderWindow& window, int x, int y, bool hidden) = 0;
         bool isClicked(sf::Vector2f mouse);

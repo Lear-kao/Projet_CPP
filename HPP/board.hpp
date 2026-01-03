@@ -5,6 +5,12 @@
 
 #define MAX_SIZE_BOARD 6
 
+
+/* 
+Objectif : Class hérité de heap card servant à représenter le terrain.
+Point à améliorer, faire en sorte que le game controller puisse lui déléguer 
+plus de tâche sur la gestion des unité à l'intérieur.
+*/
 class board: public heap_card
 {
     private:
@@ -15,7 +21,6 @@ class board: public heap_card
         void render(sf::RenderWindow& window, bool hidden = false);
         void untap_all( void );
         bool check(std::string categorie);
-        std::vector<card_gen*> attacking(int i);
         void update(void);
 };
 

@@ -1,13 +1,12 @@
-#include "../HPP/main_game.hpp"
 #include <SFML/Graphics.hpp>
-
 #include <iostream>
+#include "../HPP/main_game.hpp"
 #include "../HPP/hand.hpp"
 #include "../HPP/board.hpp"
 
 
 
-void main_game::render( sf::RenderWindow& window)
+void main_game::render( sf::RenderWindow& window )
 {
     window.draw(board_);
     next_phase->render(window);
@@ -16,7 +15,7 @@ void main_game::render( sf::RenderWindow& window)
     b_player->render_general(window);
 }
 
-void main_game::handleEvent(const sf::Event& event, sf::RenderWindow& window)
+void main_game::handleEvent( const sf::Event& event, sf::RenderWindow& window )
 /* 
 Appelle les différents fonctions pour que le joueurs puisse intéragir avec la fenêtre
 */
@@ -42,7 +41,7 @@ Appelle les différents fonctions pour que le joueurs puisse intéragir avec la 
     }
 }
 
-void main_game::click_on_hand(sf::Vector2f mousePos)
+void main_game::click_on_hand( sf::Vector2f mousePos )
 {
 
     card_gen* t_card = r_player->card_clicked_hand(mousePos);
@@ -60,12 +59,12 @@ void main_game::click_on_hand(sf::Vector2f mousePos)
 
 }
 
-void main_game::click_on_current_attacker(sf::Vector2f mousePos)
+void main_game::click_on_current_attacker( sf::Vector2f mousePos )
 {
     controller->clicked_attacker(mousePos);
 }
 
-void main_game::click_on_board(sf::Vector2f mousePos)
+void main_game::click_on_board( sf::Vector2f mousePos )
 {
     unit* t_unit = r_player->card_clicked_board(mousePos);
     if(t_unit != nullptr)
@@ -82,7 +81,7 @@ void main_game::click_on_board(sf::Vector2f mousePos)
     }
 }
 
-bool main_game::update(float delta)
+bool main_game::update( float delta )
 {
     controller->update(delta);
     player* dead = who_s_dead();
@@ -101,7 +100,7 @@ player* main_game::who_s_dead( void )
     return nullptr;
 }
 
-main_game::main_game(void)
+main_game::main_game( void )
 {
     next_phase->set_loc(718,402);
     set_board();

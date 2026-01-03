@@ -2,46 +2,97 @@
 
 
 /* 
-Toute les fonctions de mise en place de l'objet
-Méthode lourde mais explicite (voir si on fait differemment)
+Objectif : Setter de la variable catégorie.
+Entrée :
+    - Un string correspondant à la catégorie de la carte.
+Sortie : 
+    - void
 */
-
-void card_gen::set_categorie(std::string c)
+void card_gen::set_categorie( std::string c )
 {
     categorie = c;
 }
 
-std::string card_gen::get_categorie(void)
+/* 
+Objectif : Getter de la variable categorie.
+Entrée :
+    - void
+Sortie : 
+    - Un string correspondant à la catégorie de la carte.
+*/
+std::string card_gen::get_categorie( void )
 {
     return categorie;
 }
 
-void card_gen::set_cost(int c)
+/* 
+Objectif : Setter de la variable cost.
+Entrée :
+    - Un entier correspondant au coût de la carte.
+Sortie : 
+    - void
+*/
+void card_gen::set_cost( int c )
 {
     cost = c;
 }
 
-int card_gen::get_cost()
+/* 
+Objectif : Getter de la variable cost.
+Entrée :
+    - void
+Sortie : 
+    - Un entier correspondant au coût de la carte.
+*/
+int card_gen::get_cost( void )
 {
     return cost;
 }
 
-void card_gen::set_classe(std::string c)
+/* 
+Objectif : Setter de la variable classe.
+Entrée :
+    - Un string correspondant à la classe de la carte.
+Sortie : 
+    - void
+*/
+void card_gen::set_classe( std::string c )
 {
     classe = c;
 }
 
-std::string card_gen::get_classe(void)
+/* 
+Objectif : Getter de la variable classe.
+Entrée :
+    - void
+Sortie : 
+    - Un string correspondant à la classe de la carte.
+*/
+std::string card_gen::get_classe( void )
 {
     return classe;
 }
 
-void card_gen::set_name(std::string n)
+/* 
+Objectif : Setter de la variable name.
+Entrée :
+    - Un string correspondant au nom de la carte.
+Sortie : 
+    - void
+*/
+void card_gen::set_name( std::string n )
 {
     name = n;
 }
 
-void card_gen::set_sprite(std::string path)
+/* 
+Objectif : setter de l'objet sprite et texture de sfml.
+Entrée :
+    - Un string correspondant au chemin vers l'image de la carte.
+Sortie : 
+    - void
+*/
+void card_gen::set_sprite( std::string path )
 {
     texture.loadFromFile(path);
     sprite.setTexture(texture);
@@ -50,12 +101,26 @@ void card_gen::set_sprite(std::string path)
     sprite_back.setTexture(texture_back);
 }
 
+/* 
+Objectif : Getter de l'objet sprite de sfml.
+Entrée :
+    - void
+Sortie : 
+    - L'objet sprite de sfml de la carte.
+*/
 sf::Sprite card_gen::get_sprite(void)
 {
     return sprite;
 }
 
-bool card_gen::counter(card_gen *ad){
+/* 
+Objectif : Renvoie si la classe de la carte passée en paramètre bats (voir règle) la classe de la carte. 
+Entrée :
+    - Un pointeur vers une card_gen.
+Sortie : 
+    - Un booléen.
+*/
+bool card_gen::counter( card_gen *ad ){
     std::string classe_opposant = ad->get_classe();
     
     if(classe == "guerrier"){

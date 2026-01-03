@@ -2,26 +2,30 @@
 #define HEAP_CARD
 
 #include <SFML/Graphics.hpp>
+#include <vector>
 #include "card_gen.hpp"
 #include "unit.hpp"
 #include "spell.hpp"
-#include <vector>
 
 #define MIDDLE_X 380
 #define MIDDLE_y 300
 
+/* 
+Objectif : Classe générale pour une pile de carte, elle possède toutes les méthodes utiles à ses enfants.
+*/
 class heap_card
 {
-    protected:
+protected:
         std::vector<card_gen*> heap;
+
     public:
         virtual ~heap_card();
         void pop_card(card_gen* u);
-        void suffle();//a faire(Noah)
-        card_gen* pick_one();//fini
-        void add_one( card_gen* nc);//a faire(Noah)
+        void suffle();
+        card_gen* pick_one();
+        void add_one( card_gen* nc);
         card_gen *get_card_x(int n);
-        size_t get_size(void);//a faire(Noah)
+        size_t get_size(void);
         virtual void render(sf::RenderWindow& window, bool hidden) = 0;
 };
 
