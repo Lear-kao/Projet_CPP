@@ -55,7 +55,7 @@ Entrée :
 Sortie : 
     - 
 */
-int bot::charge_min_hand()
+int bot::charge_min_hand( void )
 {
     int charge_min = 10;
     for(size_t i = 0; i < get_player_hand_size() ; ++i)

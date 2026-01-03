@@ -19,7 +19,7 @@ Entrée :
 Sortie : 
     - void
 */
-player::player(bool bot)
+player::player( bool bot )
 {
     hand_player = new hand(bot);
     deck_player = new deck(bot);
@@ -41,7 +41,8 @@ player::player(bool bot)
     }
 }
 
-player::~player(){
+player::~player( void )
+{
     delete deck_player;
     delete hand_player;
     delete board_player;
@@ -54,7 +55,7 @@ Entrée :
 Sortie : 
     - void
 */
-void player::render_hand(sf::RenderWindow& window)
+void player::render_hand( sf::RenderWindow& window )
 {
     hand_player->render(window,is_bot());
 }
@@ -66,7 +67,7 @@ Entrée :
 Sortie : 
     - void
 */
-void player::render_board(sf::RenderWindow& window)
+void player::render_board( sf::RenderWindow& window )
 {
     board_player->render(window);
 }
@@ -78,7 +79,7 @@ Entrée :
 Sortie : 
     - void
 */
-void player::render_deck(sf::RenderWindow& window)
+void player::render_deck( sf::RenderWindow& window )
 {
     deck_player->render(window);
 }
@@ -90,7 +91,7 @@ Entrée :
 Sortie : 
     - void
 */
-void player::render_life(sf::RenderWindow& window)
+void player::render_life( sf::RenderWindow& window )
 {
     UI_life.render(std::to_string(life),window);
 }
@@ -102,7 +103,7 @@ Entrée :
 Sortie : 
     - void
 */
-void player::render_charge(sf::RenderWindow& window)
+void player::render_charge( sf::RenderWindow& window )
 {
     UI_charge.render(std::to_string(charge),window);
 }
@@ -114,7 +115,7 @@ Entrée :
 Sortie : 
     - void
 */
-void player::render_general(sf::RenderWindow& window)
+void player::render_general( sf::RenderWindow& window )
 {
     render_charge(window);
     render_deck(window);
@@ -130,7 +131,7 @@ Entrée :
 Sortie : 
     - void
 */
-void player::new_turn(int n_charge)
+void player::new_turn( int n_charge )
 {
     draw_card();
     board_player->untap_all();
@@ -212,7 +213,7 @@ Entrée :
 Sortie : 
     - void
 */
-void player::draw_card(void)
+void player::draw_card( void )
 {
     hand_player -> add_one(deck_player->pick_one());
     return;

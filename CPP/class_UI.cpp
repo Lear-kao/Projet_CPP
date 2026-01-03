@@ -7,7 +7,7 @@ Entrée :
 Sortie : 
     - void
 */
-UI::UI()
+UI::UI( void )
 {
     // charge la police d'écriture et d'autre éléments de font
     if (!font.loadFromFile("DOC/arial.ttf")){
@@ -26,7 +26,7 @@ Entrée :
 Sortie : 
     - void
 */
-void UI::render( std::string text_, sf::RenderWindow& window)
+void UI::render( std::string text_, sf::RenderWindow& window )
 {
     texte.setString(text_);
     window.draw(texte);
@@ -39,7 +39,7 @@ Entrée :
 Sortie : 
     - void
 */
-void UI::set_position(float x, float y)
+void UI::set_position( float x, float y )
 {
     texte.setPosition(x, y);
 }

@@ -31,7 +31,7 @@ Entrée :
 Sortie :
     - void
 */
-void hand::render(sf::RenderWindow& window, bool hidden)
+void hand::render( sf::RenderWindow& window, bool hidden )
 {
     const int spacing = 43;
     int total_width = (heap.size() - 1) * spacing;
