@@ -15,6 +15,11 @@ spell::spell( int v_e )
     set_cost(v_e);
 }
 
+spell::~spell()
+{
+    
+}
+
 /* 
 Objectif : Afficher la carte à la position x,y ou bien de dos ou bien de face.
 Entrée :
