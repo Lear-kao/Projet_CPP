@@ -14,6 +14,11 @@ unit::unit( int cost )
     stamina = cost;
 }
 
+unit::~unit( void )
+{
+    
+}
+
 /* 
 Objectif : Afficher la carte à la position x,y ou bien de dos ou bien de face.
 Entrée :

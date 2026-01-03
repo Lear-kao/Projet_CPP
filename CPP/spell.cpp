@@ -15,7 +15,7 @@ spell::spell( int v_e )
     set_cost(v_e);
 }
 
-spell::~spell()
+spell::~spell( void )
 {
     
 }
