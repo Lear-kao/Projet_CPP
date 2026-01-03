@@ -11,7 +11,7 @@ Entrée :
 Sortie : 
     - void
 */
-deck::deck(bool bot) : is_bot(bot)
+deck::deck( bool bot ) : is_bot(bot)
 {
     //charger et récupérer les informations du fichiers texte contenant les cartes
     std::ifstream f("DOC/cards.txt");
@@ -61,7 +61,7 @@ Sortie :
 */
 
 
-void deck::render(sf::RenderWindow& window, [[maybe_unused]] bool hidden)
+void deck::render( sf::RenderWindow& window, [[maybe_unused]] bool hidden )
 {
     window.draw(sprite);
 }

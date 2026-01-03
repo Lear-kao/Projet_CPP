@@ -29,7 +29,7 @@ Entrée :
 Sortie : 
     - void
 */
-void spell::render(sf::RenderWindow& window, int x, int y, bool hidden)
+void spell::render( sf::RenderWindow& window, int x, int y, bool hidden )
 {
     if(hidden)
     {
@@ -50,7 +50,7 @@ Entrée :
 Sortie : 
     - void
 */
-void spell::resolve(unit* current_target)
+void spell::resolve( unit* current_target )
 {
     current_target->killed();
     return;
@@ -63,7 +63,7 @@ Entrée :
 Sortie : 
     - void
 */
-void spell::resolve(player* current_target)
+void spell::resolve( player* current_target )
 {
     if(get_classe() == "guerrier")
     {

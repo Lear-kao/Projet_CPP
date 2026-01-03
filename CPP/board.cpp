@@ -7,7 +7,7 @@ Entrée :
 Sortie : 
     - void
 */
-board::board(bool is_bot)
+board::board( bool is_bot )
 {
     //définis l'emplacement du terrain du joueur en fonction de quel joueur il s'agit.
     if(is_bot)
@@ -30,7 +30,7 @@ Entrée :
 Sortie :
     - void
 */
-void board::render(sf::RenderWindow& window, [[maybe_unused]] bool hidden)
+void board::render( sf::RenderWindow& window, [[maybe_unused]] bool hidden )
 {
     const int spacing = 43;
     int total_width = (heap.size() - 1) * spacing;
@@ -68,7 +68,7 @@ Entrée :
 Sortie : 
     - Un booléen.
 */
-bool board::check(std::string classe)
+bool board::check( std::string classe )
 {
     size_t i = 0;
     for(i; i < heap.size(); i++) 

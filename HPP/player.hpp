@@ -16,6 +16,11 @@ class unit;
 class spell;
 class UI;
 
+/* 
+Objectif : Objet représentant le joueur, il vas donc manipuler presque l'ensemble des objets qui ont 
+été crée lors du projet.
+Point à améliorer, faire une classe parente à bot et player afin d'éviter une hérédité assez étrange.
+*/
 class player
 {
     private:

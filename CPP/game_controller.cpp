@@ -442,7 +442,7 @@ Entrée :
 Sortie :
     void
 */
-void game_controller::bot_turn()
+void game_controller::bot_turn( void )
 {
     if(p_turn == phase_turn::main1 || p_turn == phase_turn::main2){
         bot_play_main();
@@ -503,7 +503,7 @@ Entrée :
 Sortie :
     void
 */
-void game_controller::bot_play_attacker()
+void game_controller::bot_play_attacker( void )
 {
     size_t board_size = current_player->get_player_board_size();
     if(board_size!=0){
@@ -523,7 +523,7 @@ Entrée :
 Sortie :
     void
 */
-void game_controller::bot_play_blocker()
+void game_controller::bot_play_blocker( void )
 {
     for(size_t i =0 ; i < list_fight.size();++i){
         unit* t_attacker = list_fight[i].attacker;
@@ -579,7 +579,7 @@ Entrée :
 Sortie :
     - void
 */
-void game_controller::update(float delta)
+void game_controller::update( float delta )
 {
     timer -= delta;
     if((current_player->is_bot() && p_turn !=  phase_turn::selection_blocker)){

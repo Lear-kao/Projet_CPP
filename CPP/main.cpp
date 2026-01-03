@@ -6,7 +6,7 @@
 
 int turn = 0;
 
-int main() 
+int main( void ) 
 {
     int pid = fork();
     if(pid == 0)

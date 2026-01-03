@@ -8,7 +8,7 @@ Entrée :
 Sortie : 
     - void
 */
-void card_gen::set_categorie(std::string c)
+void card_gen::set_categorie( std::string c )
 {
     categorie = c;
 }
@@ -20,7 +20,7 @@ Entrée :
 Sortie : 
     - Un string correspondant à la catégorie de la carte.
 */
-std::string card_gen::get_categorie(void)
+std::string card_gen::get_categorie( void )
 {
     return categorie;
 }
@@ -32,7 +32,7 @@ Entrée :
 Sortie : 
     - void
 */
-void card_gen::set_cost(int c)
+void card_gen::set_cost( int c )
 {
     cost = c;
 }
@@ -44,7 +44,7 @@ Entrée :
 Sortie : 
     - Un entier correspondant au coût de la carte.
 */
-int card_gen::get_cost()
+int card_gen::get_cost( void )
 {
     return cost;
 }
@@ -56,7 +56,7 @@ Entrée :
 Sortie : 
     - void
 */
-void card_gen::set_classe(std::string c)
+void card_gen::set_classe( std::string c )
 {
     classe = c;
 }
@@ -68,7 +68,7 @@ Entrée :
 Sortie : 
     - Un string correspondant à la classe de la carte.
 */
-std::string card_gen::get_classe(void)
+std::string card_gen::get_classe( void )
 {
     return classe;
 }
@@ -80,7 +80,7 @@ Entrée :
 Sortie : 
     - void
 */
-void card_gen::set_name(std::string n)
+void card_gen::set_name( std::string n )
 {
     name = n;
 }
@@ -92,7 +92,7 @@ Entrée :
 Sortie : 
     - void
 */
-void card_gen::set_sprite(std::string path)
+void card_gen::set_sprite( std::string path )
 {
     texture.loadFromFile(path);
     sprite.setTexture(texture);
@@ -120,7 +120,7 @@ Entrée :
 Sortie : 
     - Un booléen.
 */
-bool card_gen::counter(card_gen *ad){
+bool card_gen::counter( card_gen *ad ){
     std::string classe_opposant = ad->get_classe();
     
     if(classe == "guerrier"){
