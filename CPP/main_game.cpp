@@ -113,6 +113,15 @@ bool main_game::update( float delta )
     return false;
 }
 
+<<<<<<< HEAD
+=======
+player* main_game::who_s_dead( void )
+{
+    if(r_player->is_dead()) return r_player;
+    if(b_player->is_dead()) return b_player;
+    return nullptr;
+}
+>>>>>>> cb4a8a6 (destructeurs)
 
 void main_game::set_board( void )
 {
