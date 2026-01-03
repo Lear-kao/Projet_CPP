@@ -13,7 +13,7 @@ class deck : public heap_card
     public:
         deck(bool bot);
         void shuffle(void);
-        void render(sf::RenderWindow& window, bool hidden);
+        void render(sf::RenderWindow& window, bool hidden = false);
 };
 
 #endif

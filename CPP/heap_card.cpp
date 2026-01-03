@@ -51,12 +51,6 @@ void heap_card::add_one( card_gen* nc)
     heap.push_back(nc);
 }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-int heap_card::get_size(void)
-=======
-=======
->>>>>>> Stashed changes
 /* 
 Objectif :
 Entrée :
@@ -65,7 +59,6 @@ Sortie :
     -
 */
 size_t heap_card::get_size(void)
->>>>>>> Stashed changes
 {
     return heap.size();
 }

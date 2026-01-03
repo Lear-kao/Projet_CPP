@@ -22,8 +22,18 @@ Sortie :
 */
 void unit::render(sf::RenderWindow& window, int x, int y, bool hidden)
 {
-    if(is_tapped()) sprite.setRotation(15.0);
-    else sprite.setRotation(0.0);
+    if(hidden)
+    {
+        sprite_back.setPosition(x,y);
+        window.draw(sprite_back);
+        return;
+    }
+    
+    if(is_tapped()) 
+        sprite.setRotation(15.0);
+    else 
+        sprite.setRotation(0.0);
+
     sprite.setPosition(x,y);
     window.draw(sprite);
     return;

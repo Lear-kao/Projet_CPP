@@ -12,7 +12,7 @@ void main_game::render( sf::RenderWindow& window)
     next_phase->render(window);
     controller->render(window);
     r_player->render_general(window);
-    bot->render_general(window);
+    b_player->render_general(window);
 }
 
 void main_game::handleEvent(const sf::Event& event, sf::RenderWindow& window)
@@ -50,10 +50,10 @@ void main_game::click_on_hand(sf::Vector2f mousePos)
         controller->selected_card_hand(t_card, r_player);
         return;
     }
-    t_card = bot->card_clicked_hand(mousePos);
+    t_card = b_player->card_clicked_hand(mousePos);
     if(t_card!=nullptr)
     {
-        controller->selected_card_hand(t_card, bot);
+        controller->selected_card_hand(t_card, b_player);
         return;
     }
 
@@ -61,7 +61,6 @@ void main_game::click_on_hand(sf::Vector2f mousePos)
 
 void main_game::click_on_current_attacker(sf::Vector2f mousePos)
 {
-    //unit* t_unit = controller->is_attacker_clicker(sf::Vector2f mousePos);
     controller->clicked_attacker(mousePos);
 }
 
@@ -74,10 +73,10 @@ void main_game::click_on_board(sf::Vector2f mousePos)
         return;
     }
 
-    t_unit = bot->card_clicked_board(mousePos);
+    t_unit = b_player->card_clicked_board(mousePos);
     if(t_unit != nullptr)
     {
-        controller->selected_card_board(t_unit, bot);
+        controller->selected_card_board(t_unit, b_player);
         return;
     }
 }
@@ -97,7 +96,7 @@ bool main_game::update(float delta)
 player* main_game::who_s_dead( void )
 {
     if(r_player->is_dead()) return r_player;
-    if(bot->is_dead()) return bot;
+    if(b_player->is_dead()) return b_player;
     return nullptr;
 }
 

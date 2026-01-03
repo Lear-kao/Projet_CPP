@@ -1,23 +1,5 @@
+#include <iostream>
 #include "../HPP/hand.hpp"
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-void hand::render(sf::RenderWindow& window)
-{
-    const int spacing = 43;
-    int total_width = (heap.size() - 1) * spacing;
-    int start_x = border_x - total_width / 2;
-
-    for(int i = 0; i < heap.size(); i++)
-    {
-        heap[i]->render(window, start_x + i * spacing, border_y);
-    }
-    return;
-}
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
 /* 
 Objectif : Constructeur de la class hand

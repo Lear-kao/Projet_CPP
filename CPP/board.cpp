@@ -36,9 +36,9 @@ void board::render(sf::RenderWindow& window, [[maybe_unused]] bool hidden)
     int total_width = (heap.size() - 1) * spacing;
     int start_x = border_x - total_width / 2;
 
-    for(int i = 0; i < heap.size(); i++)
+    for(size_t i = 0; i < heap.size(); i++)
     {
-        heap[i]->render(window, start_x + i * spacing, border_y);
+        heap[i]->render(window, start_x + i * spacing, border_y, false);
     }
     return;
 }

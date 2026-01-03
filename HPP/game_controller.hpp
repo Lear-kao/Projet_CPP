@@ -60,7 +60,7 @@ class game_controller
         std::vector<fight> get_current_attacker( void );
         
         //click sur les attaquants méthode
-        unit* clicked_attacker(sf::Vector2f mousePos);
+        void clicked_attacker(sf::Vector2f mousePos);
 
         //phase de combat méthode
         void selected_card_board(unit *u, player* p_clicked);
@@ -73,6 +73,12 @@ class game_controller
         void selected_card_hand(card_gen* card, player* p_clicked);   
         void spell_clicked(spell* casted );
         void summon_unit(unit* casted);
+
+        //tour du bot
+        void bot_turn(); 
+        void bot_play_main();
+        void bot_play_attacker();
+        void bot_play_blocker();
 
 
         void render(sf::RenderWindow& window);

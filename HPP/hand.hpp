@@ -28,7 +28,7 @@ class hand: public heap_card
     public:
         hand(bool is_bot);
         bool is_max_size(void);
-        void render(sf::RenderWindow& window);
+        void render(sf::RenderWindow& window, bool hidden);
         void update( void );
         card_gen* play_one(int i);
 };

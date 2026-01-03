@@ -27,10 +27,10 @@ Sortie :
 player::player(bool side)
 >>>>>>> Stashed changes
 {
-    bot = a;
-    hand_player = new hand(bot);
-    deck_player = new deck(bot);
-    board_player = new board(bot);
+    hand_player = new hand(side);
+    deck_player = new deck(side);
+    board_player = new board(side);
+
     for( int i = 0; i< 5; i ++)
     {
         hand_player->add_one(deck_player->pick_one());
@@ -161,7 +161,7 @@ void player::pop_from(int from, card_gen* who)
 <<<<<<< Updated upstream
 void player::render_hand(sf::RenderWindow& window)
 {
-    hand_player->render(window);
+    hand_player->render(window,is_bot());
 }
 
 void player::render_board(sf::RenderWindow& window)
@@ -403,7 +403,7 @@ Sortie :
 */
 unit* player::card_clicked_board(sf::Vector2f mousePos)
 {
-    for( int i = 0; i < board_player->get_size(); i++) 
+    for( long unsigned int i = 0; i < board_player->get_size(); i++) 
     {
         unit* card = (unit*)board_player->get_card_x(i);
         if(card->get_sprite().getGlobalBounds().contains(mousePos))
@@ -423,7 +423,7 @@ Sortie :
 */
 card_gen* player::card_clicked_hand(sf::Vector2f mousePos)
 {
-    for( int i = 0; i < hand_player->get_size(); i++) 
+    for( long unsigned int i = 0; i < hand_player->get_size(); i++) 
     {
         card_gen* card = hand_player->get_card_x(i);
         if(card->get_sprite().getGlobalBounds().contains(mousePos))

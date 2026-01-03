@@ -49,10 +49,6 @@ int card_gen::get_cost()
     return cost;
 }
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 /* 
 Objectif : Setter de la variable classe.
 Entrée :
@@ -100,6 +96,9 @@ void card_gen::set_sprite(std::string path)
 {
     texture.loadFromFile(path);
     sprite.setTexture(texture);
+    
+    texture_back.loadFromFile("assets_lib_g/back_card.png");
+    sprite_back.setTexture(texture_back);
 }
 
 /* 

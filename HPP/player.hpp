@@ -19,24 +19,32 @@ class UI;
 class player
 {
     private:
+        int charge = 1;
+        int life = 20;
+
+    protected:
         deck *deck_player;
         hand *hand_player;
         board *board_player;
-        int charge = 1;
-        int life = 20;
-        bool bot;
-
+        
         //variable interface utilisateur
         UI UI_charge;
         UI UI_life;
+
     public:
-        player(bool a);
+        player(bool);
 
     //méthode utilitaire
         bool is_dead();
         void pop_from(int from, card_gen* who);
         void set_charge(int);
         int get_charge(void);
+        card_gen* get_card_from_hand(int);
+        card_gen* get_card_from_board(int);
+        size_t get_player_hand_size();
+        size_t get_player_board_size();
+        int charge_min_hand();
+        virtual bool is_bot() {return false;}
 
     //méthode de jeu
         void new_turn( int charge);

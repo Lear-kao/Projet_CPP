@@ -1,3 +1,4 @@
+#include <iostream>
 #include "../HPP/spell.hpp"
 #include "../HPP/unit.hpp"
 #include "../HPP/player.hpp"
@@ -14,12 +15,6 @@ spell::spell(int v_e)
     set_cost(v_e);
 }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-void spell::render(sf::RenderWindow& window, int x, int y)
-=======
-=======
->>>>>>> Stashed changes
 /* 
 Objectif :
 Entrée :
@@ -28,8 +23,14 @@ Sortie :
     -
 */
 void spell::render(sf::RenderWindow& window, int x, int y, bool hidden)
->>>>>>> Stashed changes
 {
+    if(hidden)
+    {
+        sprite_back.setPosition(x,y);
+        window.draw(sprite_back);
+        return;
+    }
+    
     sprite.setPosition(x,y);
     window.draw(sprite);
     return;

@@ -2,17 +2,17 @@
 #define HEAP_CARD
 
 #include <SFML/Graphics.hpp>
+#include <vector>
 #include "card_gen.hpp"
 #include "unit.hpp"
 #include "spell.hpp"
-#include <vector>
 
 #define MIDDLE_X 380
 #define MIDDLE_y 300
 
 class heap_card
 {
-    protected:
+protected:
         std::vector<card_gen*> heap;
 
     public:
