@@ -11,25 +11,23 @@
 
 
 
-player::player(bool a)
+player::player(bool side)
 {
-    bot = a;
-    hand_player = new hand(bot);
-    deck_player = new deck(bot);
-    board_player = new board(bot);
+    hand_player = new hand(side);
+    deck_player = new deck(side);
+    board_player = new board(side);
+
     for( int i = 0; i< 5; i ++)
     {
         hand_player->add_one(deck_player->pick_one());
     }
-    if(bot)
-    {
-        UI_charge.set_position(40, 80);
-        UI_life.set_position(50,30);
-    }
-    else
-    {
+    if(!side){
         UI_charge.set_position(750, 500);
         UI_life.set_position(720,550);
+    }
+    else{
+        UI_charge.set_position(40, 80);
+        UI_life.set_position(50,30);
     }
 }
 
@@ -50,6 +48,34 @@ void player::pop_from(int from, card_gen* who)
     {
         board_player->pop_card(who);
     }
+}
+
+size_t player::get_player_hand_size(){
+    return hand_player->get_size();
+}
+
+card_gen* player::get_card_from_hand(int i){
+    return hand_player->get_card_x(i);
+}
+
+size_t player::get_player_board_size(){
+    return board_player->get_size();
+}
+
+card_gen* player::get_card_from_board(int i){
+    return board_player->get_card_x(i);
+}
+
+
+int player::charge_min_hand(){
+    int charge_min = 10;
+    for(size_t i = 0; i < get_player_hand_size() ; ++i){
+        card_gen * card = get_card_from_hand(i);
+        if(card->get_cost() < charge_min){
+            charge_min = card->get_cost();
+        }
+    }
+    return charge_min;
 }
 
 void player::render_hand(sf::RenderWindow& window)
